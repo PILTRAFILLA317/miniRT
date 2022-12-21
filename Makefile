@@ -3,7 +3,8 @@ NAME = miniRT
 LIBFT_PATH		=	./libft
 LIBFT			=	$(LIBFT_PATH)/libft.a
 
-SRC = main.c
+SRC = main.c	\
+ft_strtod.c		\
 
 OBJ = $(SRC:.c=.o)
 
@@ -36,10 +37,12 @@ $(NAME): $(OBJ)
 clean:
 	@echo "$(WHT)Removing o-files...$(EOC)"
 	$(RM) $(OBJ)
+	@ make clean -C libft
 	@echo "$(GREEN)clean done.$(EOC)"
 
 fclean: clean
 	@echo "$(WHT)Removing binary -files...$(EOC)"
+	@make fclean -C libft
 	$(RM) $(NAME)
 	@echo "$(GREEN)fclean done.$(EOC)"
 

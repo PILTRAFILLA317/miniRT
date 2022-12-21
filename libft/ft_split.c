@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 12:47:07 by umartin-          #+#    #+#             */
-/*   Updated: 2022/04/12 14:45:58 by umartin-         ###   ########.fr       */
+/*   Updated: 2022/12/21 17:54:18 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	**ft_split(char const *s, char c)
 	if (ft_strlen(s) > 0)
 		dest = malloc(sizeof(char *) * (file_lines(s, c) + 1));
 	else
-		dest = malloc(sizeof(char *) * (0 + 1));
+		dest = malloc(sizeof(char *) * (1));
 	if (dest == NULL)
 		return (NULL);
 	fill_dic(dest, s, c);

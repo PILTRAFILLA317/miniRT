@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_doublestrlen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/21 12:32:13 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/21 14:22:30 by umartin-         ###   ########.fr       */
+/*   Created: 2022/12/21 17:41:05 by umartin-          #+#    #+#             */
+/*   Updated: 2022/12/21 17:41:41 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_doublestrlen(char **str)
 {
-	size_t	c;
+	int	i;
 
-	c = 0;
-	while (str[c])
-		c++;
-	return (c);
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

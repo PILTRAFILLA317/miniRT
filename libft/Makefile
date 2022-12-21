@@ -6,7 +6,7 @@
 #    By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/20 12:04:06 by umartin-          #+#    #+#              #
-#    Updated: 2022/04/08 15:04:37 by umartin-         ###   ########.fr        #
+#    Updated: 2022/12/21 17:42:26 by umartin-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,8 @@ ft_lstadd_front.c \
 ft_lstsize.c \
 ft_lstlast.c \
 ft_lstadd_back.c \
+ft_doubleprint.c \
+ft_doublestrlen.c \
 
 OBJECTS = ft_isalpha.o \
 ft_isdigit.o \
@@ -100,6 +102,8 @@ ft_lstadd_front.o \
 ft_lstsize.o \
 ft_lstlast.o \
 ft_lstadd_back.o \
+ft_doubleprint.o \
+ft_doublestrlen.o \
 
 CCFLAGS = -Wall -Werror -Wextra
 
@@ -110,16 +114,16 @@ ARRC = ar rc
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	$(ARRC) $(NAME) $(OBJECTS)
+	@$(ARRC) $(NAME) $(OBJECTS)
 
 $(CSOURCE): $(SOURCE)
-	$(CC) $(CCFLAGS) -c $(SOURCE)
+	@$(CC) $(CCFLAGS) -c $(SOURCE)
 	
 clean: 
-	$(RM) $(OBJECTS) $(BONUS_OBJECTS)
+	@$(RM) $(OBJECTS) $(BONUS_OBJECTS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

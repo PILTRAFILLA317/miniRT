@@ -1,42 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_doubleprint.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/25 13:11:14 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/21 20:24:16 by umartin-         ###   ########.fr       */
+/*   Created: 2022/12/21 15:18:08 by umartin-          #+#    #+#             */
+/*   Updated: 2022/12/21 17:56:24 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-int	ft_atoi(const char *str)
+void	ft_doubleprint(char **str)
 {
-	int			c;
-	int			s;
-	long int	res;
+	int	i;
 
-	c = 0;
-	s = 1;
-	res = 0;
-	while ((str[c] >= '\t' && str[c] <= '\r') || str[c] == ' ')
-		c++;
-	if (str[c] == '+' || str[c] == '-')
+	i = 0;
+	if (!str || !str[0])
 	{
-		if (str[c] == '-')
-			s *= -1;
-		c++;
+		printf("Error\n");
+		return ;
 	}
-	while (str[c] >= '0' && str[c] <= '9')
+	while (str[i])
 	{
-		res = (str[c] - '0') + (res * 10);
-		if (res * s < -2147483648)
-			return (0);
-		if (res * s > 2147483647)
-			return (-1);
-		c++;
+		printf("str[%d] == (%s)\n", i, str[i]);
+		i++;
 	}
-	return (res * s);
 }
