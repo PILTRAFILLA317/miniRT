@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 21:06:18 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/21 21:25:13 by umartin-         ###   ########.fr       */
+/*   Updated: 2022/12/27 15:52:05 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,30 @@
 double	ft_strtod_double_creator(char **a, int s)
 {
 	double	rtn;
-	int		res;
-	int		res2;
+	int		res[2];
 	int		i;
 
 	i = -1;
-	res = 0;
+	res[1] = 0;
 	while (a[0][++i])
 	{
-		res = (a[0][i] - '0') + (res * 10);
-		if (res * s < -2147483648)
+		res[1] = (a[0][i] - '0') + (res[1] * 10);
+		if (res[1] * s < -2147483648)
 			return (0);
-		if (res * s > 2147483647)
+		if (res[1] * s > 2147483647)
 			return (-1);
 	}
 	i = -1;
-	res2 = 0;
+	res[0] = 0;
+	if (a[1] == NULL)
+		return (rtn = res[1] * s, rtn);
 	while (a[1][++i])
 	{
-		res2 = (a[1][i] - '0') + (res2 * 10);
-		if (res2 * s < -2147483648 || res2 * s > 2147483647)
+		res[0] = (a[1][i] - '0') + (res[0] * 10);
+		if (res[0] * s < -2147483648 || res[0] * s > 2147483647)
 			return (-1);
 	}
-	return (rtn = res + (res2 * 0.1));
+	return (rtn = res[1] + (res[0] * 0.1));
 }
 
 int	ft_strtod_chkr(char *str)

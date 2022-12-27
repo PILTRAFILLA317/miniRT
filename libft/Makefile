@@ -6,7 +6,7 @@
 #    By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/20 12:04:06 by umartin-          #+#    #+#              #
-#    Updated: 2022/12/21 17:42:26 by umartin-         ###   ########.fr        #
+#    Updated: 2022/12/27 16:38:55 by umartin-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ ft_lstlast.c \
 ft_lstadd_back.c \
 ft_doubleprint.c \
 ft_doublestrlen.c \
+ft_doublefree.c \
 
 OBJECTS = ft_isalpha.o \
 ft_isdigit.o \
@@ -104,6 +105,7 @@ ft_lstlast.o \
 ft_lstadd_back.o \
 ft_doubleprint.o \
 ft_doublestrlen.o \
+ft_doublefree.o \
 
 CCFLAGS = -Wall -Werror -Wextra
 

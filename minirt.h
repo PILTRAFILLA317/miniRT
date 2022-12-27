@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/21 21:24:42 by umartin-         ###   ########.fr       */
+/*   Updated: 2022/12/27 16:54:01 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ typedef struct s_vec
 typedef struct s_ligth
 {
 	t_vec	pos;
+	int		r;
+	int		g;
+	int		b;
 	double	bright;
 }	t_light;
-
 
 typedef struct s_alight
 {
@@ -106,7 +108,7 @@ typedef struct s_elem
 {
 	t_alight		alight;
 	t_cam			cam;
-	t_light			light;
+	struct t_light	*light;
 	struct t_sph	*sphr;
 	struct t_cyl	*cyl;
 	struct t_pl		*pl;
@@ -119,5 +121,10 @@ typedef struct s_elem
 double	ft_strtod(char *str);
 char	*first_char_trimmer(char	*str);
 char	*last_char_trimmer(char	*str);
+void	error_printer(int i);
+
+////////// AL_CAM_INIT //////////
+int		first_line_alight(char *line, t_elem *elem);
+int		second_line_cam(char *line, t_elem *elem);
 
 #endif

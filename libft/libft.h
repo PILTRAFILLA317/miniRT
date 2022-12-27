@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 11:16:24 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/21 17:41:57 by umartin-         ###   ########.fr       */
+/*   Updated: 2022/12/27 16:38:21 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 void	ft_doubleprint(char **str);
 int		ft_doublestrlen(char **str);
+int		ft_doublefree(char **str);
 
 int		ft_isalnum(int c);
 int		ft_atoi(const char *str);

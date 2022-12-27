@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/21 21:06:31 by umartin-         ###   ########.fr       */
+/*   Updated: 2022/12/27 16:53:45 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ char	*first_char_trimmer(char	*str)
 
 	i = 0;
 	c = 0;
-	rtn = ft_calloc(sizeof(char *), (ft_strlen(str) - 2));
+	rtn = ft_calloc(sizeof(char *), (ft_strlen(str) - 1));
 	while (++i < ((int)ft_strlen(str)))
 	{
 		rtn[c] = str[i];
 		c++;
 	}
+	rtn[c] = 0;
 	free(str);
 	return (rtn);
 }
@@ -49,32 +50,53 @@ char	*last_char_trimmer(char	*str)
 
 	i = -1;
 	c = 0;
-	rtn = ft_calloc(sizeof(char *), (ft_strlen(str) - 2));
+	rtn = ft_calloc(sizeof(char *), (ft_strlen(str) - 1));
 	while (++i < ((int)ft_strlen(str) - 1))
 	{
 		rtn[c] = str[i];
 		c++;
 	}
+	rtn[c] = 0;
 	free(str);
 	return (rtn);
 }
 
-int	first_line(char *line, t_elem *elem)
-{
-	char	**fl;
-	char	**rgb;
+// int	light_checker(t_elem *elem)
+// {
+// 	if (elem->light.bright < 0 || elem->light.bright > 1)
+// 		return (-1);
+// 	if (elem->light.r < 0 || elem->alight.r > 255)
+// 		return (-1);
+// 	if (elem->light.g < 0 || elem->alight.g > 255)
+// 		return (-1);
+// 	if (elem->light.b < 0 || elem->alight.r > 255)
+// 		return (-1);
+// 	return (0);
+// }
 
-	line = last_char_trimmer(line);
-	fl = ft_split(line, ' ');
-	if (fl[0][0] != 'A' || ft_doublestrlen(fl) != 3)
-		return (error_printer(3), 1);
-	elem->alight.ratio = ft_strtod(fl[1]);
-	rgb = ft_split(fl[2], ',');
-	elem->alight.r = ft_atoi(rgb[0]);
-	elem->alight.g = ft_atoi(rgb[1]);
-	elem->alight.b = ft_atoi(rgb[2]);
-	return (0);
-}
+// int	third_line_light(char *line, t_elem *elem)
+// {
+// 	char	**fl;
+// 	char	**pos;
+// 	char	**rgb;
+
+// 	line = last_char_trimmer(line);
+// 	fl = ft_split(line, ' ');
+// 	if (fl[0][0] != 'L' || ft_doublestrlen(fl) != 4)
+// 		return (error_printer(3), 1);
+// 	pos = ft_split(fl[1], ',');
+// 	elem->light.pos.x = ft_strtod(pos[0]);
+// 	elem->light.pos.y = ft_strtod(pos[1]);
+// 	elem->light.pos.z = ft_strtod(pos[2]);
+// 	elem->light.bright = ft_strtod(fl[2]);
+// 	rgb = ft_split(fl[3], ',');
+// 	elem->light.r = ft_atoi(rgb[0]);
+// 	elem->light.g = ft_atoi(rgb[1]);
+// 	elem->light.b = ft_atoi(rgb[2]);
+// 	if (light_checker(elem) == -1)
+// 		return (-1);
+// 	return (0);
+// }
 
 int	main(int ac, char **av)
 {
@@ -91,10 +113,34 @@ int	main(int ac, char **av)
 		return (error_printer(2), 1);
 	file = open(av[1], O_RDONLY);
 	line = get_next_line(file);
-	first_line(line, &elem);
-	printf("RATIO = %f\n", elem.alight.ratio);
-	printf("R = %d\n", elem.alight.r);
-	printf("G = %d\n", elem.alight.g);
-	printf("B = %d\n", elem.alight.b);
+	if (first_line_alight(line, &elem) == -1)
+		return (error_printer(3), 1);
+	line = get_next_line(file);
+	if (second_line_cam(line, &elem) == -1)
+		return (error_printer(3), 1);
+	line = get_next_line(file);
+	// if (third_line_light(line, &elem) == -1)
+	// 	return (error_printer(3), 1);
+	printf("\n////////////AMBIENT LIGHT////////////\n");
+	printf("AL-RATIO = %f\n", elem.alight.ratio);
+	printf("AL-R = %d\n", elem.alight.r);
+	printf("AL-G = %d\n", elem.alight.g);
+	printf("AL-B = %d\n", elem.alight.b);
+	printf("\n////////////CAM////////////\n");
+	printf("CAM-FOV = %d\n", elem.cam.fov);
+	printf("CAM-POS-X = %f\n", elem.cam.pos.x);
+	printf("CAM-POS-Y = %f\n", elem.cam.pos.y);
+	printf("CAM-POS-Z = %f\n", elem.cam.pos.z);
+	printf("CAM-ROT-X = %f\n", elem.cam.orient.x);
+	printf("CAM-ROT-Y = %f\n", elem.cam.orient.y);
+	printf("CAM-ROT-Z = %f\n", elem.cam.orient.z);
+	// printf("\n////////////LIGHT////////////\n");
+	// printf("LIGHT-BR = %f\n", elem.light.bright);
+	// printf("LIGHT-POS-X = %f\n", elem.light.pos.x);
+	// printf("LIGHT-POS-Y = %f\n", elem.light.pos.y);
+	// printf("LIGHT-POS-Z = %f\n", elem.light.pos.z);
+	// printf("LIGHT-R = %d\n", elem.light.r);
+	// printf("LIGHT-G = %d\n", elem.light.g);
+	// printf("LIGHT-B = %d\n", elem.light.b);
 	return (0);
 }

@@ -5,6 +5,7 @@ LIBFT			=	$(LIBFT_PATH)/libft.a
 
 SRC = main.c	\
 ft_strtod.c		\
+al_cam_init.c	\
 
 OBJ = $(SRC:.c=.o)
 
@@ -27,7 +28,7 @@ m: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft
-	@echo "$(WHT)Compiling Philosophers...$(EOC)"
+	@echo "$(WHT)Compiling MiniRT...$(EOC)"
 	@$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LIBFT)
 	@echo "$(GREEN)miniRT build completed.$(EOC)"
 
