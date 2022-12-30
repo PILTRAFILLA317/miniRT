@@ -19,8 +19,8 @@ WHT = \033[1;37m
 EOC = \033[1;0m
 
 HEADERS = minirt.h
-CC = gcc
-FLAGS = -Wall -Wextra -Werror -pthread -g3 -fsanitize=address
+CC = clang
+FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 all: $(NAME)
 

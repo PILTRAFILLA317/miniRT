@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/27 16:54:01 by umartin-         ###   ########.fr       */
+/*   Updated: 2022/12/30 17:54:17 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ typedef struct s_vec
 
 typedef struct s_ligth
 {
-	t_vec	pos;
-	int		r;
-	int		g;
-	int		b;
-	double	bright;
+	t_vec			pos;
+	int				r;
+	int				g;
+	int				b;
+	double			bright;
+	struct s_light	*next;
 }	t_light;
 
 typedef struct s_alight
@@ -76,8 +77,8 @@ typedef struct s_sphere
 	int				r;
 	int				g;
 	int				b;
-	struct t_sphere	*prev;
-	struct t_sphere	*next;
+	struct s_sphere	*prev;
+	struct s_sphere	*next;
 }	t_sphere;
 
 typedef struct s_plane
@@ -87,8 +88,8 @@ typedef struct s_plane
 	int				r;
 	int				g;
 	int				b;
-	struct t_plane	*prev;
-	struct t_plane	*next;
+	struct s_plane	*prev;
+	struct s_plane	*next;
 }	t_plane;
 
 typedef struct s_cyl
@@ -100,20 +101,18 @@ typedef struct s_cyl
 	int				r;
 	int				g;
 	int				b;
-	struct t_cyl	*prev;
-	struct t_cyl	*next;
+	struct s_cyl	*prev;
+	struct s_cyl	*next;
 }	t_cyl;
 
 typedef struct s_elem
 {
-	t_alight		alight;
-	t_cam			cam;
-	struct t_light	*light;
-	struct t_sph	*sphr;
-	struct t_cyl	*cyl;
-	struct t_pl		*pl;
-	struct t_elem	*prev;
-	struct t_elem	*next;
+	t_alight	alight;
+	t_cam		cam;
+	t_light		*light;
+	t_sphere	*sphr;
+	t_cyl		*cyl;
+	t_plane		*pl;
 }	t_elem;
 
 # define BUFFER_SIZE 1
