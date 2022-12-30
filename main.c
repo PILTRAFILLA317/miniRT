@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/30 17:59:18 by umartin-         ###   ########.fr       */
+/*   Updated: 2022/12/30 18:27:15 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,8 @@ void	new_light(t_light **lst, t_light *new)
 		return ;
 	}
 	while ((*lst)->next != NULL)
-		(*lst) = (t_light *)(*lst)->next;
-	(*lst)->next = (struct s_light *)new;
+		(*lst) = (*lst)->next;
+	(*lst)->next = new;
 }
 
 int elem_type(char *line, t_elem *elem)
@@ -193,7 +193,7 @@ void printer(t_elem elem)
 		printf("LIGHT-R = %d\n", elem.light->r);
 		printf("LIGHT-G = %d\n", elem.light->g);
 		printf("LIGHT-B = %d\n", elem.light->b);
-		elem.light = (t_light *)elem.light->next;
+		elem.light = elem.light->next;
 	}
 }
 

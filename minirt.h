@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/30 17:54:17 by umartin-         ###   ########.fr       */
+/*   Updated: 2022/12/30 18:19:16 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_vec
 	double	z;
 }	t_vec;
 
-typedef struct s_ligth
+typedef struct s_light
 {
 	t_vec			pos;
 	int				r;
