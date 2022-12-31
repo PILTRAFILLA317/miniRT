@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/30 18:27:15 by umartin-         ###   ########.fr       */
+/*   Updated: 2022/12/31 17:07:23 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,98 +61,6 @@ char *last_char_trimmer(char *str)
 	return (rtn);
 }
 
-// int	light_checker(t_elem *elem)
-// {
-// 	if (elem->light.bright < 0 || elem->light.bright > 1)
-// 		return (-1);
-// 	if (elem->light.r < 0 || elem->alight.r > 255)
-// 		return (-1);
-// 	if (elem->light.g < 0 || elem->alight.g > 255)
-// 		return (-1);
-// 	if (elem->light.b < 0 || elem->alight.r > 255)
-// 		return (-1);
-// 	return (0);
-// }
-
-// int	third_line_light(char *line, t_elem *elem)
-// {
-// 	char	**fl;
-// 	char	**pos;
-// 	char	**rgb;
-
-// 	line = last_char_trimmer(line);
-// 	fl = ft_split(line, ' ');
-// 	if (fl[0][0] != 'L' || ft_doublestrlen(fl) != 4)
-// 		return (error_printer(3), 1);
-// 	pos = ft_split(fl[1], ',');
-// 	elem->light.pos.x = ft_strtod(pos[0]);
-// 	elem->light.pos.y = ft_strtod(pos[1]);
-// 	elem->light.pos.z = ft_strtod(pos[2]);
-// 	elem->light.bright = ft_strtod(fl[2]);
-// 	rgb = ft_split(fl[3], ',');
-// 	elem->light.r = ft_atoi(rgb[0]);
-// 	elem->light.g = ft_atoi(rgb[1]);
-// 	elem->light.b = ft_atoi(rgb[2]);
-// 	if (light_checker(elem) == -1)
-// 		return (-1);
-// 	return (0);
-// }
-
-// int	elementType(char *line)
-// {
-
-// }
-
-// int	createElements(char *filename)
-// {
-// 	int		fd;
-// 	char	*line;
-
-// 	fd = open(filename, O_RDONLY);
-// 	line = get_next_line(fd);
-// 	while (line != NULL)
-// 	{
-// 		if (elementType(line))
-// 			return (1);
-// 		line = get_next_line(fd);
-// 	}
-// 	if (elementType(line))
-// 		return (1);
-// 	return (0);
-// }
-
-t_light	*light_creator(char **fl)
-{
-	char	**pos;
-	char	**rgb;
-	t_light	*light;
-
-	light = malloc(sizeof(t_light));
-	pos = ft_split(fl[1], ',');
-	light->pos.x = ft_strtod(pos[0]);
-	light->pos.y = ft_strtod(pos[1]);
-	light->pos.z = ft_strtod(pos[2]);
-	light->bright = ft_strtod(fl[2]);
-	rgb = ft_split(fl[3], ',');
-	light->r = ft_atoi(rgb[0]);
-	light->g = ft_atoi(rgb[1]);
-	light->b = ft_atoi(rgb[2]);
-	light->next = NULL;
-	return (light);
-}
-
-void	new_light(t_light **lst, t_light *new)
-{
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	while ((*lst)->next != NULL)
-		(*lst) = (*lst)->next;
-	(*lst)->next = new;
-}
-
 int elem_type(char *line, t_elem *elem)
 {
 	char	**fl;
@@ -164,6 +72,24 @@ int elem_type(char *line, t_elem *elem)
 		if (ft_doublestrlen(fl) != 4)
 			return (error_printer(3), 1);
 		new_light(&elem->light, light_creator(fl));
+	}
+	if (line[0] == 'p' && line[1] == 'l')
+	{
+		if (ft_doublestrlen(fl) != 4)
+			return (error_printer(3), 1);
+		new_plane(&elem->light, plane_creator(fl));
+	}
+	if (line[0] == 's' && line[1] == 'p')
+	{
+		if (ft_doublestrlen(fl) != 4)
+			return (error_printer(3), 1);
+		new_sphere(&elem->light, sphere_creator(fl));
+	}
+	if (line[0] == 'c' && line[1] == 'y')
+	{
+		if (ft_doublestrlen(fl) != 4)
+			return (error_printer(3), 1);
+		new_cyl(&elem->light, cyl_creator(fl));
 	}
 	return (0);
 }

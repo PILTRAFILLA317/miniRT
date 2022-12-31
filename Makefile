@@ -6,6 +6,10 @@ LIBFT			=	$(LIBFT_PATH)/libft.a
 SRC = main.c	\
 ft_strtod.c		\
 al_cam_init.c	\
+light_linked.c	\
+plane_linked.c	\
+sph_linked.c	\
+cyl_linked.c	\
 
 OBJ = $(SRC:.c=.o)
 
@@ -19,8 +23,8 @@ WHT = \033[1;37m
 EOC = \033[1;0m
 
 HEADERS = minirt.h
-CC = clang
-FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CC = gcc
+FLAGS = -Wall -Wextra -g3 #-fsanitize=address -Werror
 
 all: $(NAME)
 
