@@ -6,11 +6,28 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:07:38 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 19:21:28 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:48:57 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+int	cyl_checker(t_elem *elem)
+{
+	if (elem->cyl->orient.x < -1 || elem->cyl->orient.x > 1)
+		return (-1);
+	if (elem->cyl->orient.y < -1 || elem->cyl->orient.y > 1)
+		return (-1);
+	if (elem->cyl->orient.z < -1 || elem->cyl->orient.z > 1)
+		return (-1);
+	if (elem->cyl->r < 0 || elem->cyl->r > 255)
+		return (-1);
+	if (elem->cyl->g < 0 || elem->cyl->g > 255)
+		return (-1);
+	if (elem->cyl->b < 0 || elem->cyl->r > 255)
+		return (-1);
+	return (0);
+}
 
 t_cyl	*cyl_creator(char **fl)
 {

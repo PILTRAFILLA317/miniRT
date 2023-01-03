@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 19:43:02 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:21:43 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ typedef struct s_elem
 	t_alight	alight;
 	t_cam		cam;
 	t_light		*light;
-	t_sphere	*spehre;
+	t_sphere	*sphere;
 	t_cyl		*cyl;
 	t_plane		*pl;
 }	t_elem;
@@ -127,17 +127,21 @@ int		second_line_cam(char *line, t_elem *elem);
 ////////// LIGHT_LNKD //////////
 t_light	*light_creator(char **fl);
 void	new_light(t_light **lst, t_light *new);
+int		light_checker(t_elem *elem);
 
 ////////// PLANE_LNKD //////////
 t_plane	*plane_creator(char **fl);
 void	new_plane(t_plane **lst, t_plane *new);
+int		plane_checker(t_elem *elem);
 
 ////////// SPHERE_LNKD //////////
 t_sphere	*sphere_creator(char **fl);
 void	sphere_light(t_sphere **lst, t_sphere *new);
+int		sphere_checker(t_elem *elem);
 
 ////////// CYL_LNKD //////////
 t_cyl	*cyl_creator(char **fl);
 void	new_cyl(t_cyl **lst, t_cyl *new);
+int		cyl_checker(t_elem *elem);
 
 #endif

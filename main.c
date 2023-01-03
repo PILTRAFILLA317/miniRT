@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 20:23:18 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:23:08 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,24 +72,32 @@ int elem_type(char *line, t_elem *elem)
 		if (ft_doublestrlen(fl) != 4)
 			return (error_printer(3), 1);
 		new_light(&elem->light, light_creator(fl));
+		if (light_checker(elem))
+			return (error_printer(3), 1);
 	}
 	if (line[0] == 'p' && line[1] == 'l')
 	{
 		if (ft_doublestrlen(fl) != 4)
 			return (error_printer(3), 1);
 		new_plane(&elem->pl, plane_creator(fl));
+		if (plane_checker(elem))
+			return (error_printer(3), 1);
 	}
 	if (line[0] == 's' && line[1] == 'p')
 	{
 		if (ft_doublestrlen(fl) != 4)
 			return (error_printer(3), 1);
-		new_sphere(&elem->spehre, sphere_creator(fl));
+		new_sphere(&elem->sphere, sphere_creator(fl));
+		if (sphere_checker(elem))
+			return (error_printer(3), 1);
 	}
 	if (line[0] == 'c' && line[1] == 'y')
 	{
 		if (ft_doublestrlen(fl) != 6)
 			return (error_printer(3), 1);
 		new_cyl(&elem->cyl, cyl_creator(fl));
+		if (cyl_checker(elem))
+			return (error_printer(3), 1);
 	}
 	return (0);
 }
@@ -121,17 +129,17 @@ void printer(t_elem elem)
 		printf("LIGHT-B = %d\n" CLOSE, elem.light->b);
 		elem.light = elem.light->next;
 	}
-	while (elem.spehre != NULL)
+	while (elem.sphere != NULL)
 	{
 		printf(BHGRN "\n////////////SPHERE////////////\n");
-		printf("SPH-DIAM = %f\n", elem.spehre->diam);
-		printf("SPH-POS-X = %f\n", elem.spehre->pos.x);
-		printf("SPH-POS-Y = %f\n", elem.spehre->pos.y);
-		printf("SPH-POS-Z = %f\n", elem.spehre->pos.z);
-		printf("SPH-R = %d\n", elem.spehre->r);
-		printf("SPH-G = %d\n", elem.spehre->g);
-		printf("SPH-B = %d\n" CLOSE, elem.spehre->b);
-		elem.spehre = elem.spehre->next;
+		printf("SPH-DIAM = %f\n", elem.sphere->diam);
+		printf("SPH-POS-X = %f\n", elem.sphere->pos.x);
+		printf("SPH-POS-Y = %f\n", elem.sphere->pos.y);
+		printf("SPH-POS-Z = %f\n", elem.sphere->pos.z);
+		printf("SPH-R = %d\n", elem.sphere->r);
+		printf("SPH-G = %d\n", elem.sphere->g);
+		printf("SPH-B = %d\n" CLOSE, elem.sphere->b);
+		elem.sphere = elem.sphere->next;
 	}
 	while (elem.pl != NULL)
 	{

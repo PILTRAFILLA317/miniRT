@@ -6,11 +6,22 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:31 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 19:11:57 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/03 21:15:31 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+int	sphere_checker(t_elem *elem)
+{
+	if (elem->sphere->r < 0 || elem->sphere->r > 255)
+		return (-1);
+	if (elem->sphere->g < 0 || elem->sphere->g > 255)
+		return (-1);
+	if (elem->sphere->b < 0 || elem->sphere->r > 255)
+		return (-1);
+	return (0);
+}
 
 t_sphere	*sphere_creator(char **fl)
 {
