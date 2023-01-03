@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/31 17:13:03 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/03 19:43:02 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct s_sphere
 	int				r;
 	int				g;
 	int				b;
-	struct s_sphere	*prev;
 	struct s_sphere	*next;
 }	t_sphere;
 
@@ -88,7 +87,6 @@ typedef struct s_plane
 	int				r;
 	int				g;
 	int				b;
-	struct s_plane	*prev;
 	struct s_plane	*next;
 }	t_plane;
 

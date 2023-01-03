@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/31 17:07:23 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/03 20:23:18 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,19 @@ int elem_type(char *line, t_elem *elem)
 	{
 		if (ft_doublestrlen(fl) != 4)
 			return (error_printer(3), 1);
-		new_plane(&elem->light, plane_creator(fl));
+		new_plane(&elem->pl, plane_creator(fl));
 	}
 	if (line[0] == 's' && line[1] == 'p')
 	{
 		if (ft_doublestrlen(fl) != 4)
 			return (error_printer(3), 1);
-		new_sphere(&elem->light, sphere_creator(fl));
+		new_sphere(&elem->spehre, sphere_creator(fl));
 	}
 	if (line[0] == 'c' && line[1] == 'y')
 	{
-		if (ft_doublestrlen(fl) != 4)
+		if (ft_doublestrlen(fl) != 6)
 			return (error_printer(3), 1);
-		new_cyl(&elem->light, cyl_creator(fl));
+		new_cyl(&elem->cyl, cyl_creator(fl));
 	}
 	return (0);
 }
@@ -111,15 +111,57 @@ void printer(t_elem elem)
 	printf("CAM-ROT-Z = %f\n", elem.cam.orient.z);
 	while (elem.light != NULL)
 	{
-		printf("\n////////////LIGHT////////////\n");
+		printf(BHBLU "\n////////////LIGHT////////////\n");
 		printf("LIGHT-BR = %f\n", elem.light->bright);
 		printf("LIGHT-POS-X = %f\n", elem.light->pos.x);
 		printf("LIGHT-POS-Y = %f\n", elem.light->pos.y);
 		printf("LIGHT-POS-Z = %f\n", elem.light->pos.z);
 		printf("LIGHT-R = %d\n", elem.light->r);
 		printf("LIGHT-G = %d\n", elem.light->g);
-		printf("LIGHT-B = %d\n", elem.light->b);
+		printf("LIGHT-B = %d\n" CLOSE, elem.light->b);
 		elem.light = elem.light->next;
+	}
+	while (elem.spehre != NULL)
+	{
+		printf(BHGRN "\n////////////SPHERE////////////\n");
+		printf("SPH-DIAM = %f\n", elem.spehre->diam);
+		printf("SPH-POS-X = %f\n", elem.spehre->pos.x);
+		printf("SPH-POS-Y = %f\n", elem.spehre->pos.y);
+		printf("SPH-POS-Z = %f\n", elem.spehre->pos.z);
+		printf("SPH-R = %d\n", elem.spehre->r);
+		printf("SPH-G = %d\n", elem.spehre->g);
+		printf("SPH-B = %d\n" CLOSE, elem.spehre->b);
+		elem.spehre = elem.spehre->next;
+	}
+	while (elem.pl != NULL)
+	{
+		printf(BHRED "\n////////////PLANE////////////\n");
+		printf("PLANE-POS-X = %f\n", elem.pl->pos.x);
+		printf("PLANE-POS-Y = %f\n", elem.pl->pos.y);
+		printf("PLANE-POS-Z = %f\n", elem.pl->pos.z);
+		printf("PLANE-ORIENT-X = %f\n", elem.pl->orient.x);
+		printf("PLANE-ORIENT-Y = %f\n", elem.pl->orient.y);
+		printf("PLANE-ORIENT-Z = %f\n", elem.pl->orient.z);
+		printf("PLANE-R = %d\n", elem.pl->r);
+		printf("PLANE-G = %d\n", elem.pl->g);
+		printf("PLANE-B = %d\n" CLOSE, elem.pl->b);
+		elem.pl = elem.pl->next;
+	}
+	while (elem.cyl != NULL)
+	{
+		printf(BHYEL "\n////////////CYL////////////\n");
+		printf("CYL-POS-X = %f\n", elem.cyl->pos.x);
+		printf("CYL-POS-Y = %f\n", elem.cyl->pos.y);
+		printf("CYL-POS-Z = %f\n", elem.cyl->pos.z);
+		printf("CYL-ORIENT-X = %f\n", elem.cyl->orient.x);
+		printf("CYL-ORIENT-Y = %f\n", elem.cyl->orient.y);
+		printf("CYL-ORIENT-Z = %f\n", elem.cyl->orient.z);
+		printf("CYL-DIAM = %f\n", elem.cyl->diam);
+		printf("CYL-H = %f\n", elem.cyl->h);
+		printf("CYL-R = %d\n", elem.cyl->r);
+		printf("CYL-G = %d\n", elem.cyl->g);
+		printf("CYL-B = %d\n" CLOSE, elem.cyl->b);
+		elem.cyl = elem.cyl->next;
 	}
 }
 
