@@ -3,13 +3,13 @@ NAME = miniRT
 LIBFT_PATH		=	./libft
 LIBFT			=	$(LIBFT_PATH)/libft.a
 
-SRC = main.c	\
-ft_strtod.c		\
-al_cam_init.c	\
-light_linked.c	\
-plane_linked.c	\
-sph_linked.c	\
-cyl_linked.c	\
+SRC = srcs/main.c	\
+srcs/utils.c		\
+srcs/al_cam_init.c	\
+srcs/light_linked.c	\
+srcs/plane_linked.c	\
+srcs/sph_linked.c	\
+srcs/cyl_linked.c	\
 
 OBJ = $(SRC:.c=.o)
 

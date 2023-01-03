@@ -6,11 +6,11 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:30:52 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 20:49:20 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/03 23:29:41 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../includes/minirt.h"
 
 int	plane_checker(t_elem *elem)
 {
@@ -26,6 +26,27 @@ int	plane_checker(t_elem *elem)
 		return (-1);
 	if (elem->pl->b < 0 || elem->pl->r > 255)
 		return (-1);
+	return (0);
+}
+
+int	plane_pre_chkr(char **fl)
+{
+	char	**pos;
+	char	**dir;
+	char	**rgb;
+
+	pos = ft_split(fl[1], ',');
+	if (ft_doublestrlen(pos) != 3 || digit_checker(pos[0])
+		|| digit_checker(pos[1]) || digit_checker(pos[2]))
+		return (error_printer(3), 1);
+	dir = ft_split(fl[2], ',');
+	if (ft_doublestrlen(dir) != 3 || digit_checker(dir[0])
+		|| digit_checker(dir[1]) || digit_checker(dir[2]))
+		return (error_printer(3), 1);
+	rgb = ft_split(fl[3], ',');
+	if (ft_doublestrlen(rgb) != 3 || digit_checker(rgb[0])
+		|| digit_checker(rgb[1]) || digit_checker(rgb[2]))
+		return (error_printer(3), 1);
 	return (0);
 }
 

@@ -6,11 +6,11 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:31 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 21:15:31 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/03 23:31:08 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../includes/minirt.h"
 
 int	sphere_checker(t_elem *elem)
 {
@@ -20,6 +20,24 @@ int	sphere_checker(t_elem *elem)
 		return (-1);
 	if (elem->sphere->b < 0 || elem->sphere->r > 255)
 		return (-1);
+	return (0);
+}
+
+int	sphere_pre_chkr(char **fl)
+{
+	char	**pos;
+	char	**rgb;
+
+	pos = ft_split(fl[1], ',');
+	if (ft_doublestrlen(pos) != 3 || digit_checker(pos[0])
+		|| digit_checker(pos[1]) || digit_checker(pos[2]))
+		return (error_printer(3), 1);
+	if (digit_checker(fl[2]))
+		return (error_printer(3), 1);
+	rgb = ft_split(fl[3], ',');
+	if (ft_doublestrlen(rgb) != 3 || digit_checker(rgb[0])
+		|| digit_checker(rgb[1]) || digit_checker(rgb[2]))
+		return (error_printer(3), 1);
 	return (0);
 }
 

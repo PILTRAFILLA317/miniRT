@@ -6,11 +6,11 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 21:23:08 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/03 23:32:46 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../includes/minirt.h"
 
 void error_printer(int i)
 {
@@ -69,7 +69,7 @@ int elem_type(char *line, t_elem *elem)
 	fl = ft_split(line, ' ');
 	if (line[0] == 'L')
 	{
-		if (ft_doublestrlen(fl) != 4)
+		if (ft_doublestrlen(fl) != 4 || light_pre_chkr(fl))
 			return (error_printer(3), 1);
 		new_light(&elem->light, light_creator(fl));
 		if (light_checker(elem))
@@ -77,7 +77,7 @@ int elem_type(char *line, t_elem *elem)
 	}
 	if (line[0] == 'p' && line[1] == 'l')
 	{
-		if (ft_doublestrlen(fl) != 4)
+		if (ft_doublestrlen(fl) != 4 || plane_pre_chkr(fl))
 			return (error_printer(3), 1);
 		new_plane(&elem->pl, plane_creator(fl));
 		if (plane_checker(elem))
@@ -85,7 +85,7 @@ int elem_type(char *line, t_elem *elem)
 	}
 	if (line[0] == 's' && line[1] == 'p')
 	{
-		if (ft_doublestrlen(fl) != 4)
+		if (ft_doublestrlen(fl) != 4 || sphere_pre_chkr(fl))
 			return (error_printer(3), 1);
 		new_sphere(&elem->sphere, sphere_creator(fl));
 		if (sphere_checker(elem))
@@ -93,7 +93,7 @@ int elem_type(char *line, t_elem *elem)
 	}
 	if (line[0] == 'c' && line[1] == 'y')
 	{
-		if (ft_doublestrlen(fl) != 6)
+		if (ft_doublestrlen(fl) != 6 || cyl_pre_chkr(fl))
 			return (error_printer(3), 1);
 		new_cyl(&elem->cyl, cyl_creator(fl));
 		if (cyl_checker(elem))

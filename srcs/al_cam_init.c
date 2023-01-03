@@ -6,11 +6,11 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:50:21 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/27 16:52:15 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/03 23:41:56 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "../includes/minirt.h"
 
 int	alight_checker(t_elem *elem)
 {
@@ -47,13 +47,18 @@ int	first_line_alight(char *line, t_elem *elem)
 	fl = ft_split(line, ' ');
 	if (fl[0][0] != 'A' || ft_doublestrlen(fl) != 3)
 		return (error_printer(3), 1);
+	if (digit_checker(fl[1]))
+		return (error_printer(3), 1);
 	elem->alight.ratio = ft_strtod(fl[1]);
 	rgb = ft_split(fl[2], ',');
+	if (ft_doublestrlen(rgb) != 3 || digit_checker(rgb[0])
+		|| digit_checker(rgb[1]) || digit_checker(rgb[2]))
+		return (error_printer(3), 1);
 	elem->alight.r = ft_atoi(rgb[0]);
 	elem->alight.g = ft_atoi(rgb[1]);
 	elem->alight.b = ft_atoi(rgb[2]);
 	if (alight_checker(elem) == -1)
-		return (-1);
+		return (1);
 	ft_doublefree(fl);
 	ft_doublefree(rgb);
 	return (0);
@@ -70,15 +75,21 @@ int	second_line_cam(char *line, t_elem *elem)
 	if (fl[0][0] != 'C' || ft_doublestrlen(fl) != 4)
 		return (error_printer(3), 1);
 	pos = ft_split(fl[1], ',');
+	if (ft_doublestrlen(pos) != 3 || digit_checker(pos[0])
+		|| digit_checker(pos[1]) || digit_checker(pos[2]))
+		return (error_printer(3), 1);
 	elem->cam.pos.x = ft_strtod(pos[0]);
 	elem->cam.pos.y = ft_strtod(pos[1]);
 	elem->cam.pos.z = ft_strtod(pos[2]);
 	rot = ft_split(fl[2], ',');
+	if (ft_doublestrlen(rot) != 3 || digit_checker(rot[0])
+		|| digit_checker(rot[1]) || digit_checker(rot[2]))
+		return (error_printer(3), 1);
 	elem->cam.orient.x = ft_strtod(rot[0]);
 	elem->cam.orient.y = ft_strtod(rot[1]);
 	elem->cam.orient.z = ft_strtod(rot[2]);
 	elem->cam.fov = ft_atoi(fl[3]);
 	if (cam_checker(elem) == -1)
-		return (-1);
+		return (1);
 	return (0);
 }
