@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 18:00:29 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:40:52 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,18 @@ int	elem_type(char *line, t_elem *elem)
 {
 	char	**fl;
 
-	line = last_char_trimmer(line);
+	if (line[ft_strlen(line) - 1] == '\n')
+		line = last_char_trimmer(line);
 	fl = ft_split(line, ' ');
 	if (line[0] == 'L')
 	{
 		if (ft_doublestrlen(fl) != 4 || light_pre_chkr(fl))
 			return (error_printer(3), 1);
 		new_light(&elem->light, light_creator(fl));
-		if (light_checker(elem))
+		if (light_checker(elem) == -1)
 			return (error_printer(3), 1);
 	}
-	if (line[0] == 'p' && line[1] == 'l')
+	else if (line[0] == 'p' && line[1] == 'l')
 	{
 		if (ft_doublestrlen(fl) != 4 || plane_pre_chkr(fl))
 			return (error_printer(3), 1);
@@ -83,15 +84,15 @@ int	elem_type(char *line, t_elem *elem)
 		if (plane_checker(elem))
 			return (error_printer(3), 1);
 	}
-	if (line[0] == 's' && line[1] == 'p')
+	else if (line[0] == 's' && line[1] == 'p')
 	{
 		if (ft_doublestrlen(fl) != 4 || sphere_pre_chkr(fl))
 			return (error_printer(3), 1);
 		new_sphere(&elem->sphere, sphere_creator(fl));
-		if (sphere_checker(elem))
+		if (sphere_checker(elem) == -1)
 			return (error_printer(3), 1);
 	}
-	if (line[0] == 'c' && line[1] == 'y')
+	else if (line[0] == 'c' && line[1] == 'y')
 	{
 		if (ft_doublestrlen(fl) != 6 || cyl_pre_chkr(fl))
 			return (error_printer(3), 1);
@@ -99,6 +100,8 @@ int	elem_type(char *line, t_elem *elem)
 		if (cyl_checker(elem))
 			return (error_printer(3), 1);
 	}
+	else
+		return (error_printer(3), 1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:31 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:27:15 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:41:11 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	sphere_pre_chkr(char **fl)
 	pos = ft_split(fl[1], ',');
 	if (ft_doublestrlen(pos) != 3 || digit_checker(pos[0])
 		|| digit_checker(pos[1]) || digit_checker(pos[2]))
-		return (error_printer(3), 1);
+		return (1);
 	if (digit_checker(fl[2]))
-		return (error_printer(3), 1);
+		return (1);
 	rgb = ft_split(fl[3], ',');
 	if (ft_doublestrlen(rgb) != 3 || digit_checker(rgb[0])
 		|| digit_checker(rgb[1]) || digit_checker(rgb[2]))
-		return (error_printer(3), 1);
+		return (1);
 	return (0);
 }
 
