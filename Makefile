@@ -3,6 +3,9 @@ NAME = miniRT
 LIBFT_PATH		=	./libft
 LIBFT			=	$(LIBFT_PATH)/libft.a
 
+MLX_PATH		=	./mlx
+MLX				=	$(MLX_PATH)/libmlx.a
+
 SRC = srcs/main.c	\
 srcs/utils.c		\
 srcs/al_cam_init.c	\
@@ -30,8 +33,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft
+	make -C mlx
 	@echo "$(WHT)Compiling MiniRT...$(EOC)"
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+	@$(CC) $(FLAGS) -lmlx -Lmlx -framework OpenGL -framework AppKit $(LIBFT) $(MLX) $^ -o $@
 	@echo "$(GREEN)miniRT build completed.$(EOC)"
 
 %.o: %.c
@@ -41,11 +45,13 @@ clean:
 	@echo "$(WHT)Removing o-files...$(EOC)"
 	$(RM) $(OBJ)
 	@ make clean -C libft
+	@ make clean -C mlx
 	@echo "$(GREEN)clean done.$(EOC)"
 
 fclean: clean
 	@echo "$(WHT)Removing binary -files...$(EOC)"
 	@make fclean -C libft
+	@make clean -C mlx
 	$(RM) $(NAME)
 	@echo "$(GREEN)fclean done.$(EOC)"
 

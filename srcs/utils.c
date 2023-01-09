@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 21:06:18 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:27:04 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:26:59 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int	digit_checker(char *str)
 		return (1);
 	while (str[++i])
 	{
-		if (str[i] == 46 || (str[i] >= 48 && str[i] <= 57))
+		if ((str[i] >= 48 && str[i] <= 57) || str[i] == 46 || str[i] == 45)
 			continue ;
 		else
 			return (1);
 	}
-	return (0);	
+	return (0);
 }
 
 double	ft_strtod_double_creator(char **a, int s)

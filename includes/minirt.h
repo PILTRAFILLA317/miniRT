@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:24:02 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:48:16 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 # define MINIRT_H
 
 # include "../libft/libft.h"
+# include "../mlx/mlx.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
+
+# define KEY_ESC 53
 
 # define RED	"\033[0;31m"
 # define GREEN	"\033[0;32m"
@@ -108,6 +111,8 @@ typedef struct s_cyl
 
 typedef struct s_elem
 {
+	void		*mlx;
+	void		*win;
 	t_alight	alight;
 	t_cam		cam;
 	t_light		*light;

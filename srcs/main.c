@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:29:50 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 18:00:29 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,23 @@ void printer(t_elem elem)
 	}
 }
 
+int	ft_close(t_elem *elem)
+{
+	mlx_destroy_window(elem->mlx, elem->win);
+	exit(0);
+	return (0);
+}
+
+int	ft_keypress(int keycode, t_elem *elem)
+{
+	if (keycode == KEY_ESC)
+	{
+		mlx_destroy_window(elem->mlx, elem->win);
+		exit(0);
+	}
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	int		file;
@@ -200,8 +217,14 @@ int	main(int ac, char **av)
 		line = get_next_line(file);
 		if (line == NULL)
 			break ;
-		elem_type(line, &elem);
+		if (elem_type(line, &elem))
+			return (1);
 	}
-	printer(elem);
+	elem.mlx = mlx_init();
+	elem.win = mlx_new_window(elem.mlx, 1920, 1080, "miniRT");
+	mlx_hook(elem.win, 2, 1L << 0, ft_keypress, &elem);
+	mlx_hook(elem.win, 17, 1L << 17, ft_close, &elem);
+	mlx_loop(elem.mlx);
+	//printer(elem);
 	return (0);
 }
