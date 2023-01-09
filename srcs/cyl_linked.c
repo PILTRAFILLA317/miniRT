@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:07:38 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 23:23:20 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:27:22 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ t_cyl	*cyl_creator(char **fl)
 	t_cyl	*cyl;
 
 	cyl = malloc(sizeof(t_cyl));
+	cyl->x = 0;
+	if (fl[0][2] == 'x')
+		cyl->x = 1;
 	pos = ft_split(fl[1], ',');
 	cyl->pos.x = ft_strtod(pos[0]);
 	cyl->pos.y = ft_strtod(pos[1]);

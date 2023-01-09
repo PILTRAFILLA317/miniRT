@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 23:31:19 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:24:02 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_sphere
 {
 	struct s_vec	pos;
 	double			diam;
+	int				x;
 	int				r;
 	int				g;
 	int				b;
@@ -84,6 +85,7 @@ typedef struct s_plane
 {
 	struct s_vec	pos;
 	struct s_vec	orient;
+	int				x;
 	int				r;
 	int				g;
 	int				b;
@@ -95,6 +97,7 @@ typedef struct s_cyl
 	struct s_vec	pos;
 	struct s_vec	orient;
 	double			diam;
+	int				x;
 	double			h;
 	int				r;
 	int				g;
@@ -116,38 +119,39 @@ typedef struct s_elem
 # define BUFFER_SIZE 1
 
 ////////// UTILS //////////
-double	ft_strtod(char *str);
-char	*first_char_trimmer(char	*str);
-char	*last_char_trimmer(char	*str);
-void	error_printer(int i);
-int		digit_checker(char *str);
+double		ft_strtod(char *str);
+char		*first_char_trimmer(char	*str);
+char		*last_char_trimmer(char	*str);
+void		error_printer(int i);
+int			digit_checker(char *str);
 
 ////////// AL_CAM_INIT //////////
-int		first_line_alight(char *line, t_elem *elem);
-int		second_line_cam(char *line, t_elem *elem);
+int			first_line_alight(char *line, t_elem *elem);
+int			second_line_cam(char *line, t_elem *elem);
 
 ////////// LIGHT_LNKD //////////
-t_light	*light_creator(char **fl);
-void	new_light(t_light **lst, t_light *new);
-int		light_checker(t_elem *elem);
-int		light_pre_chkr(char **fl);
+t_light		*light_creator(char **fl);
+void		new_light(t_light **lst, t_light *new);
+int			light_checker(t_elem *elem);
+int			light_pre_chkr(char **fl);
 
 ////////// PLANE_LNKD //////////
-t_plane	*plane_creator(char **fl);
-void	new_plane(t_plane **lst, t_plane *new);
-int		plane_checker(t_elem *elem);
-int		plane_pre_chkr(char **fl);
+t_plane		*plane_creator(char **fl);
+void		new_plane(t_plane **lst, t_plane *new);
+int			plane_checker(t_elem *elem);
+int			plane_pre_chkr(char **fl);
 
 ////////// SPHERE_LNKD //////////
+void		new_sphere(t_sphere **lst, t_sphere *new);
 t_sphere	*sphere_creator(char **fl);
-void	sphere_light(t_sphere **lst, t_sphere *new);
-int		sphere_checker(t_elem *elem);
-int		sphere_pre_chkr(char **fl);
+void		sphere_light(t_sphere **lst, t_sphere *new);
+int			sphere_checker(t_elem *elem);
+int			sphere_pre_chkr(char **fl);
 
 ////////// CYL_LNKD //////////
-t_cyl	*cyl_creator(char **fl);
-void	new_cyl(t_cyl **lst, t_cyl *new);
-int		cyl_checker(t_elem *elem);
-int		cyl_pre_chkr(char **fl);
+t_cyl		*cyl_creator(char **fl);
+void		new_cyl(t_cyl **lst, t_cyl *new);
+int			cyl_checker(t_elem *elem);
+int			cyl_pre_chkr(char **fl);
 
 #endif

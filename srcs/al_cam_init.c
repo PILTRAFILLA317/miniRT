@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:50:21 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 23:41:56 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:29:54 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	second_line_cam(char *line, t_elem *elem)
 	char	**pos;
 	char	**rot;
 
-	line = last_char_trimmer(line);
 	fl = ft_split(line, ' ');
 	if (fl[0][0] != 'C' || ft_doublestrlen(fl) != 4)
 		return (error_printer(3), 1);

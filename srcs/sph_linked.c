@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:31 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 23:31:08 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:27:15 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,15 @@ int	sphere_pre_chkr(char **fl)
 
 t_sphere	*sphere_creator(char **fl)
 {
-	char	    **pos;
-	char	    **rgb;
+	char		**pos;
+	char		**rgb;
 	t_sphere	*sphere;
 
 	sphere = malloc(sizeof(t_sphere));
+	if (fl[0][2] == 'x')
+		sphere->x = 1;
+	else
+		sphere->x = 0;
 	pos = ft_split(fl[1], ',');
 	sphere->pos.x = ft_strtod(pos[0]);
 	sphere->pos.y = ft_strtod(pos[1]);

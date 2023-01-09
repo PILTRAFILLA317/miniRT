@@ -6,13 +6,13 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 23:32:46 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:29:50 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-void error_printer(int i)
+void	error_printer(int i)
 {
 	printf(BHRED "Error: " CLOSE);
 	if (i == 1)
@@ -23,11 +23,11 @@ void error_printer(int i)
 		printf(RED "Invalid scene\n" CLOSE);
 }
 
-char *first_char_trimmer(char *str)
+char	*first_char_trimmer(char *str)
 {
-	int i;
-	int c;
-	char *rtn;
+	int		i;
+	int		c;
+	char	*rtn;
 
 	i = 0;
 	c = 0;
@@ -42,11 +42,11 @@ char *first_char_trimmer(char *str)
 	return (rtn);
 }
 
-char *last_char_trimmer(char *str)
+char	*last_char_trimmer(char *str)
 {
-	int i;
-	int c;
-	char *rtn;
+	int		i;
+	int		c;
+	char	*rtn;
 
 	i = -1;
 	c = 0;
@@ -61,7 +61,7 @@ char *last_char_trimmer(char *str)
 	return (rtn);
 }
 
-int elem_type(char *line, t_elem *elem)
+int	elem_type(char *line, t_elem *elem)
 {
 	char	**fl;
 
@@ -173,7 +173,7 @@ void printer(t_elem elem)
 	}
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	int		file;
 	char	*line;
@@ -193,7 +193,7 @@ int main(int ac, char **av)
 	if (first_line_alight(line, &elem) == -1)
 		return (error_printer(3), 1);
 	line = get_next_line(file);
-	if (second_line_cam(line, &elem) == -1)
+	if (second_line_cam(last_char_trimmer(line), &elem) == -1)
 		return (error_printer(3), 1);
 	while (line != NULL)
 	{

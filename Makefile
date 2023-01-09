@@ -24,11 +24,9 @@ EOC = \033[1;0m
 
 HEADERS = minirt.h
 CC = gcc
-FLAGS = -Wall -Wextra -g3 #-fsanitize=address -Werror
+FLAGS = -Wall -Wextra -g3 -fsanitize=address -Werror
 
 all: $(NAME)
-
-m: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft
@@ -37,7 +35,7 @@ $(NAME): $(OBJ)
 	@echo "$(GREEN)miniRT build completed.$(EOC)"
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $^ -o $@
+	$(CC) $(FLAGS) -Imlx -c $^ -o $@
 
 clean:
 	@echo "$(WHT)Removing o-files...$(EOC)"

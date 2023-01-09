@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:30:52 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 23:29:41 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:23:24 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ t_plane	*plane_creator(char **fl)
 	t_plane	*plane;
 
 	plane = malloc(sizeof(t_plane));
+	if (fl[0][2] == 'x')
+		plane->x = 1;
+	else
+		plane->x = 0;
 	pos = ft_split(fl[1], ',');
 	plane->pos.x = ft_strtod(pos[0]);
 	plane->pos.y = ft_strtod(pos[1]);
