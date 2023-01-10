@@ -13,6 +13,7 @@ srcs/light_linked.c	\
 srcs/plane_linked.c	\
 srcs/sph_linked.c	\
 srcs/cyl_linked.c	\
+srcs/ray_caster.c	\
 
 OBJ = $(SRC:.c=.o)
 

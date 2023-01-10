@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 19:40:52 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:27:03 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	error_printer(int i)
 		printf(RED "Invalid scene name\n" CLOSE);
 	if (i == 3)
 		printf(RED "Invalid scene\n" CLOSE);
+	if (i == 4)
+		printf(RED "Scene does not exist\n" CLOSE);
 }
 
 char	*first_char_trimmer(char *str)
@@ -199,10 +201,12 @@ int	main(int ac, char **av)
 	char	*line;
 	t_elem	elem;
 
+	if (ac != 2 || WIN_X < 1 || WIN_Y < 1)
+		return (error_printer(1), 1);
+	if (access(av[1], F_OK))
+		return (error_printer(4), 1);
 	ft_memset(&elem, 0, sizeof(elem));
 	elem.light = NULL;
-	if (ac != 2)
-		return (error_printer(1), 1);
 	if (ft_strlen(av[1]) < 4)
 		return (error_printer(2), 1);
 	if (av[1][ft_strlen(av[1]) - 1] != 't' || av[1][ft_strlen(av[1]) - 2] != 'r'
@@ -224,9 +228,10 @@ int	main(int ac, char **av)
 			return (1);
 	}
 	elem.mlx = mlx_init();
-	elem.win = mlx_new_window(elem.mlx, 1920, 1080, "miniRT");
+	elem.win = mlx_new_window(elem.mlx, WIN_X, WIN_Y, "miniRT");
 	mlx_hook(elem.win, 2, 1L << 0, ft_keypress, &elem);
 	mlx_hook(elem.win, 17, 1L << 17, ft_close, &elem);
+	ray_caster(&elem);
 	mlx_loop(elem.mlx);
 	//printer(elem);
 	return (0);

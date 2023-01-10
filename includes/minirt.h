@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 17:48:16 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:41:16 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include <math.h>
 
 # define KEY_ESC 53
+# define WIN_X 1920
+# define WIN_Y 1080
+
+# define BUFFER_SIZE 1
 
 # define RED	"\033[0;31m"
 # define GREEN	"\033[0;32m"
@@ -121,8 +125,6 @@ typedef struct s_elem
 	t_plane		*pl;
 }	t_elem;
 
-# define BUFFER_SIZE 1
-
 ////////// UTILS //////////
 double		ft_strtod(char *str);
 char		*first_char_trimmer(char	*str);
@@ -158,5 +160,7 @@ t_cyl		*cyl_creator(char **fl);
 void		new_cyl(t_cyl **lst, t_cyl *new);
 int			cyl_checker(t_elem *elem);
 int			cyl_pre_chkr(char **fl);
+
+void		ray_caster(t_elem *elem);
 
 #endif
