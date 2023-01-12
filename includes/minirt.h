@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/10 16:41:16 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/12 20:53:46 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,12 @@ t_cyl		*cyl_creator(char **fl);
 void		new_cyl(t_cyl **lst, t_cyl *new);
 int			cyl_checker(t_elem *elem);
 int			cyl_pre_chkr(char **fl);
+
+////////// VEC_UTILS //////////
+double		vec_dot(t_vec a, t_vec b);
+double		vec_scalar(t_vec a, t_vec b);
+double		vec_len(t_vec vec);
+t_vec		vec_norm(t_vec vec);
 
 void		ray_caster(t_elem *elem);
 

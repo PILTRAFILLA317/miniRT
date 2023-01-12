@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/12 17:33:23 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/12 21:03:32 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	ft_intersect(t_elem *elem, t_vec dir)
 	l.x = elem->sphere->pos.x - elem->cam.pos.x;
 	l.y = elem->sphere->pos.y - elem->cam.pos.y;
 	l.z = elem->sphere->pos.z - elem->cam.pos.z;
-	ld = sqrt((l.x * l.x) + (l.y * l.y) + (l.z * l.z));
-	tca = (l.x * dir.x) + (l.y * dir.y) + (l.z * dir.z);
+	ld = vec_len(l);
+	tca = vec_scalar(l, dir);
 	if (tca < 0)
 		return (0);
 	d = sqrt((ld * ld) - (tca * tca));
-	if (d <= (elem->sphere->diam / 2))
+	if (d < (elem->sphere->diam / 2))
 		return (1);
 	return (0);
 }
@@ -52,6 +52,18 @@ t_vec	vec_rotation(int x, int y, t_elem *elem)
 	rtn.y = rtn.y;
 	rtn.z = (-rtn.x * sin(ang_x))
 		+ (rtn.z * cos(ang_x));
+	vec_norm (rtn);
+	if (x == 0 && y == 540)
+	{
+		printf ("\nWIN_X = %d\n", x);
+		printf ("WIN_Y = %d\n", y);
+		printf ("X = %f\n", rtn.x);
+		printf ("Y = %f\n", rtn.y);
+		printf ("Z = %f\n", rtn.z);
+		printf ("C X = %f\n", elem->cam.orient.x);
+		printf ("C Y = %f\n", elem->cam.orient.y);
+		printf ("C Z = %f\n", elem->cam.orient.z);
+	}
 	return (rtn);
 }
 

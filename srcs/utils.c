@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 21:06:18 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 17:26:59 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:23:23 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ double	ft_strtod_double_creator(char **a, int s)
 	while (a[0][++i])
 	{
 		res[1] = (a[0][i] - '0') + (res[1] * 10);
-		if (res[1] * s < -2147483648)
+		if (res[1] * s < -2147483647)
 			return (0);
-		if (res[1] * s > 2147483647)
+		if (res[1] * s > 2147483646)
 			return (-1);
 	}
 	i = -1;
@@ -52,7 +52,7 @@ double	ft_strtod_double_creator(char **a, int s)
 	while (a[1][++i])
 	{
 		res[0] = (a[1][i] - '0') + (res[0] * 10);
-		if (res[0] * s < -2147483648 || res[0] * s > 2147483647)
+		if (res[0] * s < -2147483647 || res[0] * s > 2147483646)
 			return (-1);
 	}
 	return (rtn = res[1] + (res[0] * 0.1));
