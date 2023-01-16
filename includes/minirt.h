@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/12 20:53:46 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:41:49 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,6 @@ int			cyl_pre_chkr(char **fl);
 
 ////////// VEC_UTILS //////////
 double		vec_dot(t_vec a, t_vec b);
-double		vec_scalar(t_vec a, t_vec b);
 double		vec_len(t_vec vec);
 t_vec		vec_norm(t_vec vec);
 
