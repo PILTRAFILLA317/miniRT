@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/16 20:41:22 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:20:23 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ t_vec	vec_rotation(int x, int y, t_elem *elem)
 	double	imageaspectratio;
 	double	px;
 	double	py;
+	double	scale;
 
+	scale = tan((elem->cam.fov * 0.5) * (M_PI / 180));
 	imageaspectratio = WIN_X / WIN_Y;
-	px = (2 * ((x + 0.5) / WIN_X) - 1)
-		* tan(elem->cam.fov / 2 * (M_PI / 180)) * imageaspectratio;
-	py = (1 - 2 * ((y + 0.5) / WIN_Y)) * tan(elem->cam.fov / 2 * (M_PI / 180));
+	px = (2.0 * ((x + 0.5) / WIN_X) - 1.0) * imageaspectratio * scale;
+	py = (1.0 - 2.0 * ((y + 0.5) / WIN_Y)) * scale;
 	rtn.x = px;
 	rtn.y = py;
-	rtn.z = 1;
+	rtn.z = -1;
 	rtn = vec_norm (rtn);
 	return (rtn);
 }

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/16 20:41:49 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:20:15 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <math.h>
 
 # define KEY_ESC 53
-# define WIN_X 1920
-# define WIN_Y 1080
+# define WIN_X 1920.0
+# define WIN_Y 1080.0
 
 # define BUFFER_SIZE 1
 
