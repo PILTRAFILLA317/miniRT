@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/10 18:27:03 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:31:13 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	elem_type(char *line, t_elem *elem)
 	{
 		if (ft_doublestrlen(fl) != 4 || light_pre_chkr(fl))
 			return (error_printer(3), 1);
-		new_light(&elem->light, light_creator(fl));
+		new_light(&elem->light, light_creator(fl, elem));
 		if (light_checker(elem) == -1)
 			return (error_printer(3), 1);
 	}
@@ -82,7 +82,7 @@ int	elem_type(char *line, t_elem *elem)
 	{
 		if (ft_doublestrlen(fl) != 4 || plane_pre_chkr(fl))
 			return (error_printer(3), 1);
-		new_plane(&elem->pl, plane_creator(fl));
+		new_plane(&elem->pl, plane_creator(fl, elem));
 		if (plane_checker(elem))
 			return (error_printer(3), 1);
 	}
@@ -90,7 +90,7 @@ int	elem_type(char *line, t_elem *elem)
 	{
 		if (ft_doublestrlen(fl) != 4 || sphere_pre_chkr(fl))
 			return (error_printer(3), 1);
-		new_sphere(&elem->sphere, sphere_creator(fl));
+		new_sphere(&elem->sphere, sphere_creator(fl, elem));
 		if (sphere_checker(elem) == -1)
 			return (error_printer(3), 1);
 	}
@@ -98,7 +98,7 @@ int	elem_type(char *line, t_elem *elem)
 	{
 		if (ft_doublestrlen(fl) != 6 || cyl_pre_chkr(fl))
 			return (error_printer(3), 1);
-		new_cyl(&elem->cyl, cyl_creator(fl));
+		new_cyl(&elem->cyl, cyl_creator(fl, elem));
 		if (cyl_checker(elem))
 			return (error_printer(3), 1);
 	}

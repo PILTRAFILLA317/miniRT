@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:50:21 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 17:22:27 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:44:41 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,22 @@ int	second_line_cam(char *line, t_elem *elem)
 	if (ft_doublestrlen(pos) != 3 || digit_checker(pos[0])
 		|| digit_checker(pos[1]) || digit_checker(pos[2]))
 		return (error_printer(3), 1);
-	elem->cam.pos.x = ft_strtod(pos[0]);
-	elem->cam.pos.y = ft_strtod(pos[1]);
-	elem->cam.pos.z = ft_strtod(pos[2]);
+	elem->cam.mtx.pos.x = ft_strtod(pos[0]);
+	elem->cam.pos.x = 0;
+	elem->cam.mtx.pos.y = ft_strtod(pos[1]);
+	elem->cam.pos.y = 0;
+	elem->cam.mtx.pos.z = ft_strtod(pos[2]);
+	elem->cam.pos.z = 0;
 	rot = ft_split(fl[2], ',');
 	if (ft_doublestrlen(rot) != 3 || digit_checker(rot[0])
 		|| digit_checker(rot[1]) || digit_checker(rot[2]))
 		return (error_printer(3), 1);
-	elem->cam.orient.x = ft_strtod(rot[0]);
-	elem->cam.orient.y = ft_strtod(rot[1]);
-	elem->cam.orient.z = ft_strtod(rot[2]);
+	elem->cam.mtx.rot.x = ft_strtod(rot[0]);
+	elem->cam.orient.x = 0;
+	elem->cam.mtx.rot.y = ft_strtod(rot[1]);
+	elem->cam.orient.y = 0;
+	elem->cam.mtx.rot.z = ft_strtod(rot[2]);
+	elem->cam.orient.z = -1;
 	elem->cam.fov = ft_atoi(fl[3]);
 	if (cam_checker(elem) == -1)
 		return (1);

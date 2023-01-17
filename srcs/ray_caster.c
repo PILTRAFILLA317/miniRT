@@ -6,13 +6,46 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/16 21:20:23 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:15:33 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-int	ft_intersect(t_elem *elem, t_vec dir)
+int	pl_intersect(t_elem *elem, t_vec dir)
+{
+	double	t;
+	double	denom;
+	t_vec	p0l0;
+
+	denom = vec_dot(elem->pl->orient, dir);
+	if (denom > 1e-6)
+	{
+		p0l0 = points_to_vec(elem->cam.pos, elem->pl->pos);
+		t = vec_dot(p0l0, elem->pl->orient) / denom;
+		if (t > 0.0)
+			return (1);
+	}
+	return (0);
+}
+
+t_vec	sph_intersect_point(t_elem *elem, t_vec dir, double d, double tca)
+{
+	t_vec	inter_point;
+	float	thc;
+	float	t0;
+	float	t1;
+
+	thc = sqrt(((elem->sphere->diam / 2) * (elem->sphere->diam / 2)) - (d * d));
+	t0 = tca - thc;
+	t1 = tca + thc;
+	inter_point.x = elem->cam.pos.x + (dir.x * t0);
+	inter_point.y = elem->cam.pos.y + (dir.y * t0);
+	inter_point.z = elem->cam.pos.z + (dir.z * t0);
+	return (inter_point);
+}
+
+int	sph_intersect(t_elem *elem, t_vec dir)
 {
 	t_vec	l;
 	float	ld;
@@ -62,8 +95,8 @@ void	ray_caster(t_elem *elem)
 		y = 0;
 		while (y <= WIN_Y)
 		{
-			if (ft_intersect(elem, vec_rotation(x, y, elem)) == 1)
-				mlx_pixel_put(elem->mlx, elem->win, x, y, 0x0000FF00);
+			if (sph_intersect(elem, vec_rotation(x, y, elem)) == 1)
+				mlx_pixel_put(elem->mlx, elem->win, x, y, 0xFFFFFF);
 			y++;
 		}
 		x++;

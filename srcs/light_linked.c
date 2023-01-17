@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:19:49 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/03 23:25:53 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:47:59 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	light_pre_chkr(char **fl)
 	return (0);
 }
 
-t_light	*light_creator(char **fl)
+t_light	*light_creator(char **fl, t_elem *e)
 {
 	char	**pos;
 	char	**rgb;
@@ -51,9 +51,9 @@ t_light	*light_creator(char **fl)
 
 	light = malloc(sizeof(t_light));
 	pos = ft_split(fl[1], ',');
-	light->pos.x = ft_strtod(pos[0]);
-	light->pos.y = ft_strtod(pos[1]);
-	light->pos.z = ft_strtod(pos[2]);
+	light->pos.x = ft_strtod(pos[0]) - e->cam.mtx.pos.x;
+	light->pos.y = ft_strtod(pos[1]) - e->cam.mtx.pos.y;
+	light->pos.z = ft_strtod(pos[2]) - e->cam.mtx.pos.z;
 	light->bright = ft_strtod(fl[2]);
 	rgb = ft_split(fl[3], ',');
 	light->r = ft_atoi(rgb[0]);

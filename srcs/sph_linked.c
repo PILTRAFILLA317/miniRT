@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:31 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 19:41:11 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:48:17 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	sphere_pre_chkr(char **fl)
 	return (0);
 }
 
-t_sphere	*sphere_creator(char **fl)
+t_sphere	*sphere_creator(char **fl, t_elem *e)
 {
 	char		**pos;
 	char		**rgb;
@@ -53,9 +53,9 @@ t_sphere	*sphere_creator(char **fl)
 	else
 		sphere->x = 0;
 	pos = ft_split(fl[1], ',');
-	sphere->pos.x = ft_strtod(pos[0]);
-	sphere->pos.y = ft_strtod(pos[1]);
-	sphere->pos.z = ft_strtod(pos[2]);
+	sphere->pos.x = ft_strtod(pos[0]) - e->cam.mtx.pos.x;
+	sphere->pos.y = ft_strtod(pos[1]) - e->cam.mtx.pos.y;
+	sphere->pos.z = ft_strtod(pos[2]) - e->cam.mtx.pos.z;
 	sphere->diam = ft_strtod(fl[2]);
 	rgb = ft_split(fl[3], ',');
 	sphere->r = ft_atoi(rgb[0]);

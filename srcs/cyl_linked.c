@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:07:38 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:27:22 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:47:50 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	cyl_pre_chkr(char **fl)
 	return (0);
 }
 
-t_cyl	*cyl_creator(char **fl)
+t_cyl	*cyl_creator(char **fl, t_elem *e)
 {
 	char	**pos;
 	char	**dir;
@@ -64,9 +64,9 @@ t_cyl	*cyl_creator(char **fl)
 	if (fl[0][2] == 'x')
 		cyl->x = 1;
 	pos = ft_split(fl[1], ',');
-	cyl->pos.x = ft_strtod(pos[0]);
-	cyl->pos.y = ft_strtod(pos[1]);
-	cyl->pos.z = ft_strtod(pos[2]);
+	cyl->pos.x = ft_strtod(pos[0]) - e->cam.mtx.pos.x;
+	cyl->pos.y = ft_strtod(pos[1]) - e->cam.mtx.pos.y;
+	cyl->pos.z = ft_strtod(pos[2]) - e->cam.mtx.pos.z;
 	dir = ft_split(fl[2], ',');
 	cyl->orient.x = ft_strtod(dir[0]);
 	cyl->orient.y = ft_strtod(dir[1]);

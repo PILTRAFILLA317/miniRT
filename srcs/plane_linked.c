@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:30:52 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:23:24 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:48:08 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	plane_pre_chkr(char **fl)
 	return (0);
 }
 
-t_plane	*plane_creator(char **fl)
+t_plane	*plane_creator(char **fl, t_elem *e)
 {
 	char	**pos;
 	char	**dir;
@@ -63,9 +63,9 @@ t_plane	*plane_creator(char **fl)
 	else
 		plane->x = 0;
 	pos = ft_split(fl[1], ',');
-	plane->pos.x = ft_strtod(pos[0]);
-	plane->pos.y = ft_strtod(pos[1]);
-	plane->pos.z = ft_strtod(pos[2]);
+	plane->pos.x = ft_strtod(pos[0]) - e->cam.mtx.pos.x;
+	plane->pos.y = ft_strtod(pos[1]) - e->cam.mtx.pos.y;
+	plane->pos.z = ft_strtod(pos[2]) - e->cam.mtx.pos.z;
 	dir = ft_split(fl[2], ',');
 	plane->orient.x = ft_strtod(dir[0]);
 	plane->orient.y = ft_strtod(dir[1]);

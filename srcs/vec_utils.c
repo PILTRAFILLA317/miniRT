@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 20:52:04 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/16 20:41:42 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:19:37 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,15 @@ t_vec	vec_norm(t_vec vec)
 	rtn.x = vec.x / len;
 	rtn.y = vec.y / len;
 	rtn.z = vec.z / len;
+	return (rtn);
+}
+
+t_vec	points_to_vec(t_vec a, t_vec b)
+{
+	t_vec	rtn;
+
+	rtn.x = b.x - a.x;
+	rtn.y = b.y - a.y;
+	rtn.z = b.z - a.z;
 	return (rtn);
 }
