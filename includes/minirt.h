@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/17 18:23:30 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:24:53 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ typedef struct s_cyl
 	int				r;
 	int				g;
 	int				b;
-	struct s_cyl	*prev;
 	struct s_cyl	*next;
 }	t_cyl;
 
@@ -173,6 +172,8 @@ double		vec_dot(t_vec a, t_vec b);
 double		vec_len(t_vec vec);
 t_vec		vec_norm(t_vec vec);
 t_vec		points_to_vec(t_vec a, t_vec b);
+double		vec_selfdot(t_vec a);
+t_vec		vec_diff(t_vec a, t_vec b);
 
 void		ray_caster(t_elem *elem);
 
