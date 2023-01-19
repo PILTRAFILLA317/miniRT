@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:07:38 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/17 16:47:50 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:03:23 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	cyl_checker(t_elem *elem)
 		return (-1);
 	if (elem->cyl->orient.z < -1 || elem->cyl->orient.z > 1)
 		return (-1);
-	if (elem->cyl->r < 0 || elem->cyl->r > 255)
+	if (elem->cyl->color.x < 0 || elem->cyl->color.x > 255)
 		return (-1);
-	if (elem->cyl->g < 0 || elem->cyl->g > 255)
+	if (elem->cyl->color.y< 0 || elem->cyl->color.y> 255)
 		return (-1);
-	if (elem->cyl->b < 0 || elem->cyl->r > 255)
+	if (elem->cyl->color.z < 0 || elem->cyl->color.x > 255)
 		return (-1);
 	return (0);
 }
@@ -71,12 +71,23 @@ t_cyl	*cyl_creator(char **fl, t_elem *e)
 	cyl->orient.x = ft_strtod(dir[0]);
 	cyl->orient.y = ft_strtod(dir[1]);
 	cyl->orient.z = ft_strtod(dir[2]);
+	cyl->orient = vec_norm(cyl->orient);
 	cyl->diam = ft_strtod(fl[3]);
 	cyl->h = ft_strtod(fl[4]);
+	cyl->pos2 = vec_point(cyl->orient, cyl->pos, cyl->h);
 	rgb = ft_split(fl[5], ',');
-	cyl->r = ft_atoi(rgb[0]);
-	cyl->g = ft_atoi(rgb[1]);
-	cyl->b = ft_atoi(rgb[2]);
+	cyl->color.x = ft_atoi(rgb[0]);
+	cyl->color.y= ft_atoi(rgb[1]);
+	cyl->color.z = ft_atoi(rgb[2]);
+	cyl->orient2 = vec_norm(points_to_vec(cyl->pos2, cyl->pos));
+	cyl->bot_disc.color = cyl->color;
+	cyl->bot_disc.diam = cyl->diam;
+	cyl->bot_disc.orient = cyl->orient;
+	cyl->bot_disc.pos = cyl->pos;
+	cyl->top_disc.color = cyl->color;
+	cyl->top_disc.diam = cyl->diam;
+	cyl->top_disc.orient = cyl->orient2;
+	cyl->top_disc.pos = cyl->pos2;
 	cyl->next = NULL;
 	return (cyl);
 }

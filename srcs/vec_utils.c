@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 20:52:04 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/18 19:53:34 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:12:53 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,57 @@ t_vec	vec_diff(t_vec a, t_vec b)
 	rtn.x = a.x - b.x;
 	rtn.y = a.y - b.y;
 	rtn.z = a.z - b.z;
+	return (rtn);
+}
+
+t_vec	vec_add(t_vec a, t_vec b)
+{
+	t_vec	rtn;
+
+	rtn.x = a.x + b.x;
+	rtn.y = a.y + b.y;
+	rtn.z = a.z + b.z;
+	return (rtn);
+}
+
+t_vec	vec_mult(t_vec vec, double a)
+{
+	t_vec	rtn;
+
+	rtn.x = vec.x * a;
+	rtn.y = vec.y * a;
+	rtn.z = vec.z * a;
+	return (rtn);
+}
+
+t_vec	vec_div(t_vec vec, double a)
+{
+	t_vec	rtn;
+
+	rtn.x = vec.x / a;
+	rtn.y = vec.y / a;
+	rtn.z = vec.z / a;
+	return (rtn);
+}
+
+t_vec	vec_point(t_vec dir, t_vec pos, double t)
+{
+	t_vec	rtn;
+
+	return(rtn = vec_add(pos, vec_mult(dir, t)));
+}
+
+void	vec_printer(t_vec	vec)
+{
+	printf("[%lf][%lf][%lf]\n", vec.x, vec.y, vec.z);
+}
+
+t_vec	new_vec(double x, double y, double z)
+{
+	t_vec	rtn;
+
+	rtn.x = x;
+	rtn.y = y;
+	rtn.z = z;
 	return (rtn);
 }

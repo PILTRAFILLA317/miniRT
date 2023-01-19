@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/18 17:24:53 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:59:04 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@
 # define BHCYN "\e[1;96m"
 # define BHWHT "\e[1;97m"
 
+enum e_type {p, s, c};
+
 typedef struct s_vec
 {
 	double	x;
@@ -61,9 +63,7 @@ typedef struct s_rotmtx
 typedef struct s_light
 {
 	t_vec			pos;
-	int				r;
-	int				g;
-	int				b;
+	t_vec			color;
 	double			bright;
 	struct s_light	*next;
 }	t_light;
@@ -87,11 +87,9 @@ typedef struct s_cam
 typedef struct s_sphere
 {
 	struct s_vec	pos;
+	struct s_vec	color;
 	double			diam;
 	int				x;
-	int				r;
-	int				g;
-	int				b;
 	struct s_sphere	*next;
 }	t_sphere;
 
@@ -99,23 +97,32 @@ typedef struct s_plane
 {
 	struct s_vec	pos;
 	struct s_vec	orient;
+	struct s_vec	color;
 	int				x;
-	int				r;
-	int				g;
-	int				b;
 	struct s_plane	*next;
 }	t_plane;
+
+typedef struct s_disc
+{
+	struct s_vec	pos;
+	struct s_vec	orient;
+	struct s_vec	color;
+	double			diam;
+	int				x;
+}	t_disc;
 
 typedef struct s_cyl
 {
 	struct s_vec	pos;
+	struct s_vec	pos2;
 	struct s_vec	orient;
+	struct s_vec	orient2;
+	struct s_vec	color;
+	struct s_disc	bot_disc;
+	struct s_disc	top_disc;
 	double			diam;
 	int				x;
 	double			h;
-	int				r;
-	int				g;
-	int				b;
 	struct s_cyl	*next;
 }	t_cyl;
 
@@ -130,6 +137,12 @@ typedef struct s_elem
 	t_cyl		*cyl;
 	t_plane		*pl;
 }	t_elem;
+
+typedef struct s_object
+{
+	enum e_type	type;
+	void		*elem;
+}	t_object;
 
 ////////// UTILS //////////
 double		ft_strtod(char *str);
@@ -174,7 +187,20 @@ t_vec		vec_norm(t_vec vec);
 t_vec		points_to_vec(t_vec a, t_vec b);
 double		vec_selfdot(t_vec a);
 t_vec		vec_diff(t_vec a, t_vec b);
+t_vec		vec_point(t_vec dir, t_vec pos, double t);
+t_vec		vec_add(t_vec a, t_vec b);
+t_vec		vec_mult(t_vec vec, double a);
+void		vec_printer(t_vec	vec);
+t_vec		vec_div(t_vec vec, double a);
+t_vec		new_vec(double x, double y, double z);
+
+////////// COLOR_UTILS //////////
+int			convert_rgb(t_vec col);
+t_vec		col_to_255(t_vec	col);
+t_vec		col_to_01(t_vec	col);
 
 void		ray_caster(t_elem *elem);
+int			disc_intersect(t_elem *elem, t_disc *disc, t_vec dir);
+t_vec		disc_intersect_point(t_elem *elem, t_disc *disc, t_vec dir);
 
 #endif

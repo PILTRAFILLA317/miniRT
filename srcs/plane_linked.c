@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:30:52 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/17 16:48:08 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:01:38 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	plane_checker(t_elem *elem)
 		return (-1);
 	if (elem->pl->orient.z < -1 || elem->pl->orient.z > 1)
 		return (-1);
-	if (elem->pl->r < 0 || elem->pl->r > 255)
+	if (elem->pl->color.x < 0 || elem->pl->color.x > 255)
 		return (-1);
-	if (elem->pl->g < 0 || elem->pl->g > 255)
+	if (elem->pl->color.y< 0 || elem->pl->color.y> 255)
 		return (-1);
-	if (elem->pl->b < 0 || elem->pl->r > 255)
+	if (elem->pl->color.z < 0 || elem->pl->color.x > 255)
 		return (-1);
 	return (0);
 }
@@ -71,9 +71,9 @@ t_plane	*plane_creator(char **fl, t_elem *e)
 	plane->orient.y = ft_strtod(dir[1]);
 	plane->orient.z = ft_strtod(dir[2]);
 	rgb = ft_split(fl[3], ',');
-	plane->r = ft_atoi(rgb[0]);
-	plane->g = ft_atoi(rgb[1]);
-	plane->b = ft_atoi(rgb[2]);
+	plane->color.x = ft_atoi(rgb[0]);
+	plane->color.y= ft_atoi(rgb[1]);
+	plane->color.z = ft_atoi(rgb[2]);
 	plane->next = NULL;
 	return (plane);
 }
