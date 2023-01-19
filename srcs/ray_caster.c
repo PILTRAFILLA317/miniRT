@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/19 19:03:38 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:07:15 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,9 +197,9 @@ t_vec	vec_rotation(int x, int y, t_elem *elem)
 	imageaspectratio = WIN_X / WIN_Y;
 	px = (2.0 * ((x + 0.5) / WIN_X) - 1.0) * imageaspectratio * scale;
 	py = (1.0 - 2.0 * ((y + 0.5) / WIN_Y)) * scale;
-	rtn.x = px;
-	rtn.y = py;
-	rtn.z = -1;
+	rtn.x = px - elem->cam.orient.x;
+	rtn.y = py - elem->cam.orient.y;
+	rtn.z = elem->cam.orient.z;
 	rtn = vec_norm (rtn);
 	return (rtn);
 }
@@ -220,6 +220,7 @@ int		color(t_elem *elem, t_vec dir)
 
 	if (cyl_intersect(elem, elem->cyl, dir))
 	{
+		return(0xFFFFFF);
 		rtn = cyl_intersect_point(elem, elem->cyl, dir);
 		t = vec_len(vec_diff(elem->cam.pos, rtn));
 		t = 1 - clamp(0, 1, t / 150);

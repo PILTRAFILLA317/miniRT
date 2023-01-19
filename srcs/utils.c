@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 21:06:18 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/12 18:23:23 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:21:25 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,25 @@ int	digit_checker(char *str)
 double	ft_strtod_double_creator(char **a, int s)
 {
 	double	rtn;
-	int		res[2];
+	double	res[2];
 	int		i;
 
 	i = -1;
 	res[1] = 0;
 	while (a[0][++i])
-	{
 		res[1] = (a[0][i] - '0') + (res[1] * 10);
-		if (res[1] * s < -2147483647)
-			return (0);
-		if (res[1] * s > 2147483646)
-			return (-1);
-	}
 	i = -1;
 	res[0] = 0;
 	if (a[1] == NULL)
 		return (rtn = res[1] * s, rtn);
 	while (a[1][++i])
-	{
 		res[0] = (a[1][i] - '0') + (res[0] * 10);
-		if (res[0] * s < -2147483647 || res[0] * s > 2147483646)
-			return (-1);
+	while (i > 0)
+	{
+		res[0] = res[0] * 0.1;
+		i--;
 	}
-	return (rtn = res[1] + (res[0] * 0.1));
+	return (rtn = res[1] + (res[0]));
 }
 
 int	ft_strtod_chkr(char *str)
@@ -67,7 +62,9 @@ int	ft_strtod_chkr(char *str)
 	c = 0;
 	while (str[++i])
 	{
-		if (str[i] < 46 || str[i] > 57 || str[i] == 47)
+		if (str[i] < 46 || str[i] > 57)
+			return (0);
+		if (str[i] == 47)
 			return (0);
 		if (str[i] == 46)
 			c++;
@@ -95,7 +92,6 @@ double	ft_strtod(char *str)
 	if (c > 1)
 		return (0);
 	a = ft_split(str, 46);
-	if (ft_strtod_double_creator(a, s) == -1)
-		return (0);
+	ft_strtod_double_creator(a, s);
 	return (ft_strtod_double_creator(a, s));
 }
