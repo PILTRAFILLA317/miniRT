@@ -6,20 +6,18 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:31 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/19 17:01:38 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:28:38 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-int	sphere_checker(t_elem *elem)
+int	sphere_checker(t_sphere sphere)
 {
-	if (elem->sphere->color.x < 0 || elem->sphere->color.x > 255)
-		return (-1);
-	if (elem->sphere->color.y< 0 || elem->sphere->color.y> 255)
-		return (-1);
-	if (elem->sphere->color.z < 0 || elem->sphere->color.x > 255)
-		return (-1);
+	if (sphere.color.x < 0 || sphere.color.x > 255
+		|| sphere.color.y < 0 || sphere.color.y > 255
+		|| sphere.color.z < 0 || sphere.color.x > 255)
+		return (1);
 	return (0);
 }
 
@@ -59,20 +57,29 @@ t_sphere	*sphere_creator(char **fl, t_elem *e)
 	sphere->diam = ft_strtod(fl[2]);
 	rgb = ft_split(fl[3], ',');
 	sphere->color.x = ft_atoi(rgb[0]);
-	sphere->color.y= ft_atoi(rgb[1]);
+	sphere->color.y = ft_atoi(rgb[1]);
 	sphere->color.z = ft_atoi(rgb[2]);
 	sphere->next = NULL;
 	return (sphere);
 }
 
-void	new_sphere(t_sphere **lst, t_sphere *new)
+int	new_sphere(t_elem *elem, t_sphere *new)
 {
-	if (*lst == NULL)
+	t_sphere	*tmp;
+
+	if (sphere_checker(*new))
+		return (1);
+	if (!elem->sphere)
 	{
-		*lst = new;
-		return ;
+		elem->sphere = new;
+		return (0);
 	}
-	while ((*lst)->next != NULL)
-		(*lst) = (*lst)->next;
-	(*lst)->next = new;
+	tmp = elem->sphere;
+	while (tmp && tmp->next)
+	{
+		tmp = tmp->next;
+		printf("hola\n");
+	}
+	tmp->next = new;
+	return (0);
 }

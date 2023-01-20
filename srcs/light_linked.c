@@ -6,22 +6,22 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:19:49 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/19 17:01:42 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:48:28 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-int	light_checker(t_elem *elem)
+int	light_checker(t_light light)
 {
-	if (elem->light->bright < 0 || elem->light->bright > 1)
-		return (-1);
-	if (elem->light->color.x < 0 || elem->light->color.x > 255)
-		return (-1);
-	if (elem->light->color.y< 0 || elem->light->color.y> 255)
-		return (-1);
-	if (elem->light->color.z< 0 || elem->light->color.z > 255)
-		return (-1);
+	if (light.bright < 0 || light.bright > 1)
+		return (1);
+	if (light.color.x < 0 || light.color.x > 255)
+		return (1);
+	if (light.color.y < 0 || light.color.y > 255)
+		return (1);
+	if (light.color.z < 0 || light.color.z > 255)
+		return (1);
 	return (0);
 }
 
@@ -63,14 +63,20 @@ t_light	*light_creator(char **fl, t_elem *e)
 	return (light);
 }
 
-void	new_light(t_light **lst, t_light *new)
+int	new_light(t_elem *elem, t_light *new)
 {
-	if (*lst == NULL)
+	t_light	*tmp;
+
+	if (light_checker(*new))
+		return (1);
+	if (!elem->light)
 	{
-		*lst = new;
-		return ;
+		elem->light = new;
+		return (0);
 	}
-	while ((*lst)->next != NULL)
-		(*lst) = (*lst)->next;
-	(*lst)->next = new;
+	tmp = elem->light;
+	while (tmp && tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	return (0);
 }

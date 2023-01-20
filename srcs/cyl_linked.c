@@ -6,26 +6,26 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:07:38 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/19 17:03:23 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:38:40 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-int	cyl_checker(t_elem *elem)
+int	cyl_checker(t_cyl cyl)
 {
-	if (elem->cyl->orient.x < -1 || elem->cyl->orient.x > 1)
-		return (-1);
-	if (elem->cyl->orient.y < -1 || elem->cyl->orient.y > 1)
-		return (-1);
-	if (elem->cyl->orient.z < -1 || elem->cyl->orient.z > 1)
-		return (-1);
-	if (elem->cyl->color.x < 0 || elem->cyl->color.x > 255)
-		return (-1);
-	if (elem->cyl->color.y< 0 || elem->cyl->color.y> 255)
-		return (-1);
-	if (elem->cyl->color.z < 0 || elem->cyl->color.x > 255)
-		return (-1);
+	if (cyl.orient.x < -1 || cyl.orient.x > 1)
+		return (1);
+	if (cyl.orient.y < -1 || cyl.orient.y > 1)
+		return (1);
+	if (cyl.orient.z < -1 || cyl.orient.z > 1)
+		return (1);
+	if (cyl.color.x < 0 || cyl.color.x > 255)
+		return (1);
+	if (cyl.color.y < 0 || cyl.color.y > 255)
+		return (1);
+	if (cyl.color.z < 0 || cyl.color.x > 255)
+		return (1);
 	return (0);
 }
 
@@ -77,7 +77,7 @@ t_cyl	*cyl_creator(char **fl, t_elem *e)
 	cyl->pos2 = vec_point(cyl->orient, cyl->pos, cyl->h);
 	rgb = ft_split(fl[5], ',');
 	cyl->color.x = ft_atoi(rgb[0]);
-	cyl->color.y= ft_atoi(rgb[1]);
+	cyl->color.y = ft_atoi(rgb[1]);
 	cyl->color.z = ft_atoi(rgb[2]);
 	cyl->orient2 = vec_norm(points_to_vec(cyl->pos2, cyl->pos));
 	cyl->bot_disc.color = cyl->color;
@@ -92,14 +92,20 @@ t_cyl	*cyl_creator(char **fl, t_elem *e)
 	return (cyl);
 }
 
-void	new_cyl(t_cyl **lst, t_cyl *new)
+int	new_cyl(t_elem *elem, t_cyl *new)
 {
-	if (*lst == NULL)
+	t_cyl	*tmp;
+
+	if (cyl_checker(*new))
+		return (1);
+	if (!elem->cyl)
 	{
-		*lst = new;
-		return ;
+		elem->cyl = new;
+		return (0);
 	}
-	while ((*lst)->next != NULL)
-		(*lst) = (*lst)->next;
-	(*lst)->next = new;
+	tmp = elem->cyl;
+	while (tmp && tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	return (0);
 }

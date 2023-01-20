@@ -16,6 +16,9 @@ srcs/cyl_linked.c	\
 srcs/ray_caster.c	\
 srcs/vec_utils.c	\
 srcs/color_utils.c	\
+srcs/cyl_inter.c	\
+srcs/sph_inter.c	\
+srcs/pl_inter.c		\
 
 OBJ = $(SRC:.c=.o)
 

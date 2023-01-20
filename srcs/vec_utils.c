@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 20:52:04 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/19 17:12:53 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/20 13:17:30 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,15 @@ t_vec	new_vec(double x, double y, double z)
 	rtn.x = x;
 	rtn.y = y;
 	rtn.z = z;
+	return (rtn);
+}
+
+t_vec	vec_mult_vec(t_vec a, t_vec b)
+{
+	t_vec	rtn;
+
+	rtn.x = a.x * b.x;
+	rtn.y = a.y * b.y;
+	rtn.z = a.z * b.z;
 	return (rtn);
 }

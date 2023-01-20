@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/19 17:15:29 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:50:23 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,83 @@ char	*last_char_trimmer(char *str)
 	return (rtn);
 }
 
+void printer(t_elem elem)
+{
+	printf("\n////////////AMBIENT LIGHT////////////\n");
+	printf("AL-RATIO = %f\n", elem.alight.ratio);
+	printf("AL-R = %d\n", elem.alight.r);
+	printf("AL-G = %d\n", elem.alight.g);
+	printf("AL-B = %d\n", elem.alight.b);
+	printf("\n////////////CAM////////////\n");
+	printf("CAM-FOV = %d\n", elem.cam.fov);
+	printf("CAM-POS-X = %f\n", elem.cam.pos.x);
+	printf("CAM-POS-Y = %f\n", elem.cam.pos.y);
+	printf("CAM-POS-Z = %f\n", elem.cam.pos.z);
+	printf("CAM-ROT-X = %f\n", elem.cam.orient.x);
+	printf("CAM-ROT-Y = %f\n", elem.cam.orient.y);
+	printf("CAM-ROT-Z = %f\n", elem.cam.orient.z);
+	while (elem.light != NULL)
+	{
+		printf(BHBLU "\n////////////LIGHT////////////\n");
+		printf("LIGHT-BR = %f\n", elem.light->bright);
+		printf("LIGHT-POS-X = %f\n", elem.light->pos.x);
+		printf("LIGHT-POS-Y = %f\n", elem.light->pos.y);
+		printf("LIGHT-POS-Z = %f\n", elem.light->pos.z);
+		printf("LIGHT-R = %f\n", elem.light->color.x);
+		printf("LIGHT-G = %f\n", elem.light->color.y);
+		printf("LIGHT-B = %f\n" CLOSE, elem.light->color.z);
+		elem.light = elem.light->next;
+	}
+	while (elem.sphere != NULL)
+	{
+		printf(BHGRN "\n////////////SPHERE////////////\n");
+		printf("SPH-DIAM = %f\n", elem.sphere->diam);
+		printf("SPH-POS-X = %f\n", elem.sphere->pos.x);
+		printf("SPH-POS-Y = %f\n", elem.sphere->pos.y);
+		printf("SPH-POS-Z = %f\n", elem.sphere->pos.z);
+		printf("SPH-R = %f\n", elem.sphere->color.x);
+		printf("SPH-G = %f\n", elem.sphere->color.y);
+		printf("SPH-B = %f\n" CLOSE, elem.sphere->color.z);
+		elem.sphere = elem.sphere->next;
+	}
+	while (elem.pl != NULL)
+	{
+		printf(BHRED "\n////////////PLANE////////////\n");
+		printf("PLANE-POS-X = %f\n", elem.pl->pos.x);
+		printf("PLANE-POS-Y = %f\n", elem.pl->pos.y);
+		printf("PLANE-POS-Z = %f\n", elem.pl->pos.z);
+		printf("PLANE-ORIENT-X = %f\n", elem.pl->orient.x);
+		printf("PLANE-ORIENT-Y = %f\n", elem.pl->orient.y);
+		printf("PLANE-ORIENT-Z = %f\n", elem.pl->orient.z);
+		printf("PLANE-R = %f\n", elem.pl->color.x);
+		printf("PLANE-G = %f\n", elem.pl->color.y);
+		printf("PLANE-B = %f\n" CLOSE, elem.pl->color.z);
+		elem.pl = elem.pl->next;
+	}
+	while (elem.cyl != NULL)
+	{
+		printf(BHYEL "\n////////////CYL////////////\n");
+		printf("CYL-POS-X = %f\n", elem.cyl->pos.x);
+		printf("CYL-POS-Y = %f\n", elem.cyl->pos.y);
+		printf("CYL-POS-Z = %f\n", elem.cyl->pos.z);
+		printf("CYL-ORIENT-X = %f\n", elem.cyl->orient.x);
+		printf("CYL-ORIENT-Y = %f\n", elem.cyl->orient.y);
+		printf("CYL-ORIENT-Z = %f\n", elem.cyl->orient.z);
+		printf("CYL-DIAM = %f\n", elem.cyl->diam);
+		printf("CYL-H = %f\n", elem.cyl->h);
+		printf("CYL-R = %f\n", elem.cyl->color.x);
+		printf("CYL-G = %f\n", elem.cyl->color.y);
+		printf("CYL-B = %f\n" CLOSE, elem.cyl->color.z);
+		elem.cyl = elem.cyl->next;
+	}
+}
+
 int	elem_type(char *line, t_elem *elem)
 {
-	char	**fl;
+	char		**fl;
+	t_sphere	*s_head;
 
+	s_head = elem->sphere;
 	if (line[ft_strlen(line) - 1] == '\n')
 		line = last_char_trimmer(line);
 	fl = ft_split(line, ' ');
@@ -74,32 +147,28 @@ int	elem_type(char *line, t_elem *elem)
 	{
 		if (ft_doublestrlen(fl) != 4 || light_pre_chkr(fl))
 			return (error_printer(3), 1);
-		new_light(&elem->light, light_creator(fl, elem));
-		if (light_checker(elem) == -1)
+		if (new_light(elem, light_creator(fl, elem)))
 			return (error_printer(3), 1);
 	}
 	else if (line[0] == 'p' && line[1] == 'l')
 	{
 		if (ft_doublestrlen(fl) != 4 || plane_pre_chkr(fl))
 			return (error_printer(3), 1);
-		new_plane(&elem->pl, plane_creator(fl, elem));
-		if (plane_checker(elem))
+		if (new_plane(elem, plane_creator(fl, elem)))
 			return (error_printer(3), 1);
 	}
 	else if (line[0] == 's' && line[1] == 'p')
 	{
 		if (ft_doublestrlen(fl) != 4 || sphere_pre_chkr(fl))
 			return (error_printer(3), 1);
-		new_sphere(&elem->sphere, sphere_creator(fl, elem));
-		if (sphere_checker(elem) == -1)
+		if (new_sphere(elem, sphere_creator(fl, elem)))
 			return (error_printer(3), 1);
 	}
 	else if (line[0] == 'c' && line[1] == 'y')
 	{
 		if (ft_doublestrlen(fl) != 6 || cyl_pre_chkr(fl))
 			return (error_printer(3), 1);
-		new_cyl(&elem->cyl, cyl_creator(fl, elem));
-		if (cyl_checker(elem))
+		if (new_cyl(elem, cyl_creator(fl, elem)))
 			return (error_printer(3), 1);
 	}
 	else
@@ -156,12 +225,12 @@ int	main(int ac, char **av)
 		if (elem_type(line, &elem))
 			return (1);
 	}
+	printer(elem);
 	elem.mlx = mlx_init();
 	elem.win = mlx_new_window(elem.mlx, WIN_X, WIN_Y, "miniRT");
 	mlx_hook(elem.win, 2, 1L << 0, ft_keypress, &elem);
 	mlx_hook(elem.win, 17, 1L << 17, ft_close, &elem);
 	ray_caster(&elem);
 	mlx_loop(elem.mlx);
-	//printer(elem);
 	return (0);
 }

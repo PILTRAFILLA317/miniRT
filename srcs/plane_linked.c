@@ -6,26 +6,26 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:30:52 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/19 17:01:38 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:49:36 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-int	plane_checker(t_elem *elem)
+int	plane_checker(t_plane pl)
 {
-	if (elem->pl->orient.x < -1 || elem->pl->orient.x > 1)
-		return (-1);
-	if (elem->pl->orient.y < -1 || elem->pl->orient.y > 1)
-		return (-1);
-	if (elem->pl->orient.z < -1 || elem->pl->orient.z > 1)
-		return (-1);
-	if (elem->pl->color.x < 0 || elem->pl->color.x > 255)
-		return (-1);
-	if (elem->pl->color.y< 0 || elem->pl->color.y> 255)
-		return (-1);
-	if (elem->pl->color.z < 0 || elem->pl->color.x > 255)
-		return (-1);
+	if (pl.orient.x < -1 || pl.orient.x > 1)
+		return (1);
+	if (pl.orient.y < -1 || pl.orient.y > 1)
+		return (1);
+	if (pl.orient.z < -1 || pl.orient.z > 1)
+		return (1);
+	if (pl.color.x < 0 || pl.color.x > 255)
+		return (1);
+	if (pl.color.y < 0 || pl.color.y > 255)
+		return (1);
+	if (pl.color.z < 0 || pl.color.x > 255)
+		return (1);
 	return (0);
 }
 
@@ -72,20 +72,26 @@ t_plane	*plane_creator(char **fl, t_elem *e)
 	plane->orient.z = ft_strtod(dir[2]);
 	rgb = ft_split(fl[3], ',');
 	plane->color.x = ft_atoi(rgb[0]);
-	plane->color.y= ft_atoi(rgb[1]);
+	plane->color.y = ft_atoi(rgb[1]);
 	plane->color.z = ft_atoi(rgb[2]);
 	plane->next = NULL;
 	return (plane);
 }
 
-void	new_plane(t_plane **lst, t_plane *new)
+int	new_plane(t_elem *elem, t_plane *new)
 {
-	if (*lst == NULL)
+	t_plane	*tmp;
+
+	if (plane_checker(*new))
+		return (1);
+	if (!elem->pl)
 	{
-		*lst = new;
-		return ;
+		elem->pl = new;
+		return (0);
 	}
-	while ((*lst)->next != NULL)
-		(*lst) = (*lst)->next;
-	(*lst)->next = new;
+	tmp = elem->pl;
+	while (tmp && tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	return (0);
 }

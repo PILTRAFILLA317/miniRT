@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/19 18:59:04 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:47:37 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,27 +157,23 @@ int			second_line_cam(char *line, t_elem *elem);
 
 ////////// LIGHT_LNKD //////////
 t_light		*light_creator(char **fl, t_elem *e);
-void		new_light(t_light **lst, t_light *new);
-int			light_checker(t_elem *elem);
+int			new_light(t_elem *elem, t_light *new);
 int			light_pre_chkr(char **fl);
 
 ////////// PLANE_LNKD //////////
 t_plane		*plane_creator(char **fl, t_elem *e);
-void		new_plane(t_plane **lst, t_plane *new);
-int			plane_checker(t_elem *elem);
+int			new_plane(t_elem *elem, t_plane *new);
 int			plane_pre_chkr(char **fl);
 
 ////////// SPHERE_LNKD //////////
-void		new_sphere(t_sphere **lst, t_sphere *new);
+int			new_sphere(t_elem *elem, t_sphere *new);
 t_sphere	*sphere_creator(char **fl, t_elem *e);
 void		sphere_light(t_sphere **lst, t_sphere *new);
-int			sphere_checker(t_elem *elem);
 int			sphere_pre_chkr(char **fl);
 
 ////////// CYL_LNKD //////////
+int			new_cyl(t_elem *elem, t_cyl *new);
 t_cyl		*cyl_creator(char **fl, t_elem *e);
-void		new_cyl(t_cyl **lst, t_cyl *new);
-int			cyl_checker(t_elem *elem);
 int			cyl_pre_chkr(char **fl);
 
 ////////// VEC_UTILS //////////
@@ -193,14 +189,24 @@ t_vec		vec_mult(t_vec vec, double a);
 void		vec_printer(t_vec	vec);
 t_vec		vec_div(t_vec vec, double a);
 t_vec		new_vec(double x, double y, double z);
+t_vec		vec_mult_vec(t_vec a, t_vec b);
 
 ////////// COLOR_UTILS //////////
 int			convert_rgb(t_vec col);
 t_vec		col_to_255(t_vec	col);
 t_vec		col_to_01(t_vec	col);
 
-void		ray_caster(t_elem *elem);
+////////// INTERSECTIONS //////////
+int			cyl_intersect(t_elem *elem, t_cyl *cyl, t_vec dir);
+t_vec		cyl_intersect_point(t_elem *elem, t_cyl *cyl, t_vec dir);
 int			disc_intersect(t_elem *elem, t_disc *disc, t_vec dir);
 t_vec		disc_intersect_point(t_elem *elem, t_disc *disc, t_vec dir);
+t_vec		pl_intersect_point(t_elem *elem, t_plane *pl, t_vec dir);
+int			pl_intersect(t_elem *elem, t_plane *pl, t_vec dir);
+t_vec		sph_intersect_point(t_elem *elem, t_sphere *sph, t_vec dir);
+int			sph_intersect(t_elem *elem, t_sphere *sph, t_vec dir);
+
+////////// RAY_CAST //////////
+void		ray_caster(t_elem *elem);
 
 #endif

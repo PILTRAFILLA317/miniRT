@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 21:06:18 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/19 20:21:25 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/20 13:10:59 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ double	ft_strtod_double_creator(char **a, int s)
 		res[0] = res[0] * 0.1;
 		i--;
 	}
-	return (rtn = res[1] + (res[0]));
+	return (rtn = (res[1] + (res[0])) * s);
 }
 
 int	ft_strtod_chkr(char *str)
