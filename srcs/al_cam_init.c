@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:50:21 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/20 13:51:56 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/21 18:09:31 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int	alight_checker(t_elem *elem)
 {
 	if (elem->alight.ratio < 0 || elem->alight.ratio > 1)
 		return (-1);
-	if (elem->alight.r < 0 || elem->alight.r > 255)
+	if (elem->alight.color.x < 0 || elem->alight.color.x > 255)
 		return (-1);
-	if (elem->alight.g < 0 || elem->alight.g > 255)
+	if (elem->alight.color.y < 0 || elem->alight.color.y > 255)
 		return (-1);
-	if (elem->alight.b < 0 || elem->alight.r > 255)
+	if (elem->alight.color.z < 0 || elem->alight.color.z > 255)
 		return (-1);
 	return (0);
 }
@@ -54,9 +54,9 @@ int	first_line_alight(char *line, t_elem *elem)
 	if (ft_doublestrlen(rgb) != 3 || digit_checker(rgb[0])
 		|| digit_checker(rgb[1]) || digit_checker(rgb[2]))
 		return (error_printer(3), 1);
-	elem->alight.r = ft_atoi(rgb[0]);
-	elem->alight.g = ft_atoi(rgb[1]);
-	elem->alight.b = ft_atoi(rgb[2]);
+	elem->alight.color.x = ft_atoi(rgb[0]);
+	elem->alight.color.y = ft_atoi(rgb[1]);
+	elem->alight.color.z = ft_atoi(rgb[2]);
 	if (alight_checker(elem) == -1)
 		return (1);
 	ft_doublefree(fl);

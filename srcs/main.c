@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/20 18:50:23 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/21 18:09:57 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void printer(t_elem elem)
 {
 	printf("\n////////////AMBIENT LIGHT////////////\n");
 	printf("AL-RATIO = %f\n", elem.alight.ratio);
-	printf("AL-R = %d\n", elem.alight.r);
-	printf("AL-G = %d\n", elem.alight.g);
-	printf("AL-B = %d\n", elem.alight.b);
+	printf("AL-R = %f\n", elem.alight.color.x);
+	printf("AL-G = %f\n", elem.alight.color.y);
+	printf("AL-B = %f\n", elem.alight.color.z);
 	printf("\n////////////CAM////////////\n");
 	printf("CAM-FOV = %d\n", elem.cam.fov);
 	printf("CAM-POS-X = %f\n", elem.cam.pos.x);
@@ -225,7 +225,6 @@ int	main(int ac, char **av)
 		if (elem_type(line, &elem))
 			return (1);
 	}
-	printer(elem);
 	elem.mlx = mlx_init();
 	elem.win = mlx_new_window(elem.mlx, WIN_X, WIN_Y, "miniRT");
 	mlx_hook(elem.win, 2, 1L << 0, ft_keypress, &elem);

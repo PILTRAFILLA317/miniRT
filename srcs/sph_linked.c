@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:31 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/20 18:28:38 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/21 18:10:20 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ int	new_sphere(t_elem *elem, t_sphere *new)
 	}
 	tmp = elem->sphere;
 	while (tmp && tmp->next)
-	{
 		tmp = tmp->next;
-		printf("hola\n");
-	}
 	tmp->next = new;
 	return (0);
 }

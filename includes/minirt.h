@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/20 18:47:37 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/21 18:07:31 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ typedef struct s_light
 typedef struct s_alight
 {
 	double	ratio;
-	int		r;
-	int		g;
-	int		b;
+	t_vec	color;
 }	t_alight;
 
 typedef struct s_cam
