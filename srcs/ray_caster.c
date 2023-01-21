@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/20 13:53:48 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/21 19:15:49 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ int	color(t_elem *elem, t_vec dir)
 {
 	t_vec		rtn;
 	t_object	obj;
+	t_vec		alight;
+	t_vec		light;
+	t_vec		final;
 	double		t;
 
 	obj = first_intersect(elem, dir);
@@ -123,15 +126,18 @@ int	color(t_elem *elem, t_vec dir)
 	{
 		// return (convert_rgb(((t_sphere *)obj.elem)->color));
 		rtn = sph_intersect_point(elem, obj.elem, dir);
-		t_vec norm;
-		norm = vec_norm(points_to_vec(((t_sphere *)obj.elem)->pos, rtn));
-		t_vec light;
-		light = vec_norm(vec_diff(elem->light->pos, rtn));
-		t = vec_dot(norm, light);
+		t = vec_dot(vec_norm(points_to_vec(((t_sphere *)obj.elem)->pos, rtn)),
+				vec_norm(vec_diff(elem->light->pos, rtn)));
 		// t = vec_len(vec_diff(elem->cam.pos, rtn));
 		// t = 1 - clamp(0, 1, t / 150);
-		return (convert_rgb(col_to_255(vec_mult(vec_mult_vec(col_to_01(((t_sphere *)obj.elem)->color),
-				col_to_01(elem->light->color)), t * elem->light->bright))));
+		alight = (col_to_255(vec_mult(vec_mult_vec(col_to_01(((t_sphere *)obj.elem)->color),
+				col_to_01(elem->alight.color)), elem->alight.ratio)));
+		light = (col_to_255(vec_mult(vec_mult_vec(col_to_01(((t_sphere *)obj.elem)->color),
+				col_to_01(elem->light->color)), t * elem->light->bright)));
+		final = (vec_add(light, alight));
+		final = (vec_div(final, 2));
+		return (convert_rgb(final));
+		// return (convert_rgb(alight));
 	}
 	if (obj.type == p)
 	{
