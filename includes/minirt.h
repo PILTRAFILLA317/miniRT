@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/21 18:07:31 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:56:23 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,11 +188,13 @@ void		vec_printer(t_vec	vec);
 t_vec		vec_div(t_vec vec, double a);
 t_vec		new_vec(double x, double y, double z);
 t_vec		vec_mult_vec(t_vec a, t_vec b);
+t_vec		vec_clamp(double min, double max, t_vec value);
 
 ////////// COLOR_UTILS //////////
 int			convert_rgb(t_vec col);
 t_vec		col_to_255(t_vec	col);
 t_vec		col_to_01(t_vec	col);
+double		clamp(double min, double max, double value);
 
 ////////// INTERSECTIONS //////////
 int			cyl_intersect(t_elem *elem, t_cyl *cyl, t_vec dir);

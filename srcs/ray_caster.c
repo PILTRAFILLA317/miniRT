@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/21 19:15:49 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:55:08 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,6 @@ t_vec	vec_rotation(int x, int y, t_elem *elem)
 	rtn.z = elem->cam.orient.z;
 	rtn = vec_norm (rtn);
 	return (rtn);
-}
-
-double	clamp(double min, double max, double value)
-{
-	if (value > max)
-		return (max);
-	if (value < min)
-		return (min);
-	return (value);
 }
 
 t_object	first_intersect(t_elem *elem, t_vec dir)
@@ -128,16 +119,18 @@ int	color(t_elem *elem, t_vec dir)
 		rtn = sph_intersect_point(elem, obj.elem, dir);
 		t = vec_dot(vec_norm(points_to_vec(((t_sphere *)obj.elem)->pos, rtn)),
 				vec_norm(vec_diff(elem->light->pos, rtn)));
+		t = clamp(0, 1, t);
 		// t = vec_len(vec_diff(elem->cam.pos, rtn));
 		// t = 1 - clamp(0, 1, t / 150);
-		alight = (col_to_255(vec_mult(vec_mult_vec(col_to_01(((t_sphere *)obj.elem)->color),
-				col_to_01(elem->alight.color)), elem->alight.ratio)));
-		light = (col_to_255(vec_mult(vec_mult_vec(col_to_01(((t_sphere *)obj.elem)->color),
-				col_to_01(elem->light->color)), t * elem->light->bright)));
-		final = (vec_add(light, alight));
-		final = (vec_div(final, 2));
-		return (convert_rgb(final));
+		alight = (vec_mult(vec_mult_vec(col_to_01(((t_sphere *)obj.elem)->color),
+				col_to_01(elem->alight.color)), elem->alight.ratio));
+		light = (vec_mult(vec_mult_vec(col_to_01(((t_sphere *)obj.elem)->color),
+				col_to_01(elem->light->color)), t * elem->light->bright));
+		final = vec_add(alight, light);
+		final = vec_clamp(0, 1, final);
+		//final = col_to_255(final);
 		// return (convert_rgb(alight));
+		return (convert_rgb(col_to_255(final)));
 	}
 	if (obj.type == p)
 	{

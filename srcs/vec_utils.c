@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 20:52:04 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/20 13:17:30 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:55:58 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,24 @@ t_vec	vec_mult_vec(t_vec a, t_vec b)
 	rtn.x = a.x * b.x;
 	rtn.y = a.y * b.y;
 	rtn.z = a.z * b.z;
+	return (rtn);
+}
+
+double	clamp(double min, double max, double value)
+{
+	if (value > max)
+		return (max);
+	if (value < min)
+		return (min);
+	return (value);
+}
+
+t_vec	vec_clamp(double min, double max, t_vec value)
+{
+	t_vec	rtn;
+
+	rtn.x = clamp(min, max, value.x);
+	rtn.y = clamp(min, max, value.y);
+	rtn.z = clamp(min, max, value.z);
 	return (rtn);
 }
