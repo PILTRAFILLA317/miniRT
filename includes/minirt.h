@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/27 13:23:46 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:46:21 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define BHCYN "\e[1;96m"
 # define BHWHT "\e[1;97m"
 
-enum e_type {p, s, c};
+enum e_type {p, s, c, d};
 
 typedef struct s_vec
 {
@@ -209,5 +209,9 @@ int			sph_intersect(t_elem *elem, t_sphere *sph, t_vec dir);
 
 ////////// RAY_CAST //////////
 void		ray_caster(t_elem *elem);
+t_vec		light_comb_sph(t_sphere sph, t_elem *elem, t_vec rtn);
+t_vec		light_comb_pl(t_plane pl, t_elem *elem, t_vec rtn);
+t_vec		light_comb_cyl(t_cyl cyl, t_elem *elem, t_vec rtn);
+t_vec		mid_point(t_cyl cyl, t_vec inter);
 
 #endif
