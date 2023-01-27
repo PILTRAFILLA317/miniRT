@@ -20,6 +20,7 @@ srcs/cyl_inter.c	\
 srcs/sph_inter.c	\
 srcs/pl_inter.c		\
 srcs/light_comb.c	\
+srcs/inter_with.c	\
 
 OBJ = $(SRC:.c=.o)
 

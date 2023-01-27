@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/24 18:48:14 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:02:36 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,39 @@ int	elem_type(char *line, t_elem *elem)
 	return (0);
 }
 
+void	id_creator(t_elem *elem)
+{
+	int			id;
+	t_sphere	*s_head;
+	t_cyl		*c_head;
+	t_plane		*p_head;
+
+	s_head = elem->sphere;
+	c_head = elem->cyl;
+	p_head = elem->pl;
+	id = 0;
+	while (s_head != NULL)
+	{
+		s_head->id = id;
+		id++;
+		s_head = s_head->next;
+	}
+	id = 0;
+	while (c_head != NULL)
+	{
+		c_head->id = id;
+		id++;
+		c_head = c_head->next;
+	}
+	id = 0;
+	while (p_head != NULL)
+	{
+		p_head->id = id;
+		id++;
+		p_head = p_head->next;
+	}
+}
+
 int	ft_close(t_elem *elem)
 {
 	mlx_destroy_window(elem->mlx, elem->win);
@@ -225,6 +258,7 @@ int	main(int ac, char **av)
 		if (elem_type(line, &elem))
 			return (1);
 	}
+	id_creator(&elem);
 	elem.mlx = mlx_init();
 	elem.win = mlx_new_window(elem.mlx, WIN_X, WIN_Y, "miniRT");
 	mlx_hook(elem.win, 2, 1L << 0, ft_keypress, &elem);

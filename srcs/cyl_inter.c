@@ -6,13 +6,13 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:44:22 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/27 17:59:55 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/27 20:13:09 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-t_vec	cyl_intersect_point(t_elem *elem, t_cyl *cyl, t_vec dir)
+t_vec	cyl_intersect_point(t_vec pos, t_cyl *cyl, t_vec dir)
 {
 	double	a;
 	double	b;
@@ -21,7 +21,7 @@ t_vec	cyl_intersect_point(t_elem *elem, t_cyl *cyl, t_vec dir)
 	double	t1;
 	t_vec	x;
 
-	x = vec_diff(elem->cam.pos, cyl->pos);
+	x = vec_diff(pos, cyl->pos);
 	a = vec_dot(dir, dir) - (vec_dot(dir, cyl->orient)
 			* vec_dot(dir, cyl->orient));
 	b = (vec_dot(dir, x) - vec_dot(dir, cyl->orient)
@@ -32,27 +32,27 @@ t_vec	cyl_intersect_point(t_elem *elem, t_cyl *cyl, t_vec dir)
 	if (d >= 0)
 	{
 		t1 = (-b - sqrt(d)) / (2 * a);
-		return (vec_point(dir, elem->cam.pos, t1));
+		return (vec_point(dir, pos, t1));
 	}
-	if (disc_intersect(elem, &cyl->bot_disc, dir) == 1
-		|| disc_intersect(elem, &cyl->top_disc, dir) == 1)
+	if (disc_intersect(pos, &cyl->bot_disc, dir) == 1
+		|| disc_intersect(pos, &cyl->top_disc, dir) == 1)
 	{
-		if (vec_len(disc_intersect_point(elem, &cyl->bot_disc, dir))
-			> vec_len(disc_intersect_point(elem, &cyl->top_disc, dir)))
-			return (disc_intersect_point(elem, &cyl->top_disc, dir), dir);
+		if (vec_len(disc_intersect_point(pos, &cyl->bot_disc, dir))
+			> vec_len(disc_intersect_point(pos, &cyl->top_disc, dir)))
+			return (disc_intersect_point(pos, &cyl->top_disc, dir), dir);
 		else
-			return (disc_intersect_point(elem, &cyl->bot_disc, dir), dir);
+			return (disc_intersect_point(pos, &cyl->bot_disc, dir), dir);
 	}
-	if (disc_intersect(elem, &cyl->bot_disc, dir) == 1
-		|| disc_intersect(elem, &cyl->top_disc, dir) != 1)
-		return (disc_intersect_point(elem, &cyl->bot_disc, dir), dir);
-	if (disc_intersect(elem, &cyl->bot_disc, dir) != 1
-		|| disc_intersect(elem, &cyl->top_disc, dir) == 1)
-		return (disc_intersect_point(elem, &cyl->top_disc, dir), dir);
+	if (disc_intersect(pos, &cyl->bot_disc, dir) == 1
+		|| disc_intersect(pos, &cyl->top_disc, dir) != 1)
+		return (disc_intersect_point(pos, &cyl->bot_disc, dir), dir);
+	if (disc_intersect(pos, &cyl->bot_disc, dir) != 1
+		|| disc_intersect(pos, &cyl->top_disc, dir) == 1)
+		return (disc_intersect_point(pos, &cyl->top_disc, dir), dir);
 	return (cyl->pos);
 }
 
-int	cyl_intersect(t_elem *elem, t_cyl *cyl, t_vec dir)
+int	cyl_intersect(t_vec pos, t_cyl *cyl, t_vec dir)
 {
 	double	a;
 	double	b;
@@ -64,7 +64,7 @@ int	cyl_intersect(t_elem *elem, t_cyl *cyl, t_vec dir)
 	double	a1;
 	double	a2;
 
-	x = vec_diff(elem->cam.pos, cyl->pos);
+	x = vec_diff(pos, cyl->pos);
 	a = vec_dot(dir, dir) - (vec_dot(dir, cyl->orient)
 			* vec_dot(dir, cyl->orient));
 	b = (vec_dot(dir, x) - vec_dot(dir, cyl->orient)
@@ -77,20 +77,20 @@ int	cyl_intersect(t_elem *elem, t_cyl *cyl, t_vec dir)
 		t1 = (-b - sqrt(d)) / (2 * a);
 		if (t1 > 0)
 		{
-			p = vec_point(dir, elem->cam.pos, t1);
+			p = vec_point(dir, pos, t1);
 			a1 = vec_dot(vec_norm(points_to_vec(cyl->pos, p)), cyl->orient);
 			a2 = vec_dot(vec_norm(points_to_vec(cyl->pos2, p)), cyl->orient2);
 			if (a1 >= 0 && a2 >= 0)
 				return (1);
 		}
 	}
-	if (disc_intersect(elem, &cyl->bot_disc, dir) == 1
-		|| disc_intersect(elem, &cyl->top_disc, dir) == 1)
+	if (disc_intersect(pos, &cyl->bot_disc, dir) == 1
+		|| disc_intersect(pos, &cyl->top_disc, dir) == 1)
 		return (2);
 	return (0);
 }
 
-t_vec	disc_intersect_point(t_elem *elem, t_disc *disc, t_vec dir)
+t_vec	disc_intersect_point(t_vec pos, t_disc *disc, t_vec dir)
 {
 	double	t;
 	double	denom;
@@ -98,13 +98,13 @@ t_vec	disc_intersect_point(t_elem *elem, t_disc *disc, t_vec dir)
 	t_vec	ip;
 
 	denom = vec_dot(disc->orient, dir);
-	p0l0 = points_to_vec(elem->cam.pos, disc->pos);
+	p0l0 = points_to_vec(pos, disc->pos);
 	t = vec_dot(p0l0, disc->orient) / denom;
-	ip = vec_point(dir, elem->cam.pos, t);
+	ip = vec_point(dir, pos, t);
 	return (ip);
 }
 
-int	disc_intersect(t_elem *elem, t_disc *disc, t_vec dir)
+int	disc_intersect(t_vec pos, t_disc *disc, t_vec dir)
 {
 	double	t;
 	double	denom;
@@ -114,11 +114,11 @@ int	disc_intersect(t_elem *elem, t_disc *disc, t_vec dir)
 	denom = vec_dot(disc->orient, dir);
 	if (denom != 0)
 	{
-		p0l0 = points_to_vec(elem->cam.pos, disc->pos);
+		p0l0 = points_to_vec(pos, disc->pos);
 		t = vec_dot(p0l0, disc->orient) / denom;
 		if (t > 0.0)
 		{
-			ip = vec_point(dir, elem->cam.pos, t);
+			ip = vec_point(dir, pos, t);
 			if (vec_len(points_to_vec(ip, disc->pos)) < (disc->diam / 2.0))
 				return (1);
 		}

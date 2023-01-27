@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/27 18:46:21 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:25:38 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_sphere
 	struct s_vec	color;
 	double			diam;
 	int				x;
+	int				id;
 	struct s_sphere	*next;
 }	t_sphere;
 
@@ -97,6 +98,7 @@ typedef struct s_plane
 	struct s_vec	orient;
 	struct s_vec	color;
 	int				x;
+	int				id;
 	struct s_plane	*next;
 }	t_plane;
 
@@ -121,6 +123,7 @@ typedef struct s_cyl
 	double			diam;
 	int				x;
 	double			h;
+	int				id;
 	struct s_cyl	*next;
 }	t_cyl;
 
@@ -198,14 +201,14 @@ t_vec		col_to_01(t_vec	col);
 double		clamp(double min, double max, double value);
 
 ////////// INTERSECTIONS //////////
-int			cyl_intersect(t_elem *elem, t_cyl *cyl, t_vec dir);
-t_vec		cyl_intersect_point(t_elem *elem, t_cyl *cyl, t_vec dir);
-int			disc_intersect(t_elem *elem, t_disc *disc, t_vec dir);
-t_vec		disc_intersect_point(t_elem *elem, t_disc *disc, t_vec dir);
-t_vec		pl_intersect_point(t_elem *elem, t_plane *pl, t_vec dir);
-int			pl_intersect(t_elem *elem, t_plane *pl, t_vec dir);
-t_vec		sph_intersect_point(t_elem *elem, t_sphere *sph, t_vec dir);
-int			sph_intersect(t_elem *elem, t_sphere *sph, t_vec dir);
+int			cyl_intersect(t_vec pos, t_cyl *cyl, t_vec dir);
+t_vec		cyl_intersect_point(t_vec pos, t_cyl *cyl, t_vec dir);
+int			disc_intersect(t_vec pos, t_disc *disc, t_vec dir);
+t_vec		disc_intersect_point(t_vec pos, t_disc *disc, t_vec dir);
+t_vec		pl_intersect_point(t_vec pos, t_plane *pl, t_vec dir);
+int			pl_intersect(t_vec pos, t_plane *pl, t_vec dir);
+t_vec		sph_intersect_point(t_vec pos, t_sphere *sph, t_vec dir);
+int			sph_intersect(t_vec pos, t_sphere *sph, t_vec dir);
 
 ////////// RAY_CAST //////////
 void		ray_caster(t_elem *elem);
@@ -213,5 +216,8 @@ t_vec		light_comb_sph(t_sphere sph, t_elem *elem, t_vec rtn);
 t_vec		light_comb_pl(t_plane pl, t_elem *elem, t_vec rtn);
 t_vec		light_comb_cyl(t_cyl cyl, t_elem *elem, t_vec rtn);
 t_vec		mid_point(t_cyl cyl, t_vec inter);
+int			inter_with_sph(t_elem *elem, t_vec dir, t_vec p, t_sphere sph);
+int			inter_with_cyl(t_elem *elem, t_vec dir, t_vec p, t_cyl cyl);
+int			inter_with_pl(t_elem *elem, t_vec dir, t_vec p, t_plane pl);
 
 #endif
