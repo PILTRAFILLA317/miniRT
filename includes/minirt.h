@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/23 14:56:23 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/27 13:23:46 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_cam
 	struct s_rotmtx	mtx;
 	struct s_vec	pos;
 	struct s_vec	orient;
-	int				fov;
+	double			fov;
 }	t_cam;
 
 typedef struct s_sphere
@@ -189,6 +189,7 @@ t_vec		vec_div(t_vec vec, double a);
 t_vec		new_vec(double x, double y, double z);
 t_vec		vec_mult_vec(t_vec a, t_vec b);
 t_vec		vec_clamp(double min, double max, t_vec value);
+t_vec		vec_unit(t_vec vec);
 
 ////////// COLOR_UTILS //////////
 int			convert_rgb(t_vec col);

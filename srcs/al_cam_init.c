@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:50:21 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/21 18:09:31 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/24 18:47:59 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	second_line_cam(char *line, t_elem *elem)
 	elem->cam.orient.y = ft_strtod(rot[1]);
 	elem->cam.orient.z = ft_strtod(rot[2]);
 	elem->cam.orient = vec_norm(elem->cam.orient);
-	elem->cam.fov = ft_atoi(fl[3]);
+	elem->cam.fov = ft_strtod(fl[3]);
 	if (cam_checker(elem) == -1)
 		return (1);
 	return (0);

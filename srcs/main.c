@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/21 18:09:57 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/24 18:48:14 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void printer(t_elem elem)
 	printf("AL-G = %f\n", elem.alight.color.y);
 	printf("AL-B = %f\n", elem.alight.color.z);
 	printf("\n////////////CAM////////////\n");
-	printf("CAM-FOV = %d\n", elem.cam.fov);
+	printf("CAM-FOV = %lf\n", elem.cam.fov);
 	printf("CAM-POS-X = %f\n", elem.cam.pos.x);
 	printf("CAM-POS-Y = %f\n", elem.cam.pos.y);
 	printf("CAM-POS-Z = %f\n", elem.cam.pos.z);
