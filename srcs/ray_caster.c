@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/30 17:36:08 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:44:16 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,19 @@ int	color(t_elem *elem, t_vec dir)
 	}
 	if (obj.type == d)
 	{
-		rtn = cyl_intersect_point(elem->cam.pos, obj.elem, dir);
-		alight = (vec_mult(vec_mult_vec(col_to_01(((t_cyl *)obj.elem)->color),
+		if (cyl_intersect(elem->cam.pos, obj.elem, dir) == 2)
+		{
+			rtn = disc_intersect_point(elem->cam.pos, &((t_cyl *)obj.elem)->top_disc, dir);
+			light = light_comb_disc((*(t_cyl *)obj.elem).top_disc, elem, rtn);
+		}
+		else
+		{
+			rtn = disc_intersect_point(elem->cam.pos, &((t_cyl *)obj.elem)->bot_disc, dir);
+			light = light_comb_disc((*(t_cyl *)obj.elem).bot_disc, elem, rtn);
+		}
+		alight = (vec_mult(vec_mult_vec(col_to_01(((t_plane *)obj.elem)->color),
 						col_to_01(elem->alight.color)), elem->alight.ratio));
-		light = light_comb_cyl(* (t_cyl *)obj.elem, elem, rtn);
+		light = light_comb_disc((*(t_cyl *)obj.elem).bot_disc, elem, rtn);
 		final = vec_add(alight, light);
 		final = vec_clamp(0, 1, final);
 		return (convert_rgb(col_to_255(light)));

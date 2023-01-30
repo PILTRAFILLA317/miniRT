@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/27 21:02:36 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:32:54 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,8 @@ void	id_creator(t_elem *elem)
 	while (c_head != NULL)
 	{
 		c_head->id = id;
+		c_head->bot_disc.id = id;
+		c_head->top_disc.id = id;
 		id++;
 		c_head = c_head->next;
 	}
