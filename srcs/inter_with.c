@@ -6,13 +6,13 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 21:17:28 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/27 21:33:17 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:54:30 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-int	inter_with_sph(t_elem *elem, t_vec dir, t_vec p, t_sphere sph)
+int	inter_with_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light)
 {
 	t_sphere	*s_head;
 	t_cyl		*c_head;
@@ -23,26 +23,32 @@ int	inter_with_sph(t_elem *elem, t_vec dir, t_vec p, t_sphere sph)
 	p_head = elem->pl;
 	while (s_head != NULL)
 	{
-		if (sph_intersect(p, s_head, dir) == 1 && s_head->id != sph.id)
-			return (1);
+		if (sph_intersect(arg.pos, s_head, arg.dir) == 1 && s_head->id != sph.id)
+			if (vec_len(vec_diff(arg.pos, sph_intersect_point(arg.pos, s_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
 		s_head = s_head->next;
 	}
 	while (c_head != NULL)
 	{
-		if (cyl_intersect(p, c_head, dir) > 0)
-			return (1);
+		if (cyl_intersect(arg.pos, c_head, arg.dir) == 1)
+			if (vec_len(vec_diff(arg.pos, cyl_intersect_point(arg.pos, c_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
 		c_head = c_head->next;
 	}
 	while (p_head != NULL)
 	{
-		if (pl_intersect(p, p_head, dir) == 1)
-			return (1);
+		if (pl_intersect(arg.pos, p_head, arg.dir) == 1)
+			if (vec_len(vec_diff(arg.pos, pl_intersect_point(arg.pos, p_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
 		p_head = p_head->next;
 	}
 	return (0);
 }
 
-int	inter_with_cyl(t_elem *elem, t_vec dir, t_vec p, t_cyl cyl)
+int	inter_with_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light)
 {
 	t_sphere	*s_head;
 	t_cyl		*c_head;
@@ -53,26 +59,32 @@ int	inter_with_cyl(t_elem *elem, t_vec dir, t_vec p, t_cyl cyl)
 	p_head = elem->pl;
 	while (s_head != NULL)
 	{
-		if (sph_intersect(p, s_head, dir) == 1)
-			return (1);
+		if (sph_intersect(arg.pos, s_head, arg.dir) == 1)
+			if (vec_len(vec_diff(arg.pos, sph_intersect_point(arg.pos, s_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
 		s_head = s_head->next;
 	}
 	while (c_head != NULL)
 	{
-		if (cyl_intersect(p, c_head, dir) > 0 && c_head->id != cyl.id)
-			return (1);
+		if (cyl_intersect(arg.pos, c_head, arg.dir) > 0 && c_head->id != cyl.id)
+			if (vec_len(vec_diff(arg.pos, cyl_intersect_point(arg.pos, c_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
 		c_head = c_head->next;
 	}
 	while (p_head != NULL)
 	{
-		if (pl_intersect(p, p_head, dir) == 1)
-			return (1);
+		if (pl_intersect(arg.pos, p_head, arg.dir) == 1)
+			if (vec_len(vec_diff(arg.pos, pl_intersect_point(arg.pos, p_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
 		p_head = p_head->next;
 	}
 	return (0);
 }
 
-int	inter_with_pl(t_elem *elem, t_vec dir, t_vec p, t_plane pl)
+int	inter_with_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light)
 {
 	t_sphere	*s_head;
 	t_cyl		*c_head;
@@ -83,20 +95,26 @@ int	inter_with_pl(t_elem *elem, t_vec dir, t_vec p, t_plane pl)
 	p_head = elem->pl;
 	while (s_head != NULL)
 	{
-		if (sph_intersect(p, s_head, dir) == 1)
-			return (1);
+		if (sph_intersect(arg.pos, s_head, arg.dir) == 1)
+			if (vec_len(vec_diff(arg.pos, sph_intersect_point(arg.pos, s_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
 		s_head = s_head->next;
 	}
 	while (c_head != NULL)
 	{
-		if (cyl_intersect(p, c_head, dir) > 0)
-			return (1);
+		if (cyl_intersect(arg.pos, c_head, arg.dir) == 1)
+			if (vec_len(vec_diff(arg.pos, cyl_intersect_point(arg.pos, c_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
 		c_head = c_head->next;
 	}
 	while (p_head != NULL)
 	{
-		if (pl_intersect(p, p_head, dir) == 1 && p_head->id != pl.id)
-			return (1);
+		if (pl_intersect(arg.pos, p_head, arg.dir) == 1 && p_head->id != pl.id)
+			if (vec_len(vec_diff(arg.pos, pl_intersect_point(arg.pos, p_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
 		p_head = p_head->next;
 	}
 	return (0);

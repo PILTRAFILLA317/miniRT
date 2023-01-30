@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/27 21:17:45 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:36:08 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int	color(t_elem *elem, t_vec dir)
 		rtn = pl_intersect_point(elem->cam.pos, obj.elem, dir);
 		alight = (vec_mult(vec_mult_vec(col_to_01(((t_plane *)obj.elem)->color),
 						col_to_01(elem->alight.color)), elem->alight.ratio));
-		light = light_comb_pl(* ((t_plane *)obj.elem), elem, rtn);
+		light = light_comb_pl(*((t_plane *)obj.elem), elem, rtn);
 		final = vec_add(alight, light);
 		final = vec_clamp(0, 1, final);
 		return (convert_rgb(col_to_255(final)));

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/27 21:25:38 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/01/30 19:04:39 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define BHCYN "\e[1;96m"
 # define BHWHT "\e[1;97m"
 
-enum e_type {p, s, c, d};
+enum e_type {p, s, c, bd, td};
 
 typedef struct s_vec
 {
@@ -59,6 +59,12 @@ typedef struct s_rotmtx
 	t_vec	pos;
 	t_vec	rot;
 }	t_rotmtx;
+
+typedef struct s_dirpos
+{
+	t_vec	pos;
+	t_vec	dir;
+}	t_dirpos;
 
 typedef struct s_light
 {
@@ -216,8 +222,8 @@ t_vec		light_comb_sph(t_sphere sph, t_elem *elem, t_vec rtn);
 t_vec		light_comb_pl(t_plane pl, t_elem *elem, t_vec rtn);
 t_vec		light_comb_cyl(t_cyl cyl, t_elem *elem, t_vec rtn);
 t_vec		mid_point(t_cyl cyl, t_vec inter);
-int			inter_with_sph(t_elem *elem, t_vec dir, t_vec p, t_sphere sph);
-int			inter_with_cyl(t_elem *elem, t_vec dir, t_vec p, t_cyl cyl);
-int			inter_with_pl(t_elem *elem, t_vec dir, t_vec p, t_plane pl);
+int			inter_with_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light);
+int			inter_with_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light);
+int			inter_with_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light);
 
 #endif
