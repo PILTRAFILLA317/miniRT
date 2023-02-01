@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:33:29 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:03:37 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define KEY_ESC 53
 # define WIN_X 1920.0
 # define WIN_Y 1080.0
+
 
 # define BUFFER_SIZE 1
 
@@ -228,5 +229,6 @@ int			inter_with_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light);
 int			inter_with_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light);
 int			inter_with_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light);
 int			inter_with_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light);
+int			color(t_elem *elem, t_vec dir);
 
 #endif
