@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:31 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/21 18:10:20 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:55:52 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ t_sphere	*sphere_creator(char **fl, t_elem *e)
 	sphere->color.x = ft_atoi(rgb[0]);
 	sphere->color.y = ft_atoi(rgb[1]);
 	sphere->color.z = ft_atoi(rgb[2]);
+	if (fl[4] != NULL)
+		sphere->ref = ft_strtod(fl[4]);
 	sphere->next = NULL;
 	return (sphere);
 }

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:55:11 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/21 18:23:32 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:33:47 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,14 @@ int	convert_rgb(t_vec col)
 		col.z = 0;
 	trgb = 0 << 24 | (int)col.x << 16 | (int)col.y << 8 | (int)col.z;
 	return (trgb);
+}
+
+t_vec	double_to_rgb(int num)
+{
+	t_vec	rtn;
+
+	rtn.x = (num & 0x00ff0000) >> 16;
+	rtn.y = (num & 0x0000ff00) >> 8;
+	rtn.z = (num & 0x000000ff);
+	return (rtn);
 }

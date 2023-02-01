@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/01 14:03:37 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/01 20:02:10 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_sphere
 	struct s_vec	pos;
 	struct s_vec	color;
 	double			diam;
+	double			ref;
 	int				x;
 	int				id;
 	struct s_sphere	*next;
@@ -104,6 +105,7 @@ typedef struct s_plane
 	struct s_vec	pos;
 	struct s_vec	orient;
 	struct s_vec	color;
+	double			ref;
 	int				x;
 	int				id;
 	struct s_plane	*next;
@@ -207,6 +209,7 @@ int			convert_rgb(t_vec col);
 t_vec		col_to_255(t_vec	col);
 t_vec		col_to_01(t_vec	col);
 double		clamp(double min, double max, double value);
+t_vec		double_to_rgb(int num);
 
 ////////// INTERSECTIONS //////////
 int			cyl_intersect(t_vec pos, t_cyl *cyl, t_vec dir);
@@ -229,6 +232,6 @@ int			inter_with_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light);
 int			inter_with_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light);
 int			inter_with_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light);
 int			inter_with_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light);
-int			color(t_elem *elem, t_vec dir);
+int			color(t_elem *elem, t_vec dir, t_vec pos);
 
 #endif

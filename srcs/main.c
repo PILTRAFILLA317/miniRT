@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:32:54 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/01 20:05:10 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,14 +152,18 @@ int	elem_type(char *line, t_elem *elem)
 	}
 	else if (line[0] == 'p' && line[1] == 'l')
 	{
-		if (ft_doublestrlen(fl) != 4 || plane_pre_chkr(fl))
+		if (ft_doublestrlen(fl) < 4
+			|| ft_doublestrlen(fl) > 5
+			|| plane_pre_chkr(fl))
 			return (error_printer(3), 1);
 		if (new_plane(elem, plane_creator(fl, elem)))
 			return (error_printer(3), 1);
 	}
 	else if (line[0] == 's' && line[1] == 'p')
 	{
-		if (ft_doublestrlen(fl) != 4 || sphere_pre_chkr(fl))
+		if (ft_doublestrlen(fl) < 4
+			|| ft_doublestrlen(fl) > 5
+			|| sphere_pre_chkr(fl))
 			return (error_printer(3), 1);
 		if (new_sphere(elem, sphere_creator(fl, elem)))
 			return (error_printer(3), 1);

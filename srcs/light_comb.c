@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:04:49 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:36:13 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/01 19:38:35 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ t_vec	light_comb_sph(t_sphere sph, t_elem *elem, t_vec rtn)
 	t = vec_dot(vec_norm(points_to_vec(sph.pos, rtn)),
 			vec_norm(vec_diff(tmp->pos, rtn)));
 	t = clamp(0, 1, t);
-	t = t * (clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn))) / (tmp->bright * 1000))));
+	t = t * (clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
+					/ (tmp->bright * 1000))));
 	light = (vec_mult(vec_mult_vec(col_to_01(sph.color),
-			col_to_01(tmp->color)), t * tmp->bright));
+					col_to_01(tmp->color)), t * tmp->bright));
 	arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
 	arg.pos = rtn;
 	if (inter_with_sph(elem, arg, sph, *tmp) == 1)
@@ -70,11 +71,12 @@ t_vec	light_comb_sph(t_sphere sph, t_elem *elem, t_vec rtn)
 	while (tmp != NULL)
 	{
 		t = vec_dot(vec_norm(points_to_vec(sph.pos, rtn)),
-			vec_norm(vec_diff(tmp->pos, rtn)));
+				vec_norm(vec_diff(tmp->pos, rtn)));
 		t = clamp(0, 1, t);
-		t = t * (clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn))) / (tmp->bright * 1000))));
+		t = t * (clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
+						/ (tmp->bright * 1000))));
 		aux = (vec_mult(vec_mult_vec(col_to_01(sph.color),
-			col_to_01(tmp->color)), t * tmp->bright));
+						col_to_01(tmp->color)), t * tmp->bright));
 		arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
 		arg.pos = rtn;
 		if (inter_with_sph(elem, arg, sph, *tmp) == 1)
@@ -100,7 +102,8 @@ t_vec	light_comb_cyl(t_cyl cyl, t_elem *elem, t_vec rtn)
 	t = vec_dot(vec_norm(points_to_vec(mid_p, rtn)),
 			vec_norm(vec_diff(tmp->pos, rtn)));
 	t = clamp(0, 1, t);
-	t = t * (clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn))) / (tmp->bright * 1000))));
+	t = t * (clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
+					/ (tmp->bright * 1000))));
 	light = (vec_mult(vec_mult_vec(col_to_01(cyl.color),
 					col_to_01(tmp->color)), t * tmp->bright));
 	arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
@@ -114,7 +117,8 @@ t_vec	light_comb_cyl(t_cyl cyl, t_elem *elem, t_vec rtn)
 		t = vec_dot(vec_norm(points_to_vec(mid_p, rtn)),
 				vec_norm(vec_diff(tmp->pos, rtn)));
 		t = clamp(0, 1, t);
-		t = t * (clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn))) / (tmp->bright * 1000))));
+		t = t * (clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
+						/ (tmp->bright * 1000))));
 		aux = (vec_mult(vec_mult_vec(col_to_01(cyl.color),
 						col_to_01(tmp->color)), t * tmp->bright));
 		arg.dir = vec_norm(vec_diff(tmp->pos, rtn));

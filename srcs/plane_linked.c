@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:30:52 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/20 18:49:36 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/01 20:03:55 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ t_plane	*plane_creator(char **fl, t_elem *e)
 	plane->color.x = ft_atoi(rgb[0]);
 	plane->color.y = ft_atoi(rgb[1]);
 	plane->color.z = ft_atoi(rgb[2]);
+	if (fl[4] != NULL)
+		plane->ref = ft_strtod(fl[4]);
 	plane->next = NULL;
 	return (plane);
 }
