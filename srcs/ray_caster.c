@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/01 20:14:32 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:39:42 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,26 +188,33 @@ int	color(t_elem *elem, t_vec dir, t_vec pos)
 		light = light_comb_cyl(*(t_cyl *)obj.elem, elem, rtn);
 		final = vec_add(alight, light);
 		final = vec_clamp(0, 1, final);
-		return (convert_rgb(col_to_255(light)));
+		return (convert_rgb(col_to_255(final)));
 	}
 	if (obj.type == d)
 	{
-		if (cyl_intersect(pos, obj.elem, dir) == 2)
+		printf("TOP DISC = ");
+		vec_printer(((t_cyl *)obj.elem)->pos2);
+		printf("BOT DISC = ");
+		vec_printer(((t_cyl *)obj.elem)->pos);
+		printf("\n");
+		if (cyl_intersect(pos, obj.elem, dir) == 3)
 		{
+			return (0xFFFFFF);
 			rtn = disc_intersect_point(pos, &((t_cyl *)obj.elem)->top_disc, dir);
 			light = light_comb_disc((*(t_cyl *)obj.elem).top_disc, elem, rtn);
+			alight = (vec_mult(vec_mult_vec(col_to_01(((t_cyl *)obj.elem)->top_disc.color),
+							col_to_01(elem->alight.color)), elem->alight.ratio));
 		}
 		else
 		{
 			rtn = disc_intersect_point(pos, &((t_cyl *)obj.elem)->bot_disc, dir);
 			light = light_comb_disc((*(t_cyl *)obj.elem).bot_disc, elem, rtn);
+			alight = (vec_mult(vec_mult_vec(col_to_01(((t_cyl *)obj.elem)->bot_disc.color),
+							col_to_01(elem->alight.color)), elem->alight.ratio));
 		}
-		alight = (vec_mult(vec_mult_vec(col_to_01(((t_plane *)obj.elem)->color),
-						col_to_01(elem->alight.color)), elem->alight.ratio));
-		light = light_comb_disc((*(t_cyl *)obj.elem).bot_disc, elem, rtn);
 		final = vec_add(alight, light);
 		final = vec_clamp(0, 1, final);
-		return (convert_rgb(col_to_255(light)));
+		return (convert_rgb(col_to_255(final)));
 	}
 	if (obj.type == s)
 	{
@@ -247,9 +254,8 @@ void	ray_caster(t_elem *elem)
 		y = 0;
 		while (y <= WIN_Y)
 		{
-			// if (pl_intersect(elem, elem->pl, vec_rotation(x, y, elem)) == 1)
-			// 	mlx_pixel_put(elem->mlx, elem->win, x, y, 0xFFFFFF);
-			mlx_pixel_put(elem->mlx, elem->win, x, y, color(elem, vec_rotation(x, y, elem), elem->cam.pos));
+			mlx_pixel_put(elem->mlx, elem->win, x, y,
+				color(elem, vec_rotation(x, y, elem), elem->cam.pos));
 			y++;
 		}
 		x++;

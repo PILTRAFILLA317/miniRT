@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:07:38 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/20 18:38:40 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:31:51 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ t_cyl	*cyl_creator(char **fl, t_elem *e)
 	cyl->orient2 = vec_norm(points_to_vec(cyl->pos2, cyl->pos));
 	cyl->bot_disc.color = cyl->color;
 	cyl->bot_disc.diam = cyl->diam;
-	cyl->bot_disc.orient = cyl->orient;
+	cyl->bot_disc.orient = cyl->orient2;
 	cyl->bot_disc.pos = cyl->pos;
 	cyl->top_disc.color = cyl->color;
 	cyl->top_disc.diam = cyl->diam;
-	cyl->top_disc.orient = cyl->orient2;
+	cyl->top_disc.orient = cyl->orient;
 	cyl->top_disc.pos = cyl->pos2;
 	cyl->next = NULL;
 	return (cyl);

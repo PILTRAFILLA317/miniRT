@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/01 20:02:10 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/02 16:46:36 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # define KEY_ESC 53
 # define WIN_X 1920.0
 # define WIN_Y 1080.0
-
 
 # define BUFFER_SIZE 1
 
@@ -46,7 +45,7 @@
 # define BHCYN "\e[1;96m"
 # define BHWHT "\e[1;97m"
 
-enum e_type {p, s, c, d};
+enum e_type {p, s, c, d, n};
 
 typedef struct s_vec
 {

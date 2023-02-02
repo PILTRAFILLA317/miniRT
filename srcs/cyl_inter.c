@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:44:22 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/30 20:22:25 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/02 17:24:25 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ int	cyl_intersect(t_vec pos, t_cyl *cyl, t_vec dir)
 		}
 	}
 	if (disc_intersect(pos, &cyl->bot_disc, dir) == 1)
-		return (3);
-	if (disc_intersect(pos, &cyl->top_disc, dir) == 1)
 		return (2);
+	if (disc_intersect(pos, &cyl->top_disc, dir) == 1)
+		return (3);
 	return (0);
 }
 

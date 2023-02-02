@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 21:17:28 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/01 19:11:27 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/02 14:43:27 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,12 @@ int	inter_with_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light)
 	while (s_head != NULL)
 	{
 		if (sph_intersect(arg.pos, s_head, arg.dir) == 1)
-			if (vec_len(vec_diff(arg.pos, sph_intersect_point(arg.pos, s_head, arg.dir)))
-				< vec_len(vec_diff(arg.pos, light.pos)))
-				return (1);
+		{
+			if (sph_intersect(arg.pos, s_head, arg.dir) == 1)
+				if (vec_len(vec_diff(arg.pos, sph_intersect_point(arg.pos, s_head, arg.dir)))
+					< vec_len(vec_diff(arg.pos, light.pos)))
+					return (1);
+		}
 		s_head = s_head->next;
 	}
 	while (c_head != NULL)
