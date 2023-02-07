@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/02 16:46:36 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:04:56 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,6 @@ int			inter_with_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light);
 int			inter_with_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light);
 int			inter_with_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light);
 int			inter_with_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light);
-int			color(t_elem *elem, t_vec dir, t_vec pos);
+int			color(t_elem *elem, t_vec dir, t_vec pos, t_object obj);
 
 #endif

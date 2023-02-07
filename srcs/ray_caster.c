@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/07 17:06:32 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:55:15 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_vec	vec_rotation(int x, int y, t_elem *elem)
 	return (rtn);
 }
 
-t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos)
+t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 {
 	double		len;
 	t_object	obj;
@@ -52,21 +52,6 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos)
 	p_head = elem->pl;
 	len = 0;
 	obj.elem = NULL;
-	while (s_head != NULL)
-	{
-		if (sph_intersect(pos, s_head, dir))
-		{
-			if (vec_len(vec_diff(pos, sph_intersect_point(pos,
-							s_head, dir))) < len || len == 0)
-			{
-				len = vec_len(vec_diff(pos,
-							sph_intersect_point(pos, s_head, dir)));
-				obj.elem = s_head;
-				obj.type = s;
-			}
-		}
-		s_head = s_head->next;
-	}
 	while (c_head != NULL)
 	{
 		if (cyl_intersect(pos, c_head, dir) == 1)
@@ -108,6 +93,29 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos)
 		}
 		p_head = p_head->next;
 	}
+	while (s_head != NULL)
+	{
+		if (o.type == 1)
+		{
+			if (s_head->id == ((t_sphere *)o.elem)->id)
+			{
+				s_head = s_head->next;
+				continue ;
+			}
+		}
+		if (sph_intersect(pos, s_head, dir))
+		{
+			if (vec_len(vec_diff(pos, sph_intersect_point(pos,
+							s_head, dir))) < len || len == 0)
+			{
+				len = vec_len(vec_diff(pos,
+							sph_intersect_point(pos, s_head, dir)));
+				obj.elem = s_head;
+				obj.type = s;
+			}
+		}
+		s_head = s_head->next;
+	}
 	return (obj);
 }
 
@@ -125,22 +133,26 @@ t_vec	mid_point(t_cyl cyl, t_vec inter)
 
 int	sph_mirror(t_elem *elem, t_vec dir, t_sphere sph, t_vec rtn)
 {
-	t_vec	ref;
-	t_vec	alight;
-	t_vec	light;
-	t_vec	final;
-	t_vec	rgb;
+	t_vec		ref;
+	t_vec		alight;
+	t_vec		light;
+	t_vec		final;
+	t_vec		rgb;
+	t_object	obj;
 
+	obj.type = 1;
+	obj.elem = &sph;
 	ref = vec_mult(vec_diff(rtn, sph.pos), vec_dot(dir, vec_diff(rtn, sph.pos)));
 	ref = vec_mult (ref, -2);
 	ref = vec_add(rtn, ref);
+	ref = vec_norm(ref);
 	alight = (vec_mult(vec_mult_vec(col_to_01(sph.color),
 					col_to_01(elem->alight.color)), elem->alight.ratio));
 	light = light_comb_sph(sph, elem, rtn);
 	final = vec_add(alight, light);
 	final = vec_clamp(0, 1, final);
 	final = vec_mult(final, (1 - sph.ref));
-	rgb = col_to_01(double_to_rgb((color(elem, ref, rtn))));
+	rgb = col_to_01(double_to_rgb((color(elem, ref, rtn, obj))));
 	rgb = vec_mult(rgb, sph.ref);
 	final = vec_add(final, rgb);
 	return (convert_rgb(col_to_255(final)));
@@ -148,28 +160,33 @@ int	sph_mirror(t_elem *elem, t_vec dir, t_sphere sph, t_vec rtn)
 
 int	pl_mirror(t_elem *elem, t_vec dir, t_plane pl, t_vec rtn)
 {
-	t_vec	ref;
-	t_vec	alight;
-	t_vec	light;
-	t_vec	final;
-	t_vec	rgb;
+	t_vec		ref;
+	t_vec		alight;
+	t_vec		light;
+	t_vec		final;
+	t_vec		rgb;
+	t_object	obj;
 
+	obj.type = 1;
+	obj.elem = &pl;
 	ref = vec_norm(vec_mult(pl.orient, vec_dot(dir, pl.orient)));
 	ref = vec_mult (ref, -2);
 	ref = vec_add(rtn, ref);
+	ref = vec_norm(ref);
 	alight = (vec_mult(vec_mult_vec(col_to_01(pl.color),
 					col_to_01(elem->alight.color)), elem->alight.ratio));
 	light = light_comb_pl(pl, elem, rtn);
 	final = vec_add(alight, light);
 	final = vec_clamp(0, 1, final);
 	final = vec_mult(final, (1 - pl.ref));
-	rgb = col_to_01(double_to_rgb((color(elem, ref, rtn))));
+	rgb = col_to_01(double_to_rgb((color(elem, ref, rtn, obj))));
 	rgb = vec_mult(rgb, pl.ref);
 	final = vec_add(final, rgb);
 	return (convert_rgb(col_to_255(final)));
 }
 
-int	color(t_elem *elem, t_vec dir, t_vec pos)
+
+int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 {
 	t_vec		rtn;
 	t_object	obj;
@@ -177,7 +194,7 @@ int	color(t_elem *elem, t_vec dir, t_vec pos)
 	t_vec		light;
 	t_vec		final;
 
-	obj = first_intersect(elem, dir, pos);
+	obj = first_intersect(elem, dir, pos, o);
 	if (obj.elem == NULL)
 		return (0);
 	if (obj.type == c)
@@ -239,17 +256,19 @@ int	color(t_elem *elem, t_vec dir, t_vec pos)
 
 void	ray_caster(t_elem *elem)
 {
-	int	x;
-	int	y;
+	int			x;
+	int			y;
+	t_object	obj;
 
 	x = 0;
+	obj.type = 4;
 	while (x <= WIN_X)
 	{
 		y = 0;
 		while (y <= WIN_Y)
 		{
 			mlx_pixel_put(elem->mlx, elem->win, x, y,
-				color(elem, vec_rotation(x, y, elem), elem->cam.pos));
+				color(elem, vec_rotation(x, y, elem), elem->cam.pos, obj));
 			y++;
 		}
 		x++;
