@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/02 17:39:42 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:06:32 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos)
 				obj.type = c;
 			}
 		}
-		if (cyl_intersect(pos, c_head, dir) == 2)
+		if (cyl_intersect(pos, c_head, dir) > 1)
 		{
 			if (vec_len(vec_diff(pos, cyl_intersect_point(pos,
 							c_head, dir))) < len || len == 0)
@@ -192,14 +192,8 @@ int	color(t_elem *elem, t_vec dir, t_vec pos)
 	}
 	if (obj.type == d)
 	{
-		printf("TOP DISC = ");
-		vec_printer(((t_cyl *)obj.elem)->pos2);
-		printf("BOT DISC = ");
-		vec_printer(((t_cyl *)obj.elem)->pos);
-		printf("\n");
 		if (cyl_intersect(pos, obj.elem, dir) == 3)
 		{
-			return (0xFFFFFF);
 			rtn = disc_intersect_point(pos, &((t_cyl *)obj.elem)->top_disc, dir);
 			light = light_comb_disc((*(t_cyl *)obj.elem).top_disc, elem, rtn);
 			alight = (vec_mult(vec_mult_vec(col_to_01(((t_cyl *)obj.elem)->top_disc.color),
