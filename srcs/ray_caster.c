@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/07 20:55:15 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:46:42 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,26 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 				obj.type = c;
 			}
 		}
-		if (cyl_intersect(pos, c_head, dir) > 1)
+		if (disc_intersect(pos, &c_head->bot_disc, dir) == 1)
 		{
-			if (vec_len(vec_diff(pos, cyl_intersect_point(pos,
-							c_head, dir))) < len || len == 0)
+			if (vec_len(vec_diff(pos, disc_intersect_point(pos,
+							&c_head->bot_disc, dir))) < len || len == 0)
 			{
 				len = vec_len(vec_diff(pos,
-							cyl_intersect_point(pos, c_head, dir)));
-				obj.elem = c_head;
-				obj.type = d;
+							disc_intersect_point(pos, &c_head->bot_disc, dir)));
+				obj.elem = &c_head->bot_disc;
+				obj.type = dt;
+			}
+		}
+		if (disc_intersect(pos, &c_head->top_disc, dir) == 1)
+		{
+			if (vec_len(vec_diff(pos, disc_intersect_point(pos,
+							&c_head->top_disc, dir))) < len || len == 0)
+			{
+				len = vec_len(vec_diff(pos,
+							disc_intersect_point(pos, &c_head->top_disc, dir)));
+				obj.elem = &c_head->top_disc;
+				obj.type = db;
 			}
 		}
 		c_head = c_head->next;
@@ -158,34 +169,6 @@ int	sph_mirror(t_elem *elem, t_vec dir, t_sphere sph, t_vec rtn)
 	return (convert_rgb(col_to_255(final)));
 }
 
-int	pl_mirror(t_elem *elem, t_vec dir, t_plane pl, t_vec rtn)
-{
-	t_vec		ref;
-	t_vec		alight;
-	t_vec		light;
-	t_vec		final;
-	t_vec		rgb;
-	t_object	obj;
-
-	obj.type = 1;
-	obj.elem = &pl;
-	ref = vec_norm(vec_mult(pl.orient, vec_dot(dir, pl.orient)));
-	ref = vec_mult (ref, -2);
-	ref = vec_add(rtn, ref);
-	ref = vec_norm(ref);
-	alight = (vec_mult(vec_mult_vec(col_to_01(pl.color),
-					col_to_01(elem->alight.color)), elem->alight.ratio));
-	light = light_comb_pl(pl, elem, rtn);
-	final = vec_add(alight, light);
-	final = vec_clamp(0, 1, final);
-	final = vec_mult(final, (1 - pl.ref));
-	rgb = col_to_01(double_to_rgb((color(elem, ref, rtn, obj))));
-	rgb = vec_mult(rgb, pl.ref);
-	final = vec_add(final, rgb);
-	return (convert_rgb(col_to_255(final)));
-}
-
-
 int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 {
 	t_vec		rtn;
@@ -207,22 +190,12 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 		final = vec_clamp(0, 1, final);
 		return (convert_rgb(col_to_255(final)));
 	}
-	if (obj.type == d)
+	if (obj.type == dt || obj.type == db)
 	{
-		if (cyl_intersect(pos, obj.elem, dir) == 3)
-		{
-			rtn = disc_intersect_point(pos, &((t_cyl *)obj.elem)->top_disc, dir);
-			light = light_comb_disc((*(t_cyl *)obj.elem).top_disc, elem, rtn);
-			alight = (vec_mult(vec_mult_vec(col_to_01(((t_cyl *)obj.elem)->top_disc.color),
-							col_to_01(elem->alight.color)), elem->alight.ratio));
-		}
-		else
-		{
-			rtn = disc_intersect_point(pos, &((t_cyl *)obj.elem)->bot_disc, dir);
-			light = light_comb_disc((*(t_cyl *)obj.elem).bot_disc, elem, rtn);
-			alight = (vec_mult(vec_mult_vec(col_to_01(((t_cyl *)obj.elem)->bot_disc.color),
-							col_to_01(elem->alight.color)), elem->alight.ratio));
-		}
+		rtn = disc_intersect_point(pos, obj.elem, dir);
+		light = light_comb_disc(*(t_disc *)obj.elem, elem, rtn);
+		alight = (vec_mult(vec_mult_vec(col_to_01(((t_disc *)obj.elem)->color),
+						col_to_01(elem->alight.color)), elem->alight.ratio));
 		final = vec_add(alight, light);
 		final = vec_clamp(0, 1, final);
 		return (convert_rgb(col_to_255(final)));
@@ -242,8 +215,6 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	if (obj.type == p)
 	{
 		rtn = pl_intersect_point(pos, obj.elem, dir);
-		if (((t_plane *)obj.elem)->x == 1)
-			return (pl_mirror(elem, dir, (*(t_plane *)obj.elem), rtn));
 		alight = (vec_mult(vec_mult_vec(col_to_01(((t_plane *)obj.elem)->color),
 						col_to_01(elem->alight.color)), elem->alight.ratio));
 		light = light_comb_pl(*((t_plane *)obj.elem), elem, rtn);

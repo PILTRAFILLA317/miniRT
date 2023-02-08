@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/07 18:04:56 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:15:34 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define BHCYN "\e[1;96m"
 # define BHWHT "\e[1;97m"
 
-enum e_type {p, s, c, d, n};
+enum e_type {p, s, c, dt, db, n};
 
 typedef struct s_vec
 {

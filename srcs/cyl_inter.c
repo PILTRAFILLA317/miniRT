@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:44:22 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/07 17:02:34 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:13:35 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,6 @@ t_vec	cyl_intersect_point(t_vec pos, t_cyl *cyl, t_vec dir)
 		t1 = (-b - sqrt(d)) / (2 * a);
 		return (vec_point(dir, pos, t1));
 	}
-	if (disc_intersect(pos, &cyl->bot_disc, dir) == 1
-		|| disc_intersect(pos, &cyl->top_disc, dir) == 1)
-	{
-		if (vec_len(disc_intersect_point(pos, &cyl->bot_disc, dir))
-			> vec_len(disc_intersect_point(pos, &cyl->top_disc, dir)))
-			return (disc_intersect_point(pos, &cyl->top_disc, dir), dir);
-		else
-			return (disc_intersect_point(pos, &cyl->bot_disc, dir), dir);
-	}
-	if (disc_intersect(pos, &cyl->bot_disc, dir) == 1
-		|| disc_intersect(pos, &cyl->top_disc, dir) != 1)
-		return (disc_intersect_point(pos, &cyl->bot_disc, dir), dir);
-	if (disc_intersect(pos, &cyl->bot_disc, dir) != 1
-		|| disc_intersect(pos, &cyl->top_disc, dir) == 1)
-		return (disc_intersect_point(pos, &cyl->top_disc, dir), dir);
 	return (cyl->pos);
 }
 
@@ -59,15 +44,11 @@ int	cyl_intersect(t_vec pos, t_cyl *cyl, t_vec dir)
 	double	c;
 	double	d;
 	double	t1;
-	double	d1;
-	double	d2;
 	t_vec	p;
 	t_vec	x;
 	double	a1;
 	double	a2;
 
-	d1 = 0;
-	d2 = 0;
 	x = vec_diff(pos, cyl->pos);
 	a = vec_dot(dir, dir) - (vec_dot(dir, cyl->orient)
 			* vec_dot(dir, cyl->orient));
@@ -88,23 +69,6 @@ int	cyl_intersect(t_vec pos, t_cyl *cyl, t_vec dir)
 				return (1);
 		}
 	}
-	if (disc_intersect(pos, &cyl->bot_disc, dir) == 1)
-		d1 = vec_len(vec_diff(disc_intersect_point
-					(pos, &cyl->bot_disc, dir), pos));
-	if (disc_intersect(pos, &cyl->top_disc, dir) == 1)
-		d2 = vec_len(vec_diff(disc_intersect_point
-					(pos, &cyl->top_disc, dir), pos));
-	if (d1 != 0 && d2 != 0)
-	{
-		if (d1 > d2)
-			return (3);
-		else
-			return (2);
-	}
-	else if (d1 == 0 && d2 != 0)
-		return (3);
-	else if (d1 != 0 && d2 == 0)
-		return (2);
 	return (0);
 }
 

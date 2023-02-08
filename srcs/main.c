@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/01 20:05:10 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/08 19:12:31 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,8 @@ void printer(t_elem elem)
 
 int	elem_type(char *line, t_elem *elem)
 {
-	char		**fl;
-	t_sphere	*s_head;
+	char	**fl;
 
-	s_head = elem->sphere;
 	if (line[ft_strlen(line) - 1] == '\n')
 		line = last_char_trimmer(line);
 	fl = ft_split(line, ' ');
