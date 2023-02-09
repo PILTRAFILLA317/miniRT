@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:47:43 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/08 21:25:29 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/09 21:16:53 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,23 @@ void	vec_printer(t_vec	vec, int fd)
 	write(fd, vec.z, ft_strlen(vec.z));
 }
 
-int	new_trian(t_tri **trian, t_tri *new)
+int	new_trian(t_ver **trian, t_ver *new)
+{
+	t_ver	*tmp;
+
+	if (!(*trian))
+	{
+		*trian = new;
+		return (0);
+	}
+	tmp = *trian;
+	while (tmp && tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	return (0);
+}
+
+int	new_face(t_tri **trian, t_tri *new)
 {
 	t_tri	*tmp;
 
@@ -72,14 +88,14 @@ int	new_norm(t_norm **norm, t_norm *new)
 	return (0);
 }
 
-t_tri	*trian_creator(char **fl)
+t_ver	*trian_creator(char **fl)
 {
-	t_tri	*trian;
+	t_ver	*trian;
 
-	trian = malloc(sizeof(t_tri));
-	trian->tri.x = last_char_trimmer(fl[1]);
-	trian->tri.y = last_char_trimmer(fl[2]);
-	trian->tri.z = last_char_trimmer(fl[3]);
+	trian = malloc(sizeof(t_ver));
+	trian->ver.x = last_char_trimmer(fl[1]);
+	trian->ver.y = last_char_trimmer(fl[2]);
+	trian->ver.z = last_char_trimmer(fl[3]);
 	trian->next = NULL;
 	return (trian);
 }
@@ -88,7 +104,7 @@ t_norm	*norm_creator(char **fl)
 {
 	t_norm	*trian;
 
-	trian = malloc(sizeof(t_tri));
+	trian = malloc(sizeof(t_ver));
 	trian->norm.x = last_char_trimmer(fl[1]);
 	trian->norm.y = last_char_trimmer(fl[2]);
 	trian->norm.z = last_char_trimmer(fl[3]);
@@ -96,7 +112,111 @@ t_norm	*norm_creator(char **fl)
 	return (trian);
 }
 
-void	lister(t_tri **trian, t_norm **normal, char *line)
+t_tri	*face_creator(char **fl, t_ver **ver)
+{
+	t_tri	*trian;
+	t_ver	*temp;
+	char	**sp;
+	int		c;
+	int		end;
+	int		i;
+
+	i = -1;
+	trian = malloc(sizeof(t_tri));
+	sp = ft_split(fl[0], '/');
+	end = ft_atoi(sp[0]);
+	temp = *ver;
+	c = -1;
+	while (++c <= end)
+		temp = temp->next;
+	trian->vert[0] = temp->ver;
+	free(sp);
+	sp = ft_split(fl[1], '/');
+	end = ft_atoi(sp[0]);
+	temp = *ver;
+	c = -1;
+	while (++c <= end)
+		temp = temp->next;
+	trian->vert[1] = temp->ver;
+	free(sp);
+	sp = ft_split(fl[2], '/');
+	end = ft_atoi(sp[0]);
+	temp = *ver;
+	c = -1;
+	while (++c <= end)
+		temp = temp->next;
+	trian->vert[2] = temp->ver;
+	temp = *ver;
+	c = -1;
+	end = ft_atoi(sp[ft_doublestrlen(sp) - 1]);
+	while (++c <= end)
+		temp = temp->next;
+	trian->norm = temp->ver;
+	trian->next = NULL;
+	printf("TRIAN 1X = %s\n", trian->vert[0].x);
+	printf("TRIAN 1Y = %s\n", trian->vert[0].y);
+	printf("TRIAN 1Z = %s\n", trian->vert[0].z);
+	return (trian);
+}
+
+void	trian_lister(char **fl, t_tri **tri, t_ver **ver)
+{
+	char	**t;
+	int		i;
+
+	i = -1;
+	if (ft_doublestrlen(fl) == 3)
+		new_face(tri, face_creator(fl, ver));
+	t = malloc(sizeof(char *) * 4);
+	if (ft_doublestrlen(fl) == 4)
+	t[3] = NULL;
+	{
+		t[0] = fl[0];
+		t[1] = fl[1];
+		t[2] = fl[2];
+		new_face(tri, face_creator(t, ver));
+		t[0] = fl[0];
+		t[1] = fl[2];
+		t[2] = fl[3];
+		new_face(tri, face_creator(t, ver));
+	}
+	if (ft_doublestrlen(fl) == 5)
+	{
+		t[0] = fl[0];
+		t[1] = fl[1];
+		t[2] = fl[2];
+		new_face(tri, face_creator(t, ver));
+		t[0] = fl[0];
+		t[1] = fl[2];
+		t[2] = fl[4];
+		new_face(tri, face_creator(t, ver));
+		t[0] = fl[2];
+		t[1] = fl[3];
+		t[2] = fl[4];
+		new_face(tri, face_creator(t, ver));
+	}
+	if (ft_doublestrlen(fl) == 6)
+	{
+		t[0] = fl[0];
+		t[1] = fl[1];
+		t[2] = fl[2];
+		new_face(tri, face_creator(t, ver));
+		t[0] = fl[0];
+		t[1] = fl[2];
+		t[2] = fl[4];
+		new_face(tri, face_creator(t, ver));
+		t[0] = fl[2];
+		t[1] = fl[3];
+		t[2] = fl[4];
+		new_face(tri, face_creator(t, ver));
+		t[0] = fl[4];
+		t[1] = fl[5];
+		t[2] = fl[0];
+		new_face(tri, face_creator(t, ver));
+	}
+}
+
+void	lister(t_ver **ver, t_norm **normal, t_tri **tri, char *line)
 {
 	char	**fl;
 
@@ -104,9 +224,11 @@ void	lister(t_tri **trian, t_norm **normal, char *line)
 	if (!line)
 		return ;
 	if (line[0] == 'v' && line[1] == ' ')
-		new_trian(trian, trian_creator(fl));
+		new_trian(ver, trian_creator(fl));
 	else if (line[0] == 'v' && line[1] == 'n')
 		new_norm(normal, norm_creator(fl));
+	else if (line[0] == 'f')
+		trian_lister(fl, tri, ver);
 }
 
 int	main(int ac, char **av)
@@ -114,26 +236,32 @@ int	main(int ac, char **av)
 	int		file;
 	int		fd;
 	char	*line;
-	t_tri	*trian;
+	t_ver	*vertice;
 	t_norm	*normal;
+	t_tri	*tri;
 
 	(void)ac;
-	ft_memset(&trian, 0, sizeof(trian));
+	ft_memset(&vertice, 0, sizeof(vertice));
 	ft_memset(&normal, 0, sizeof(normal));
+	ft_memset(&tri, 0, sizeof(tri));
 	file = open(av[1], O_RDONLY);
 	line = get_next_line(file);
-	lister(&trian, &normal, line);
+	lister(&vertice, &normal, &tri, line);
 	while (line != NULL)
 	{
 		line = get_next_line(file);
-		lister(&trian, &normal, line);
+		lister(&vertice, &normal, &tri, line);
 	}
 	fd = open(av[2], O_CREAT | O_RDWR
 			| O_TRUNC | O_APPEND, 0644);
-	while (trian != NULL)
+	while (tri != NULL)
 	{
 		write(fd, "t ", 2);
-		vec_printer(trian->tri, fd);
+		vec_printer(tri->vert[0], fd);
+		write (fd, "|", 1);
+		vec_printer(tri->vert[1], fd);
+		write (fd, "|", 1);
+		vec_printer(tri->vert[2], fd);
 		write (fd, " ", 1);
 		vec_printer(normal->norm, fd);
 		write (fd, " ", 1);
@@ -144,11 +272,7 @@ int	main(int ac, char **av)
 		}
 		else
 			write(fd, "255,255,255\n", 12);
-		trian = trian->next;
-	}
-	while (normal != NULL)
-	{
-		normal = normal->next;
+		tri = tri->next;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/08 18:15:34 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/08 21:55:37 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,15 @@ typedef struct s_plane
 	struct s_plane	*next;
 }	t_plane;
 
+typedef struct s_tri
+{
+	struct s_vec	pos;
+	struct s_vec	orient;
+	struct s_vec	color;
+	int				id;
+	struct s_tri	*next;
+}	t_tri;
+
 typedef struct s_disc
 {
 	struct s_vec	pos;
@@ -146,6 +155,7 @@ typedef struct s_elem
 	t_sphere	*sphere;
 	t_cyl		*cyl;
 	t_plane		*pl;
+	t_tri		*t;
 }	t_elem;
 
 typedef struct s_object

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/08 19:12:31 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/09 15:21:13 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,13 @@ int	elem_type(char *line, t_elem *elem)
 		if (new_cyl(elem, cyl_creator(fl, elem)))
 			return (error_printer(3), 1);
 	}
+	// else if (line[0] == 't')
+	// {
+	// 	if (ft_doublestrlen(fl) != 4)
+	// 		return (error_printer(3), 1);
+	// 	if (new_triangle(elem, triangle_creator(fl, elem)))
+	// 		return (error_printer(3), 1);
+	// }
 	else
 		return (error_printer(3), 1);
 	return (0);
