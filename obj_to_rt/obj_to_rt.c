@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:47:43 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/10 16:31:58 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:37:22 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ t_ver	*trian_creator(char **fl)
 	t_ver	*trian;
 
 	trian = malloc(sizeof(t_ver));
-	trian->ver.x = last_char_trimmer(fl[1]);
-	trian->ver.y = last_char_trimmer(fl[2]);
-	trian->ver.z = last_char_trimmer(fl[3]);
+	trian->ver.x = fl[1];
+	trian->ver.y = fl[2];
+	trian->ver.z = fl[3];
 	trian->next = NULL;
 	return (trian);
 }
@@ -112,17 +112,14 @@ t_norm	*norm_creator(char **fl)
 	return (trian);
 }
 
-t_tri	*face_creator(char **fl, t_ver **ver, t_norm **norm)
+t_tri	*face_creator(char **fl, t_ver **ver)
 {
 	t_tri	*trian;
 	t_ver	*temp;
-	t_norm	*n_temp;
 	char	**sp;
 	int		c;
 	int		end;
-	int		i;
 
-	i = -1;
 	trian = malloc(sizeof(t_tri));
 	sp = ft_split(fl[0], '/');
 	end = ft_atoi(sp[0]) - 1;
@@ -147,70 +144,36 @@ t_tri	*face_creator(char **fl, t_ver **ver, t_norm **norm)
 	while (++c < end)
 		temp = temp->next;
 	trian->vert[2] = temp->ver;
-	n_temp = *norm;
 	c = -1;
-	end = ft_atoi(sp[ft_doublestrlen(sp) - 1]) - 1;
-	while (++c < end)
-		n_temp = n_temp->next;
-	trian->norm = n_temp->norm;
 	trian->next = NULL;
 	return (trian);
 }
 
-void	trian_lister(char **fl, t_tri **tri, t_ver **ver, t_norm **norm)
+void	trian_lister(char **fl, t_tri **tri, t_ver **ver)
 {
 	char	**t;
 	int		i;
+	int		e;
 
 	i = -1;
-	if (ft_doublestrlen(fl) == 4)
-		new_face(tri, face_creator(fl, ver, norm));
 	t = malloc(sizeof(char *) * 4);
 	t[3] = NULL;
-	if (ft_doublestrlen(fl) == 5)
+	if (ft_doublestrlen(fl) == 4)
 	{
 		t[0] = fl[1];
 		t[1] = fl[2];
 		t[2] = fl[3];
-		new_face(tri, face_creator(t, ver, norm));
-		t[0] = fl[1];
-		t[1] = fl[3];
-		t[2] = fl[4];
-		new_face(tri, face_creator(t, ver, norm));
+		new_face(tri, face_creator(t, ver));
+		return ;
 	}
-	if (ft_doublestrlen(fl) == 6)
+	e = ft_doublestrlen(fl) - 1;
+	while (e - 1 > 1)
 	{
 		t[0] = fl[1];
-		t[1] = fl[2];
-		t[2] = fl[3];
-		new_face(tri, face_creator(t, ver, norm));
-		t[0] = fl[1];
-		t[1] = fl[3];
-		t[2] = fl[5];
-		new_face(tri, face_creator(t, ver, norm));
-		t[0] = fl[3];
-		t[1] = fl[4];
-		t[2] = fl[5];
-		new_face(tri, face_creator(t, ver, norm));
-	}
-	if (ft_doublestrlen(fl) == 7)
-	{
-		t[0] = fl[1];
-		t[1] = fl[2];
-		t[2] = fl[3];
-		new_face(tri, face_creator(t, ver, norm));
-		t[0] = fl[1];
-		t[1] = fl[3];
-		t[2] = fl[5];
-		new_face(tri, face_creator(t, ver, norm));
-		t[0] = fl[3];
-		t[1] = fl[4];
-		t[2] = fl[5];
-		new_face(tri, face_creator(t, ver, norm));
-		t[0] = fl[5];
-		t[1] = fl[6];
-		t[2] = fl[1];
-		new_face(tri, face_creator(t, ver, norm));
+		t[1] = fl[e];
+		t[2] = fl[e - 1];
+		new_face(tri, face_creator(t, ver));
+		e--;
 	}
 }
 
@@ -226,7 +189,7 @@ void	lister(t_ver **ver, t_norm **normal, t_tri **tri, char *line)
 	else if (line[0] == 'v' && line[1] == 'n')
 		new_norm(normal, norm_creator(fl));
 	else if (line[0] == 'f')
-		trian_lister(fl, tri, ver, normal);
+		trian_lister(fl, tri, ver);
 }
 
 int	main(int ac, char **av)
@@ -264,8 +227,6 @@ int	main(int ac, char **av)
 		vec_printer(tri->vert[1], fd);
 		write (fd, "|", 1);
 		vec_printer(tri->vert[2], fd);
-		write (fd, " ", 1);
-		vec_printer(normal->norm, fd);
 		write (fd, " ", 1);
 		if (av[3])
 		{

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:04:49 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/08 18:28:34 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/10 23:12:19 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,37 @@ t_vec	light_comb_disc(t_disc disc, t_elem *elem, t_vec rtn)
 		arg.pos = rtn;
 		if (inter_with_disc(elem, arg, disc, *tmp) == 1)
 			aux = new_vec(0.0, 0.0, 0.0);
+		light = vec_add(aux, light);
+		light = vec_clamp(0, 1, light);
+		tmp = tmp->next;
+	}
+	return (light);
+}
+
+t_vec	light_comb_tri(t_tri tri, t_elem *elem, t_vec rtn)
+{
+	t_light		*tmp;
+	t_vec		light;
+	t_vec		aux;
+	t_dirpos	arg;
+	double		t;
+
+	tmp = elem->light;
+	t = clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
+				/ (tmp->bright * 1000)));
+	light = (vec_mult(vec_mult_vec(col_to_01(tri.color),
+					col_to_01(tmp->color)), t * tmp->bright));
+	arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
+	arg.pos = rtn;
+	tmp = tmp->next;
+	while (tmp != NULL)
+	{
+		t = clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
+					/ (tmp->bright * 1000)));
+		aux = (vec_mult(vec_mult_vec(col_to_01(tri.color),
+						col_to_01(tmp->color)), t * tmp->bright));
+		arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
+		arg.pos = rtn;
 		light = vec_add(aux, light);
 		light = vec_clamp(0, 1, light);
 		tmp = tmp->next;

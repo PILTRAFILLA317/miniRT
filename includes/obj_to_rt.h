@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:50:35 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/09 18:30:58 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:35:43 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_vec
 typedef struct s_tri
 {
 	t_vec			vert[3];
-	t_vec			norm;
 	struct s_tri	*next;
 }	t_tri;
 

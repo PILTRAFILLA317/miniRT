@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 20:52:04 by umartin-          #+#    #+#             */
-/*   Updated: 2023/01/31 17:47:04 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/10 19:09:27 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,4 +150,14 @@ t_vec	vec_unit(t_vec vec)
 	mod = vec_len(vec);
 	rtn = vec_div(vec, mod);
 	return(rtn);
+}
+
+t_vec	vec_cross(t_vec v, t_vec w)
+{
+	t_vec	u;
+
+	u.x = (v.y * w.z) - (v.z * w.y);
+	u.y = (v.z * w.x) - (v.x * w.z);
+	u.z = (v.x * w.y) - (v.y * w.x);
+	return (u);
 }

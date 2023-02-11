@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/08 18:46:42 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/11 14:57:43 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	t_sphere	*s_head;
 	t_cyl		*c_head;
 	t_plane		*p_head;
+	t_tri		*t_head;
 
 	s_head = elem->sphere;
 	c_head = elem->cyl;
 	p_head = elem->pl;
+	t_head = elem->t;
 	len = 0;
 	obj.elem = NULL;
 	while (c_head != NULL)
@@ -73,7 +75,7 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 				len = vec_len(vec_diff(pos,
 							disc_intersect_point(pos, &c_head->bot_disc, dir)));
 				obj.elem = &c_head->bot_disc;
-				obj.type = dt;
+				obj.type = d;
 			}
 		}
 		if (disc_intersect(pos, &c_head->top_disc, dir) == 1)
@@ -84,7 +86,7 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 				len = vec_len(vec_diff(pos,
 							disc_intersect_point(pos, &c_head->top_disc, dir)));
 				obj.elem = &c_head->top_disc;
-				obj.type = db;
+				obj.type = d;
 			}
 		}
 		c_head = c_head->next;
@@ -126,6 +128,21 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 			}
 		}
 		s_head = s_head->next;
+	}
+	while (t_head != NULL)
+	{
+		if (tri_intersect(pos, t_head, dir))
+		{
+			if (vec_len(vec_diff(pos, t_intersect_point(pos,
+							t_head, dir))) < len || len == 0)
+			{
+				len = vec_len(vec_diff(pos,
+							t_intersect_point(pos, t_head, dir)));
+				obj.elem = t_head;
+				obj.type = t;
+			}
+		}
+		t_head = t_head->next;
 	}
 	return (obj);
 }
@@ -190,7 +207,7 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 		final = vec_clamp(0, 1, final);
 		return (convert_rgb(col_to_255(final)));
 	}
-	if (obj.type == dt || obj.type == db)
+	if (obj.type == d)
 	{
 		rtn = disc_intersect_point(pos, obj.elem, dir);
 		light = light_comb_disc(*(t_disc *)obj.elem, elem, rtn);
@@ -221,6 +238,17 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 		final = vec_add(alight, light);
 		final = vec_clamp(0, 1, final);
 		return (convert_rgb(col_to_255(final)));
+	}
+	if (obj.type == t)
+	{
+		return (0xFFFFFF);
+		// rtn = t_intersect_point(pos, obj.elem, dir);
+		// alight = (vec_mult(vec_mult_vec(col_to_01(((t_tri *)obj.elem)->color),
+		// 				col_to_01(elem->alight.color)), elem->alight.ratio));
+		// light = light_comb_tri(*((t_tri *)obj.elem), elem, rtn);
+		// final = vec_add(alight, light);
+		// final = vec_clamp(0, 1, final);
+		// return (convert_rgb(col_to_255(final)));
 	}
 	return (0);
 }
