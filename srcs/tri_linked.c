@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 22:06:17 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/11 16:33:26 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:21:15 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_tri	*triangle_creator(char **fl, t_elem *e)
 {
 	char	**ver;
 	char	**ver_pos;
-	char	**dir;
 	char	**rgb;
 	t_tri	*tri;
 	t_vec	v0v1;

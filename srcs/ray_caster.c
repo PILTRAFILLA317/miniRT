@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/11 14:57:43 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:15:32 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,16 @@ double	num_to_pos(double num)
 		return (num * -1);
 }
 
-t_vec	vec_rotation(int x, int y, t_elem *elem)
+t_vec	vec_rotation(double x, double y, t_elem *elem)
 {
 	t_vec	rtn;
-	double	imageaspectratio;
-	double	px;
-	double	py;
-	double	scale;
 
-	scale = tan((elem->cam.fov * 0.5) * (M_PI / 180));
-	imageaspectratio = WIN_X / WIN_Y;
-	px = (2.0 * ((x + 0.5) / WIN_X) - 1.0) * imageaspectratio * scale;
-	py = (1.0 - 2.0 * ((y + 0.5) / WIN_Y)) * scale;
-	rtn.x = px + elem->cam.orient.x;
-	rtn.y = py + elem->cam.orient.y;
-	rtn.z = elem->cam.orient.z;
+	rtn = vec_add(vec_add(vec_mult(elem->cam.up, x * elem->cam.h),
+			vec_mult(elem->cam.right, y * elem->cam.w)), elem->cam.orient);
+	double scale = tan((elem->cam.fov * 0.5) * (M_PI / 180));
+	double imageaspectratio = WIN_X / WIN_Y;
+	rtn.x = rtn.x * scale * imageaspectratio;
+	rtn.y = rtn.y * scale / imageaspectratio;
 	rtn = vec_norm (rtn);
 	return (rtn);
 }
@@ -257,6 +252,8 @@ void	ray_caster(t_elem *elem)
 {
 	int			x;
 	int			y;
+	double		xx;
+	double		yy;
 	t_object	obj;
 
 	x = 0;
@@ -266,8 +263,10 @@ void	ray_caster(t_elem *elem)
 		y = 0;
 		while (y <= WIN_Y)
 		{
+			xx = (double)x * 2 / WIN_X - 1;
+			yy = (double)y * 2 / WIN_Y - 1;
 			mlx_pixel_put(elem->mlx, elem->win, x, y,
-				color(elem, vec_rotation(x, y, elem), elem->cam.pos, obj));
+				color(elem, vec_rotation(xx, yy, elem), elem->cam.pos, obj));
 			y++;
 		}
 		x++;

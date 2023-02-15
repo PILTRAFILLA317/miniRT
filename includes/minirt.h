@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/10 23:12:42 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:11:23 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,15 @@ typedef struct s_cam
 {
 	struct s_rotmtx	mtx;
 	struct s_vec	pos;
+	struct s_vec	right;
+	struct s_vec	up;
+	struct s_vec	forward;
 	struct s_vec	orient;
 	double			fov;
+	double			h;
+	double			w;
+	double			theta;
+	double			a_ratio;
 }	t_cam;
 
 typedef struct s_sphere
