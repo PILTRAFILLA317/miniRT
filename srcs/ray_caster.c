@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 16:42:22 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/16 21:54:52 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,27 +250,45 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	return (0);
 }
 
-void	ray_caster(t_elem *elem)
+void	*thread_routine(void *data)
 {
-	int			x;
+	t_th		th;
+	int			end;
 	int			y;
+	int			x;
 	double		xx;
 	double		yy;
 	t_object	obj;
 
-	y = 0;
+	th = *(t_th *)data;
 	obj.type = 4;
-	while (y <= WIN_Y)
+	printf("%lf\n", th.elem->cam.fov);
+	end = (WIN_Y / NUM_THREAD * th.core) + (WIN_Y / NUM_THREAD);
+	y = WIN_Y / NUM_THREAD * th.core;
+	while (y <= end)
 	{
 		x = 0;
 		while (x <= WIN_X)
 		{
 			xx = (double)x * 2 / WIN_X - 1;
 			yy = 1 - (double)y * 2 / WIN_Y;
-			mlx_pixel_put(elem->mlx, elem->win, x, y,
-				color(elem, vec_rotation(xx, yy, elem), elem->cam.pos, obj));
+			mlx_pixel_put(th.elem->mlx, th.elem->win, x, y,
+				color(th.elem, vec_rotation(xx, yy, th.elem), th.elem->cam.pos, obj));
 			x++;
 		}
 		y++;
+	}
+	return (NULL);
+}
+
+void	ray_caster(t_elem *elem)
+{
+	int			i;
+
+	i = -1;
+	while (++i < NUM_THREAD)
+	{
+		elem->th[i].elem = elem;
+		pthread_create(&elem->th[i].th, NULL, thread_routine, &elem->th[i]);
 	}
 }

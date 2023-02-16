@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/15 18:11:23 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/16 21:31:47 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <pthread.h>
 # include <math.h>
 
 # define KEY_ESC 53
 # define WIN_X 1920.0
 # define WIN_Y 1080.0
 
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE	1
+# define NUM_THREAD		12
 
 # define RED	"\033[0;31m"
 # define GREEN	"\033[0;32m"
@@ -152,8 +154,16 @@ typedef struct s_cyl
 	struct s_cyl	*next;
 }	t_cyl;
 
+typedef struct s_th
+{
+	pthread_t		th;
+	int				core;
+	struct s_elem	*elem;
+}	t_th;
+
 typedef struct s_elem
 {
+	t_th		th[NUM_THREAD];
 	void		*mlx;
 	void		*win;
 	t_alight	alight;
