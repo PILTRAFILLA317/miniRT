@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/11 16:34:02 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:44:26 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,13 @@ int	ft_keypress(int keycode, t_elem *elem)
 	{
 		mlx_destroy_window(elem->mlx, elem->win);
 		exit(0);
+	}
+	if (keycode == 2)
+	{
+		mlx_clear_window(elem->mlx, elem->win);
+		elem->cam.orient.x += 0.1;
+		elem->cam.orient = vec_norm(elem->cam.orient);
+		ray_caster(elem);
 	}
 	return (0);
 }

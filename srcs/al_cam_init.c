@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:50:21 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/15 17:50:34 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:50:41 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,20 @@ int	second_line_cam(char *line, t_elem *elem)
 	elem->cam.orient.y = ft_strtod(rot[1]);
 	elem->cam.orient.z = ft_strtod(rot[2]);
 	elem->cam.orient = vec_norm(elem->cam.orient);
-	elem->cam.a_ratio = WIN_X / WIN_Y;
+	elem->cam.a_ratio = (double)WIN_X / (double)WIN_Y;
 	elem->cam.fov = ft_strtod(fl[3]);
 	elem->cam.theta = elem->cam.fov * M_PI / 180.0;
-	elem->cam.h = tan(elem->cam.theta / 2.0);
-	elem->cam.w = elem->cam.a_ratio * elem->cam.h;
-	elem->cam.up = vec_norm(vec_cross(elem->cam.orient, new_vec(0.0, 1.0, 0.0)));
-	elem->cam.right = vec_norm(vec_cross(elem->cam.orient, elem->cam.up));
+	//elem->cam.h = tan(elem->cam.theta / 2.0);
+	//elem->cam.w = elem->cam.a_ratio * elem->cam.h;
+	elem->cam.w = tan(elem->cam.fov * M_PI / 360.0);
+	elem->cam.h = elem->cam.w / WIN_X * WIN_Y;
+	if ((elem->cam.orient.x == 0 && elem->cam.orient.y == 1 && elem->cam.orient.z == 0)
+		|| (elem->cam.orient.x == 0 && elem->cam.orient.y == -1 && elem->cam.orient.z == 0))
+		elem->cam.up = new_vec(0.0, 0.0, 1.0);
+	else
+		elem->cam.up = new_vec(0.0, 1.0, 0.0);
+	elem->cam.right = vec_mult(vec_norm(vec_cross(elem->cam.orient, elem->cam.up)), -1);
+	elem->cam.up = vec_mult(vec_norm(vec_cross(elem->cam.right, elem->cam.orient)), -1);
 	if (cam_checker(elem) == -1)
 		return (1);
 	return (0);

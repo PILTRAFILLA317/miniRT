@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/15 18:15:32 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:42:22 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ double	num_to_pos(double num)
 t_vec	vec_rotation(double x, double y, t_elem *elem)
 {
 	t_vec	rtn;
+	t_vec	right;
+	t_vec	up;
 
-	rtn = vec_add(vec_add(vec_mult(elem->cam.up, x * elem->cam.h),
-			vec_mult(elem->cam.right, y * elem->cam.w)), elem->cam.orient);
-	double scale = tan((elem->cam.fov * 0.5) * (M_PI / 180));
-	double imageaspectratio = WIN_X / WIN_Y;
-	rtn.x = rtn.x * scale * imageaspectratio;
-	rtn.y = rtn.y * scale / imageaspectratio;
+	right = vec_mult(elem->cam.right, x * elem->cam.w);
+	up = vec_mult(elem->cam.up, y * elem->cam.h);
+	rtn = vec_add(vec_add(right,up),elem->cam.orient);
+	//double imageaspectratio = WIN_X / WIN_Y;
+	//rtn.x = rtn.x * imageaspectratio;
+	//rtn.y = rtn.y / imageaspectratio;
 	rtn = vec_norm (rtn);
 	return (rtn);
 }
@@ -256,19 +258,19 @@ void	ray_caster(t_elem *elem)
 	double		yy;
 	t_object	obj;
 
-	x = 0;
+	y = 0;
 	obj.type = 4;
-	while (x <= WIN_X)
+	while (y <= WIN_Y)
 	{
-		y = 0;
-		while (y <= WIN_Y)
+		x = 0;
+		while (x <= WIN_X)
 		{
 			xx = (double)x * 2 / WIN_X - 1;
-			yy = (double)y * 2 / WIN_Y - 1;
+			yy = 1 - (double)y * 2 / WIN_Y;
 			mlx_pixel_put(elem->mlx, elem->win, x, y,
 				color(elem, vec_rotation(xx, yy, elem), elem->cam.pos, obj));
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
