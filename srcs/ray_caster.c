@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/17 19:08:17 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/17 22:53:37 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,7 @@ t_vec	vec_rotation(double x, double y, t_elem *elem)
 
 	right = vec_mult(elem->cam.right, x * elem->cam.w);
 	up = vec_mult(elem->cam.up, y * elem->cam.h);
-	rtn = vec_add(vec_add(right,up),elem->cam.orient);
-	//double imageaspectratio = WIN_X / WIN_Y;
-	//rtn.x = rtn.x * imageaspectratio;
-	//rtn.y = rtn.y / imageaspectratio;
+	rtn = vec_add(vec_add(right, up), elem->cam.orient);
 	rtn = vec_norm (rtn);
 	return (rtn);
 }
@@ -90,6 +87,15 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	}
 	while (p_head != NULL)
 	{
+
+		if (o.type == 0)
+		{
+			if (p_head->id == ((t_plane *)o.elem)->id)
+			{
+				p_head = p_head->next;
+				continue ;
+			}
+		}
 		if (pl_intersect(pos, p_head, dir))
 		{
 			if (vec_len(vec_diff(pos, pl_intersect_point(pos,
@@ -183,6 +189,34 @@ int	sph_mirror(t_elem *elem, t_vec dir, t_sphere sph, t_vec rtn)
 	return (convert_rgb(col_to_255(final)));
 }
 
+int	pl_mirror(t_elem *elem, t_vec dir, t_plane pl, t_vec rtn)
+{
+	t_vec		ref;
+	t_vec		alight;
+	t_vec		light;
+	t_vec		final;
+	t_vec		rgb;
+	t_object	obj;
+
+	obj.type = 0;
+	obj.elem = &pl;
+	ref = vec_mult_vec(pl.orient, dir);
+	ref = vec_mult_vec(ref, pl.orient);
+	ref = vec_mult (ref, -2);
+	ref = vec_add(dir, ref);
+	ref = vec_norm(ref);
+	alight = (vec_mult(vec_mult_vec(col_to_01(pl.color),
+					col_to_01(elem->alight.color)), elem->alight.ratio));
+	light = light_comb_pl(pl, elem, rtn);
+	final = vec_add(alight, light);
+	final = vec_clamp(0, 1, final);
+	final = vec_mult(final, (1 - pl.ref));
+	rgb = col_to_01(double_to_rgb((color(elem, ref, rtn, obj))));
+	rgb = vec_mult(rgb, pl.ref);
+	final = vec_add(final, rgb);
+	return (convert_rgb(col_to_255(final)));
+}
+
 int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 {
 	t_vec		rtn;
@@ -229,6 +263,8 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	if (obj.type == p)
 	{
 		rtn = pl_intersect_point(pos, obj.elem, dir);
+		if (((t_plane *)obj.elem)->x == 1)
+			return (pl_mirror(elem, dir, (*(t_plane *)obj.elem), rtn));
 		alight = (vec_mult(vec_mult_vec(col_to_01(((t_plane *)obj.elem)->color),
 						col_to_01(elem->alight.color)), elem->alight.ratio));
 		light = light_comb_pl(*((t_plane *)obj.elem), elem, rtn);
@@ -238,7 +274,6 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	}
 	if (obj.type == t)
 	{
-		return (0xFFFFFF);
 		rtn = t_intersect_point(pos, obj.elem, dir);
 		alight = (vec_mult(vec_mult_vec(col_to_01(((t_tri *)obj.elem)->color),
 						col_to_01(elem->alight.color)), elem->alight.ratio));
@@ -294,7 +329,8 @@ void	ray_caster(t_elem *elem)
 	{
 		elem->th[i].elem = elem;
 		elem->th[i].core = i;
-		if (pthread_create(&elem->th[i].th, NULL, thread_routine, &elem->th[i]) != 0)
+		if (pthread_create(&elem->th[i].th, NULL, thread_routine,
+				&elem->th[i]) != 0)
 			printf("WUAAAAAA");
 	}
 	i = -1;

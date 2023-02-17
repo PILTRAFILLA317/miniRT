@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:04:49 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/10 23:12:19 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/17 19:43:47 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,10 @@ t_vec	light_comb_tri(t_tri tri, t_elem *elem, t_vec rtn)
 	double		t;
 
 	tmp = elem->light;
-	t = clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
+	t = vec_dot(vec_norm(tri.orient), vec_norm(vec_diff(tmp->pos, rtn)));
+	t = clamp(-1, 1, t);
+	t = num_to_pos(t);
+	t = t * clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
 				/ (tmp->bright * 1000)));
 	light = (vec_mult(vec_mult_vec(col_to_01(tri.color),
 					col_to_01(tmp->color)), t * tmp->bright));
@@ -185,7 +188,10 @@ t_vec	light_comb_tri(t_tri tri, t_elem *elem, t_vec rtn)
 	tmp = tmp->next;
 	while (tmp != NULL)
 	{
-		t = clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
+		t = vec_dot(vec_norm(tri.orient), vec_norm(vec_diff(tmp->pos, rtn)));
+		t = num_to_pos(t);
+		t = clamp(-1, 1, t);
+		t = t * clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
 					/ (tmp->bright * 1000)));
 		aux = (vec_mult(vec_mult_vec(col_to_01(tri.color),
 						col_to_01(tmp->color)), t * tmp->bright));

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/17 18:12:44 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/17 19:43:40 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ char		*first_char_trimmer(char	*str);
 char		*last_char_trimmer(char	*str);
 void		error_printer(int i);
 int			digit_checker(char *str);
+double		num_to_pos(double num);
 
 ////////// AL_CAM_INIT //////////
 int			first_line_alight(char *line, t_elem *elem);
