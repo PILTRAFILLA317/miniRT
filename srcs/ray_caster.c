@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 21:54:52 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/17 19:08:17 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,13 +239,13 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	if (obj.type == t)
 	{
 		return (0xFFFFFF);
-		// rtn = t_intersect_point(pos, obj.elem, dir);
-		// alight = (vec_mult(vec_mult_vec(col_to_01(((t_tri *)obj.elem)->color),
-		// 				col_to_01(elem->alight.color)), elem->alight.ratio));
-		// light = light_comb_tri(*((t_tri *)obj.elem), elem, rtn);
-		// final = vec_add(alight, light);
-		// final = vec_clamp(0, 1, final);
-		// return (convert_rgb(col_to_255(final)));
+		rtn = t_intersect_point(pos, obj.elem, dir);
+		alight = (vec_mult(vec_mult_vec(col_to_01(((t_tri *)obj.elem)->color),
+						col_to_01(elem->alight.color)), elem->alight.ratio));
+		light = light_comb_tri(*((t_tri *)obj.elem), elem, rtn);
+		final = vec_add(alight, light);
+		final = vec_clamp(0, 1, final);
+		return (convert_rgb(col_to_255(final)));
 	}
 	return (0);
 }
@@ -256,13 +256,13 @@ void	*thread_routine(void *data)
 	int			end;
 	int			y;
 	int			x;
+	int			clr;
 	double		xx;
 	double		yy;
 	t_object	obj;
 
 	th = *(t_th *)data;
 	obj.type = 4;
-	printf("%lf\n", th.elem->cam.fov);
 	end = (WIN_Y / NUM_THREAD * th.core) + (WIN_Y / NUM_THREAD);
 	y = WIN_Y / NUM_THREAD * th.core;
 	while (y <= end)
@@ -272,8 +272,10 @@ void	*thread_routine(void *data)
 		{
 			xx = (double)x * 2 / WIN_X - 1;
 			yy = 1 - (double)y * 2 / WIN_Y;
-			mlx_pixel_put(th.elem->mlx, th.elem->win, x, y,
-				color(th.elem, vec_rotation(xx, yy, th.elem), th.elem->cam.pos, obj));
+			clr = color(th.elem, vec_rotation(xx, yy, th.elem), th.elem->cam.pos, obj);
+			pthread_mutex_lock(&th.elem->pixl);
+			mlx_pixel_put(th.elem->mlx, th.elem->win, x, y, clr);
+			pthread_mutex_unlock(&th.elem->pixl);
 			x++;
 		}
 		y++;
@@ -283,12 +285,20 @@ void	*thread_routine(void *data)
 
 void	ray_caster(t_elem *elem)
 {
-	int			i;
+	int	i;
 
 	i = -1;
+	elem->th = (t_th *)malloc(sizeof(t_th) * NUM_THREAD);
+	pthread_mutex_init(&elem->pixl, 0);
 	while (++i < NUM_THREAD)
 	{
 		elem->th[i].elem = elem;
-		pthread_create(&elem->th[i].th, NULL, thread_routine, &elem->th[i]);
+		elem->th[i].core = i;
+		if (pthread_create(&elem->th[i].th, NULL, thread_routine, &elem->th[i]) != 0)
+			printf("WUAAAAAA");
 	}
+	i = -1;
+	while (++i < NUM_THREAD)
+		if (pthread_join(elem->th[i].th, NULL))
+			printf("WUAAAAAA");
 }

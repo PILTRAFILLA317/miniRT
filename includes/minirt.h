@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 21:31:47 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:12:44 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,16 +163,17 @@ typedef struct s_th
 
 typedef struct s_elem
 {
-	t_th		th[NUM_THREAD];
-	void		*mlx;
-	void		*win;
-	t_alight	alight;
-	t_cam		cam;
-	t_light		*light;
-	t_sphere	*sphere;
-	t_cyl		*cyl;
-	t_plane		*pl;
-	t_tri		*t;
+	pthread_mutex_t	pixl;
+	t_th			*th;
+	void			*mlx;
+	void			*win;
+	t_alight		alight;
+	t_cam			cam;
+	t_light			*light;
+	t_sphere		*sphere;
+	t_cyl			*cyl;
+	t_plane			*pl;
+	t_tri			*t;
 }	t_elem;
 
 typedef struct s_object

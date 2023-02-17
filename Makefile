@@ -37,7 +37,7 @@ EOC = \033[1;0m
 
 HEADERS = minirt.h
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -O2 -pthread -g3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -O2 -pthread -g3 -Ofast #-fsanitize=address
 
 all: $(NAME)
 
