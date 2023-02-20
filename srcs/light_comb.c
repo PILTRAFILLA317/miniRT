@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:04:49 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/17 19:43:47 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:37:01 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,8 @@ t_vec	light_comb_tri(t_tri tri, t_elem *elem, t_vec rtn)
 					col_to_01(tmp->color)), t * tmp->bright));
 	arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
 	arg.pos = rtn;
+	if (inter_with_tri(elem, arg, tri, *tmp) == 1)
+		light = new_vec(0.0, 0.0, 0.0);
 	tmp = tmp->next;
 	while (tmp != NULL)
 	{
@@ -197,6 +199,8 @@ t_vec	light_comb_tri(t_tri tri, t_elem *elem, t_vec rtn)
 						col_to_01(tmp->color)), t * tmp->bright));
 		arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
 		arg.pos = rtn;
+		if (inter_with_tri(elem, arg, tri, *tmp) == 1)
+			light = new_vec(0.0, 0.0, 0.0);
 		light = vec_add(aux, light);
 		light = vec_clamp(0, 1, light);
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/17 19:43:40 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/20 18:42:52 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ typedef struct s_disc
 	struct s_vec	orient;
 	struct s_vec	color;
 	double			diam;
-	int				x;
 	int				id;
 }	t_disc;
 
@@ -148,7 +147,6 @@ typedef struct s_cyl
 	t_disc			bot_disc;
 	t_disc			top_disc;
 	double			diam;
-	int				x;
 	double			h;
 	int				id;
 	struct s_cyl	*next;
@@ -268,6 +266,7 @@ int			inter_with_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light);
 int			inter_with_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light);
 int			inter_with_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light);
 int			inter_with_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light);
+int			inter_with_tri(t_elem *elem, t_dirpos arg, t_tri tri, t_light light);
 int			color(t_elem *elem, t_vec dir, t_vec pos, t_object obj);
 
 #endif

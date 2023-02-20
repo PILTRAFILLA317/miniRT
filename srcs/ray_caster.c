@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/17 22:53:37 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/20 21:17:13 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,51 @@ int	pl_mirror(t_elem *elem, t_vec dir, t_plane pl, t_vec rtn)
 	return (convert_rgb(col_to_255(final)));
 }
 
+int	pl_checkboard(t_elem *elem, t_vec dir, t_plane pl, t_vec rtn)
+{
+	t_vec		final;
+	t_vec		zero;
+	t_vec		dir_zero;
+	t_vec		alight;
+	t_vec		light;
+	int			x;
+	int			y;
+	int			color;
+
+	dir_zero = vec_diff(pl.orient, dir);
+	zero = vec_diff(rtn, pl.pos);
+	x = rtn.x / 5;
+	y = rtn.y / 5;
+	if ((rtn.x > 0 && rtn.y > 0) || (rtn.x < 0 && rtn.y < 0))
+	{
+		if ((x % 2 != 0) && (y % 2 != 0))
+			color = 0xFFFFFF;
+		if ((x % 2 == 0) && (y % 2 != 0))
+			color = 0x000000;
+		if ((x % 2 != 0) && (y % 2 == 0))
+			color = 0x000000;
+		if ((x % 2 == 0) && (y % 2 == 0))
+			color = 0xFFFFFF;
+	}
+	else
+	{
+		if ((x % 2 != 0) && (y % 2 != 0))
+			color = 0x000000;
+		if ((x % 2 == 0) && (y % 2 != 0))
+			color = 0xFFFFFF;
+		if ((x % 2 != 0) && (y % 2 == 0))
+			color = 0xFFFFFF;
+		if ((x % 2 == 0) && (y % 2 == 0))
+			color = 0x000000;
+	}
+	alight = (vec_mult(vec_mult_vec(col_to_01(double_to_rgb(color)),
+					col_to_01(elem->alight.color)), elem->alight.ratio));
+	light = light_comb_pl(pl, elem, rtn);
+	final = vec_add(alight, light);
+	final = vec_clamp(0, 1, final);
+	return (convert_rgb(col_to_255(final)));
+}
+
 int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 {
 	t_vec		rtn;
@@ -265,6 +310,8 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 		rtn = pl_intersect_point(pos, obj.elem, dir);
 		if (((t_plane *)obj.elem)->x == 1)
 			return (pl_mirror(elem, dir, (*(t_plane *)obj.elem), rtn));
+		if (((t_plane *)obj.elem)->x == 2)
+			return (pl_checkboard(elem, dir, (*(t_plane *)obj.elem), rtn));
 		alight = (vec_mult(vec_mult_vec(col_to_01(((t_plane *)obj.elem)->color),
 						col_to_01(elem->alight.color)), elem->alight.ratio));
 		light = light_comb_pl(*((t_plane *)obj.elem), elem, rtn);
