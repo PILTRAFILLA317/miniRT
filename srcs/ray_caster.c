@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/20 21:17:13 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/28 18:55:13 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_vec	vec_rotation(double x, double y, t_elem *elem)
 	return (rtn);
 }
 
-t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
+t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object co)
 {
 	double		len;
 	t_object	obj;
@@ -41,11 +41,13 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	t_cyl		*c_head;
 	t_plane		*p_head;
 	t_tri		*t_head;
+	t_con		*o_head;
 
 	s_head = elem->sphere;
 	c_head = elem->cyl;
 	p_head = elem->pl;
 	t_head = elem->t;
+	o_head = elem->con;
 	len = 0;
 	obj.elem = NULL;
 	while (c_head != NULL)
@@ -88,9 +90,9 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	while (p_head != NULL)
 	{
 
-		if (o.type == 0)
+		if (co.type == 0)
 		{
-			if (p_head->id == ((t_plane *)o.elem)->id)
+			if (p_head->id == ((t_plane *)co.elem)->id)
 			{
 				p_head = p_head->next;
 				continue ;
@@ -111,9 +113,9 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	}
 	while (s_head != NULL)
 	{
-		if (o.type == 1)
+		if (co.type == 1)
 		{
-			if (s_head->id == ((t_sphere *)o.elem)->id)
+			if (s_head->id == ((t_sphere *)co.elem)->id)
 			{
 				s_head = s_head->next;
 				continue ;
@@ -146,6 +148,21 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 			}
 		}
 		t_head = t_head->next;
+	}
+	while (o_head != NULL)
+	{
+		if (con_intersect(pos, o_head, dir))
+		{
+			if (vec_len(vec_diff(pos, con_intersect_point(pos,
+							o_head, dir))) < len || len == 0)
+			{
+				len = vec_len(vec_diff(pos,
+							con_intersect_point(pos, o_head, dir)));
+				obj.elem = o_head;
+				obj.type = o;
+			}
+		}
+		o_head = o_head->next;
 	}
 	return (obj);
 }
@@ -219,50 +236,82 @@ int	pl_mirror(t_elem *elem, t_vec dir, t_plane pl, t_vec rtn)
 
 int	pl_checkboard(t_elem *elem, t_vec dir, t_plane pl, t_vec rtn)
 {
+	t_vec		ref;
 	t_vec		final;
 	t_vec		zero;
 	t_vec		dir_zero;
 	t_vec		alight;
+	t_object	obj;
 	t_vec		light;
+	t_vec		rgb;
 	int			x;
 	int			y;
-	int			color;
+	int			clor;
 
 	dir_zero = vec_diff(pl.orient, dir);
 	zero = vec_diff(rtn, pl.pos);
-	x = rtn.x / 5;
-	y = rtn.y / 5;
+	if ((num_to_pos(pl.orient.x) > num_to_pos(pl.orient.y)
+			&& num_to_pos(pl.orient.x) > num_to_pos(pl.orient.z))
+		&& (pl.orient.z == 0 || pl.orient.y))
+	{
+		x = rtn.y / 10;
+		y = rtn.z / 10;
+	}
+	else if ((num_to_pos(pl.orient.y) > num_to_pos(pl.orient.x)
+			&& num_to_pos(pl.orient.y) > num_to_pos(pl.orient.z))
+		&& (pl.orient.x == 0 || pl.orient.y == 0))
+	{
+		x = rtn.x / 10;
+		y = rtn.z / 10;
+	}
+	else
+	{
+		x = rtn.x / 10;
+		y = rtn.y / 10;
+	}
 	if ((rtn.x > 0 && rtn.y > 0) || (rtn.x < 0 && rtn.y < 0))
 	{
 		if ((x % 2 != 0) && (y % 2 != 0))
-			color = 0xFFFFFF;
+			clor = 0xFFFFFF;
 		if ((x % 2 == 0) && (y % 2 != 0))
-			color = 0x000000;
+			clor = 0x000000;
 		if ((x % 2 != 0) && (y % 2 == 0))
-			color = 0x000000;
+			clor = 0x000000;
 		if ((x % 2 == 0) && (y % 2 == 0))
-			color = 0xFFFFFF;
+			clor = 0xFFFFFF;
 	}
 	else
 	{
 		if ((x % 2 != 0) && (y % 2 != 0))
-			color = 0x000000;
+			clor = 0x000000;
 		if ((x % 2 == 0) && (y % 2 != 0))
-			color = 0xFFFFFF;
+			clor = 0xFFFFFF;
 		if ((x % 2 != 0) && (y % 2 == 0))
-			color = 0xFFFFFF;
+			clor = 0xFFFFFF;
 		if ((x % 2 == 0) && (y % 2 == 0))
-			color = 0x000000;
+			clor = 0x000000;
 	}
-	alight = (vec_mult(vec_mult_vec(col_to_01(double_to_rgb(color)),
+	obj.type = 0;
+	obj.elem = &pl;
+	ref = vec_mult_vec(pl.orient, dir);
+	ref = vec_mult_vec(ref, pl.orient);
+	ref = vec_mult (ref, -2);
+	ref = vec_add(dir, ref);
+	ref = vec_norm(ref);
+	pl.color = double_to_rgb(clor);
+	alight = (vec_mult(vec_mult_vec(col_to_01(pl.color),
 					col_to_01(elem->alight.color)), elem->alight.ratio));
 	light = light_comb_pl(pl, elem, rtn);
 	final = vec_add(alight, light);
 	final = vec_clamp(0, 1, final);
+	final = vec_mult(final, (1 - pl.ref));
+	rgb = col_to_01(double_to_rgb((color(elem, ref, rtn, obj))));
+	rgb = vec_mult(rgb, pl.ref);
+	final = vec_add(final, rgb);
 	return (convert_rgb(col_to_255(final)));
 }
 
-int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
+int	color(t_elem *elem, t_vec dir, t_vec pos, t_object co)
 {
 	t_vec		rtn;
 	t_object	obj;
@@ -270,7 +319,7 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 	t_vec		light;
 	t_vec		final;
 
-	obj = first_intersect(elem, dir, pos, o);
+	obj = first_intersect(elem, dir, pos, co);
 	if (obj.elem == NULL)
 		return (0);
 	if (obj.type == c)
@@ -329,38 +378,44 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object o)
 		final = vec_clamp(0, 1, final);
 		return (convert_rgb(col_to_255(final)));
 	}
+	if (obj.type == o)
+	{
+		rtn = con_intersect_point(pos, obj.elem, dir);
+		alight = (vec_mult(vec_mult_vec(col_to_01(((t_con *)obj.elem)->color),
+						col_to_01(elem->alight.color)), elem->alight.ratio));
+		light = light_comb_con(*(t_con *)obj.elem, elem, rtn);
+		final = vec_add(alight, light);
+		final = vec_clamp(0, 1, final);
+		return (convert_rgb(col_to_255(final)));
+	}
 	return (0);
 }
 
 void	*thread_routine(void *data)
 {
 	t_th		th;
-	int			end;
-	int			y;
-	int			x;
-	int			clr;
+	int			i[4];
 	double		xx;
 	double		yy;
 	t_object	obj;
 
 	th = *(t_th *)data;
-	obj.type = 4;
-	end = (WIN_Y / NUM_THREAD * th.core) + (WIN_Y / NUM_THREAD);
-	y = WIN_Y / NUM_THREAD * th.core;
-	while (y <= end)
+	obj.type = n;
+	i[0] = (WIN_Y / NUM_THREAD * th.core) + (WIN_Y / NUM_THREAD);
+	i[1] = WIN_Y / NUM_THREAD * th.core - 1;
+	while (++i[1] <= i[0])
 	{
-		x = 0;
-		while (x <= WIN_X)
+		i[2] = -1;
+		while (++i[2] <= WIN_X)
 		{
-			xx = (double)x * 2 / WIN_X - 1;
-			yy = 1 - (double)y * 2 / WIN_Y;
-			clr = color(th.elem, vec_rotation(xx, yy, th.elem), th.elem->cam.pos, obj);
+			xx = (double)i[2] * 2 / WIN_X - 1;
+			yy = 1 - (double)i[1] * 2 / WIN_Y;
+			i[3] = color(th.elem, vec_rotation(xx, yy, th.elem),
+					th.elem->cam.pos, obj);
 			pthread_mutex_lock(&th.elem->pixl);
-			mlx_pixel_put(th.elem->mlx, th.elem->win, x, y, clr);
+			mlx_pixel_put(th.elem->mlx, th.elem->win, i[2], i[1], i[3]);
 			pthread_mutex_unlock(&th.elem->pixl);
-			x++;
 		}
-		y++;
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/15 18:44:26 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:00:39 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,13 @@ int	elem_type(char *line, t_elem *elem)
 		if (ft_doublestrlen(fl) != 6 || cyl_pre_chkr(fl))
 			return (error_printer(3), 1);
 		if (new_cyl(elem, cyl_creator(fl, elem)))
+			return (error_printer(3), 1);
+	}
+	else if (line[0] == 'c' && line[1] == 'n')
+	{
+		// if (ft_doublestrlen(fl) != 6 || cyl_pre_chkr(fl))
+		// 	return (error_printer(3), 1);
+		if (new_cone(elem, cone_creator(fl, elem)))
 			return (error_printer(3), 1);
 	}
 	else if (line[0] == 't')

@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/20 18:42:52 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/28 19:01:52 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define BHCYN "\e[1;96m"
 # define BHWHT "\e[1;97m"
 
-enum e_type {p, s, c, d, t, n};
+enum e_type {p, s, c, d, t, o, n};
 
 typedef struct s_vec
 {
@@ -152,6 +152,16 @@ typedef struct s_cyl
 	struct s_cyl	*next;
 }	t_cyl;
 
+typedef struct s_con
+{
+	struct s_vec	pos;
+	struct s_vec	orient;
+	struct s_vec	color;
+	double			ang;
+	int				id;
+	struct s_con	*next;
+}	t_con;
+
 typedef struct s_th
 {
 	pthread_t		th;
@@ -172,6 +182,7 @@ typedef struct s_elem
 	t_cyl			*cyl;
 	t_plane			*pl;
 	t_tri			*t;
+	t_con			*con;
 }	t_elem;
 
 typedef struct s_object
@@ -213,6 +224,10 @@ int			new_cyl(t_elem *elem, t_cyl *new);
 t_cyl		*cyl_creator(char **fl, t_elem *e);
 int			cyl_pre_chkr(char **fl);
 
+////////// CON_LNKD //////////
+int			new_cone(t_elem *elem, t_con *new);
+t_con		*cone_creator(char **fl, t_elem *e);
+
 ////////// TRI_LNKD //////////
 t_tri		*triangle_creator(char **fl, t_elem *e);
 int			new_triangle(t_elem *elem, t_tri *new);
@@ -245,6 +260,8 @@ t_vec		double_to_rgb(int num);
 ////////// INTERSECTIONS //////////
 int			cyl_intersect(t_vec pos, t_cyl *cyl, t_vec dir);
 t_vec		cyl_intersect_point(t_vec pos, t_cyl *cyl, t_vec dir);
+t_vec		con_intersect_point(t_vec pos, t_con *con, t_vec dir);
+int			con_intersect(t_vec pos, t_con *con, t_vec dir);
 int			disc_intersect(t_vec pos, t_disc *disc, t_vec dir);
 t_vec		disc_intersect_point(t_vec pos, t_disc *disc, t_vec dir);
 t_vec		pl_intersect_point(t_vec pos, t_plane *pl, t_vec dir);
@@ -261,6 +278,7 @@ t_vec		light_comb_pl(t_plane pl, t_elem *elem, t_vec rtn);
 t_vec		light_comb_cyl(t_cyl cyl, t_elem *elem, t_vec rtn);
 t_vec		light_comb_disc(t_disc disc, t_elem *elem, t_vec rtn);
 t_vec		light_comb_tri(t_tri tri, t_elem *elem, t_vec rtn);
+t_vec		light_comb_con(t_con con, t_elem *elem, t_vec rtn);
 t_vec		mid_point(t_cyl cyl, t_vec inter);
 int			inter_with_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light);
 int			inter_with_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light);
