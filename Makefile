@@ -23,6 +23,9 @@ srcs/light_comb.c	\
 srcs/inter_with.c	\
 srcs/tri_linked.c	\
 srcs/tri_inter.c	\
+srcs/mirrors.c		\
+srcs/color_fun.c	\
+srcs/utils2.c		\
 
 OBJ = $(SRC:.c=.o)
 

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   inter_with.c                                       :+:      :+:    :+:   */
+/*   i_w.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "../includes/minirt.h"
 
-int	inter_with_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light)
+int	i_w_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light)
 {
 	t_sphere	*s_head;
 	t_cyl		*c_head;
@@ -66,7 +66,7 @@ int	inter_with_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light)
 	return (0);
 }
 
-int	inter_with_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light)
+int	i_w_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light)
 {
 	t_sphere	*s_head;
 	t_cyl		*c_head;
@@ -120,7 +120,7 @@ int	inter_with_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light)
 	return (0);
 }
 
-int	inter_with_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light)
+int	i_w_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light)
 {
 	t_sphere	*s_head;
 	t_cyl		*c_head;
@@ -177,7 +177,7 @@ int	inter_with_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light)
 	return (0);
 }
 
-int	inter_with_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light)
+int	i_w_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light)
 {
 	t_sphere	*s_head;
 	t_cyl		*c_head;
@@ -234,7 +234,7 @@ int	inter_with_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light)
 	return (0);
 }
 
-int	inter_with_tri(t_elem *elem, t_dirpos arg, t_tri tri, t_light light)
+int	i_w_tri(t_elem *elem, t_dirpos arg, t_tri tri, t_light light)
 {
 	t_sphere	*s_head;
 	t_cyl		*c_head;
