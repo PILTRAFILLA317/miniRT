@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/28 18:55:13 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/02/28 19:18:10 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,11 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object co)
 	t_cyl		*c_head;
 	t_plane		*p_head;
 	t_tri		*t_head;
-	t_con		*o_head;
 
 	s_head = elem->sphere;
 	c_head = elem->cyl;
 	p_head = elem->pl;
 	t_head = elem->t;
-	o_head = elem->con;
 	len = 0;
 	obj.elem = NULL;
 	while (c_head != NULL)
@@ -148,21 +146,6 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object co)
 			}
 		}
 		t_head = t_head->next;
-	}
-	while (o_head != NULL)
-	{
-		if (con_intersect(pos, o_head, dir))
-		{
-			if (vec_len(vec_diff(pos, con_intersect_point(pos,
-							o_head, dir))) < len || len == 0)
-			{
-				len = vec_len(vec_diff(pos,
-							con_intersect_point(pos, o_head, dir)));
-				obj.elem = o_head;
-				obj.type = o;
-			}
-		}
-		o_head = o_head->next;
 	}
 	return (obj);
 }
@@ -374,16 +357,6 @@ int	color(t_elem *elem, t_vec dir, t_vec pos, t_object co)
 		alight = (vec_mult(vec_mult_vec(col_to_01(((t_tri *)obj.elem)->color),
 						col_to_01(elem->alight.color)), elem->alight.ratio));
 		light = light_comb_tri(*((t_tri *)obj.elem), elem, rtn);
-		final = vec_add(alight, light);
-		final = vec_clamp(0, 1, final);
-		return (convert_rgb(col_to_255(final)));
-	}
-	if (obj.type == o)
-	{
-		rtn = con_intersect_point(pos, obj.elem, dir);
-		alight = (vec_mult(vec_mult_vec(col_to_01(((t_con *)obj.elem)->color),
-						col_to_01(elem->alight.color)), elem->alight.ratio));
-		light = light_comb_con(*(t_con *)obj.elem, elem, rtn);
 		final = vec_add(alight, light);
 		final = vec_clamp(0, 1, final);
 		return (convert_rgb(col_to_255(final)));

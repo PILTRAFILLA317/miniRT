@@ -23,8 +23,6 @@ srcs/light_comb.c	\
 srcs/inter_with.c	\
 srcs/tri_linked.c	\
 srcs/tri_inter.c	\
-srcs/con_linked.c	\
-srcs/con_inter.c	\
 
 OBJ = $(SRC:.c=.o)
 
