@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/28 20:31:44 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/01 20:17:04 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,38 +142,42 @@ t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object co)
 	return (obj);
 }
 
-int	color(t_elem *elem, t_vec dir, t_vec pos, t_object co)
+int	color(t_elem *elem, t_dirpos dp, t_object co, int *ray)
 {
 	t_object	obj;
 
-	obj = first_intersect(elem, dir, pos, co);
+	obj = first_intersect(elem, dp.dir, dp.pos, co);
 	if (obj.elem == NULL)
 		return (0);
 	if (obj.type == c)
-		return (cyl_color(elem, dir, pos, (*(t_cyl *)obj.elem)));
+		return (cyl_color(elem, dp.dir, dp.pos, (*(t_cyl *)obj.elem)));
 	if (obj.type == d)
-		return (disc_color(elem, dir, pos, (*(t_disc *)obj.elem)));
+		return (disc_color(elem, dp.dir, dp.pos, (*(t_disc *)obj.elem)));
 	if (obj.type == s)
-		return (sph_color(elem, dir, pos, (*(t_sphere *)obj.elem)));
+		return (sph_color(elem, dp, (*(t_sphere *)obj.elem), ray));
 	if (obj.type == p)
-		return (plane_color(elem, dir, pos, (*(t_plane *)obj.elem)));
+		return (plane_color(elem, dp, (*(t_plane *)obj.elem), ray));
 	if (obj.type == t)
-		return (trian_color(elem, dir, pos, (*(t_tri *)obj.elem)));
+		return (trian_color(elem, dp.dir, dp.pos, (*(t_tri *)obj.elem)));
 	return (0);
 }
 
 void	*thread_routine(void *data)
 {
 	t_th		th;
-	int			i[4];
+	int			i[5];
+	int			*r;
 	double		xx;
 	double		yy;
 	t_object	obj;
+	t_dirpos	d;
 
 	th = *(t_th *)data;
 	obj.type = n;
 	i[0] = (WIN_Y / NUM_THREAD * th.core) + (WIN_Y / NUM_THREAD);
 	i[1] = WIN_Y / NUM_THREAD * th.core - 1;
+	r = malloc(sizeof(int) * ((i[0] - i[1]) * (WIN_X - i[2])));
+	i[4] = 0;
 	while (++i[1] <= i[0])
 	{
 		i[2] = -1;
@@ -181,11 +185,14 @@ void	*thread_routine(void *data)
 		{
 			xx = (double)i[2] * 2 / WIN_X - 1;
 			yy = 1 - (double)i[1] * 2 / WIN_Y;
-			i[3] = color(th.elem, vec_rotation(xx, yy, th.elem),
-					th.elem->cam.pos, obj);
+			d.pos = th.elem->cam.pos;
+			d.dir = vec_rotation(xx, yy, th.elem);
+			//printf("R = %d\n", r[i[4]]);
+			i[3] = color(th.elem, d, obj, &r[i[4]]);
 			pthread_mutex_lock(&th.elem->pixl);
 			mlx_pixel_put(th.elem->mlx, th.elem->win, i[2], i[1], i[3]);
 			pthread_mutex_unlock(&th.elem->pixl);
+			i[4]++;
 		}
 	}
 	return (NULL);

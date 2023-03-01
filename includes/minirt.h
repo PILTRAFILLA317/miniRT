@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/28 20:25:05 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/01 19:33:38 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 # define BUFFER_SIZE	1
 # define NUM_THREAD		12
+# define MAX_MIRR_RAYS	10
 
 # define RED	"\033[0;31m"
 # define GREEN	"\033[0;32m"
@@ -255,9 +256,9 @@ int			tri_intersect(t_vec pos, t_tri *tri, t_vec dir);
 t_vec		t_intersect_point(t_vec pos, t_tri *tri, t_vec dir);
 
 ////////// MIRRORS //////////
-int			sph_mirror(t_elem *elem, t_vec dir, t_sphere sph, t_vec rtn);
-int			pl_mirror(t_elem *elem, t_vec dir, t_plane pl, t_vec rtn);
-int			pl_checkboard(t_elem *elem, t_vec dir, t_plane pl, t_vec rtn);
+int			sph_mirror(t_elem *elem, t_dirpos rt, t_sphere sph, int *ray);
+int			pl_mirror(t_elem *elem, t_dirpos rt, t_plane pl, int *ray);
+int			pl_checkboard(t_elem *elem, t_dirpos rt, t_plane pl, int *ray);
 
 ////////// RAY_CAST //////////
 void		ray_caster(t_elem *elem);
@@ -272,13 +273,13 @@ int			i_w_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light);
 int			i_w_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light);
 int			i_w_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light);
 int			i_w_tri(t_elem *elem, t_dirpos arg, t_tri tri, t_light light);
-int			color(t_elem *elem, t_vec dir, t_vec pos, t_object obj);
+int			color(t_elem *elem, t_dirpos dp, t_object co, int *ray);
 
 ////////// COLORS //////////
 int			cyl_color(t_elem *elem, t_vec dir, t_vec pos, t_cyl cyl);
-int			sph_color(t_elem *elem, t_vec dir, t_vec pos, t_sphere sph);
+int			sph_color(t_elem *elem, t_dirpos d, t_sphere sph, int *ray);
 int			disc_color(t_elem *elem, t_vec dir, t_vec pos, t_disc disc);
-int			plane_color(t_elem *elem, t_vec dir, t_vec pos, t_plane pl);
+int			plane_color(t_elem *elem, t_dirpos d, t_plane pl, int *ray);
 int			trian_color(t_elem *elem, t_vec dir, t_vec pos, t_tri tri);
 
 #endif
