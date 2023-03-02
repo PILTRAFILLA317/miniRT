@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:32:04 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/01 17:23:35 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:10:30 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,74 @@ t_objlen	sph_f_i(t_elem *elem, t_dirpos d, t_object co, t_objlen ol)
 			}
 		}
 		s_head = s_head->next;
+	}
+	return (rtn);
+}
+
+t_objlen	tri_f_i(t_elem *elem, t_dirpos d, t_objlen ol)
+{
+	t_tri		*t_head;
+	t_objlen	rtn;
+
+	t_head = elem->t;
+	rtn = ol;
+	while (t_head != NULL)
+	{
+		if (tri_intersect(d.pos, t_head, d.dir))
+		{
+			if (vec_len(vec_diff(d.pos, t_intersect_point(d.pos,
+							t_head, d.dir))) < rtn.len || rtn.len == 0)
+			{
+				rtn.len = vec_len(vec_diff(d.pos,
+							t_intersect_point(d.pos, t_head, d.dir)));
+				rtn.obj.elem = t_head;
+				rtn.obj.type = t;
+			}
+		}
+		t_head = t_head->next;
+	}
+	return (rtn);
+}
+
+t_objlen	disc_f_i_ut(t_dirpos dd, t_objlen ol, t_disc disc)
+{
+	t_objlen	rtn;
+
+	rtn = ol;
+	if (vec_len(vec_diff(dd.pos, disc_intersect_point(dd.pos,
+					&disc, dd.dir))) < ol.len || ol.len == 0)
+	{
+		ol.len = vec_len(vec_diff(dd.pos,
+					disc_intersect_point(dd.pos, &disc, dd.dir)));
+		ol.obj.elem = &disc;
+		ol.obj.type = d;
+	}
+	return (rtn);
+}
+
+t_objlen	cyl_f_i(t_elem *elem, t_dirpos d, t_objlen ol)
+{
+	t_cyl		*c_head;
+	t_objlen	rtn;
+
+	c_head = elem->cyl;
+	rtn = ol;
+	while (c_head != NULL)
+	{
+		if (cyl_intersect(d.pos, c_head, d.dir) == 1)
+		{
+			if (vec_len(vec_diff(d.pos, cyl_intersect_point(d.pos,
+							c_head, d.dir))) < rtn.len || rtn.len == 0)
+			{
+				rtn.len = vec_len(vec_diff(d.pos,
+							cyl_intersect_point(d.pos, c_head, d.dir)));
+				rtn.obj.elem = c_head;
+				rtn.obj.type = c;
+			}
+		}
+		ol = disc_f_i_ut(d, ol, c_head->bot_disc);
+		ol = disc_f_i_ut(d, ol, c_head->top_disc);
+		c_head = c_head->next;
 	}
 	return (rtn);
 }

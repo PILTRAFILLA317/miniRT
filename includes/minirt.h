@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/01 19:33:38 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:09:49 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 # define BUFFER_SIZE	1
 # define NUM_THREAD		12
-# define MAX_MIRR_RAYS	10
+# define MAX_MIRR_RAYS	100
 
 # define RED	"\033[0;31m"
 # define GREEN	"\033[0;32m"
@@ -181,6 +181,12 @@ typedef struct s_object
 	void		*elem;
 }	t_object;
 
+typedef struct s_objlen
+{
+	t_object	obj;
+	double		len;
+}	t_objlen;
+
 ////////// UTILS //////////
 double		ft_strtod(char *str);
 char		*first_char_trimmer(char	*str);
@@ -274,6 +280,12 @@ int			i_w_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light);
 int			i_w_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light);
 int			i_w_tri(t_elem *elem, t_dirpos arg, t_tri tri, t_light light);
 int			color(t_elem *elem, t_dirpos dp, t_object co, int *ray);
+
+////////// FIRST_INTER //////////
+t_objlen	pl_f_i(t_elem *elem, t_dirpos d, t_object co, t_objlen ol);
+t_objlen	sph_f_i(t_elem *elem, t_dirpos d, t_object co, t_objlen ol);
+t_objlen	tri_f_i(t_elem *elem, t_dirpos d, t_objlen ol);
+t_objlen	cyl_f_i(t_elem *elem, t_dirpos d, t_objlen ol);
 
 ////////// COLORS //////////
 int			cyl_color(t_elem *elem, t_vec dir, t_vec pos, t_cyl cyl);

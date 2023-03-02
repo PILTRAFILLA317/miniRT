@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/02 13:29:11 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:10:03 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,119 +27,18 @@ t_vec	vec_rotation(double x, double y, t_elem *elem)
 
 t_object	first_intersect(t_elem *elem, t_vec dir, t_vec pos, t_object co)
 {
-	double		len;
-	t_object	obj;
-	t_sphere	*s_head;
-	t_cyl		*c_head;
-	t_plane		*p_head;
-	t_tri		*t_head;
+	t_objlen	ol;
+	t_dirpos	dp;
 
-	s_head = elem->sphere;
-	c_head = elem->cyl;
-	p_head = elem->pl;
-	t_head = elem->t;
-	len = 0;
-	obj.elem = NULL;
-	while (c_head != NULL)
-	{
-		if (cyl_intersect(pos, c_head, dir) == 1)
-		{
-			if (vec_len(vec_diff(pos, cyl_intersect_point(pos,
-							c_head, dir))) < len || len == 0)
-			{
-				len = vec_len(vec_diff(pos,
-							cyl_intersect_point(pos, c_head, dir)));
-				obj.elem = c_head;
-				obj.type = c;
-			}
-		}
-		if (disc_intersect(pos, &c_head->bot_disc, dir) == 1)
-		{
-			if (vec_len(vec_diff(pos, disc_intersect_point(pos,
-							&c_head->bot_disc, dir))) < len || len == 0)
-			{
-				len = vec_len(vec_diff(pos,
-							disc_intersect_point(pos, &c_head->bot_disc, dir)));
-				obj.elem = &c_head->bot_disc;
-				obj.type = d;
-			}
-		}
-		if (disc_intersect(pos, &c_head->top_disc, dir) == 1)
-		{
-			if (vec_len(vec_diff(pos, disc_intersect_point(pos,
-							&c_head->top_disc, dir))) < len || len == 0)
-			{
-				len = vec_len(vec_diff(pos,
-							disc_intersect_point(pos, &c_head->top_disc, dir)));
-				obj.elem = &c_head->top_disc;
-				obj.type = d;
-			}
-		}
-		c_head = c_head->next;
-	}
-	while (p_head != NULL)
-	{
-
-		if (co.type == 0)
-		{
-			if (p_head->id == ((t_plane *)co.elem)->id)
-			{
-				p_head = p_head->next;
-				continue ;
-			}
-		}
-		if (pl_intersect(pos, p_head, dir))
-		{
-			if (vec_len(vec_diff(pos, pl_intersect_point(pos,
-							p_head, dir))) < len || len == 0)
-			{
-				len = vec_len(vec_diff(pos,
-							pl_intersect_point(pos, p_head, dir)));
-				obj.elem = p_head;
-				obj.type = p;
-			}
-		}
-		p_head = p_head->next;
-	}
-	while (s_head != NULL)
-	{
-		if (co.type == 1)
-		{
-			if (s_head->id == ((t_sphere *)co.elem)->id)
-			{
-				s_head = s_head->next;
-				continue ;
-			}
-		}
-		if (sph_intersect(pos, s_head, dir))
-		{
-			if (vec_len(vec_diff(pos, sph_intersect_point(pos,
-							s_head, dir))) < len || len == 0)
-			{
-				len = vec_len(vec_diff(pos,
-							sph_intersect_point(pos, s_head, dir)));
-				obj.elem = s_head;
-				obj.type = s;
-			}
-		}
-		s_head = s_head->next;
-	}
-	while (t_head != NULL)
-	{
-		if (tri_intersect(pos, t_head, dir))
-		{
-			if (vec_len(vec_diff(pos, t_intersect_point(pos,
-							t_head, dir))) < len || len == 0)
-			{
-				len = vec_len(vec_diff(pos,
-							t_intersect_point(pos, t_head, dir)));
-				obj.elem = t_head;
-				obj.type = t;
-			}
-		}
-		t_head = t_head->next;
-	}
-	return (obj);
+	dp.dir = dir;
+	dp.pos = pos;
+	ol.len = 0;
+	ol.obj.elem = NULL;
+	ol = cyl_f_i(elem, dp, ol);
+	ol = pl_f_i(elem, dp, co, ol);
+	ol = sph_f_i(elem, dp, co, ol);
+	ol = tri_f_i(elem, dp, ol);
+	return (ol.obj);
 }
 
 int	color(t_elem *elem, t_dirpos dp, t_object co, int *ray)

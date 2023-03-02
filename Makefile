@@ -26,6 +26,7 @@ srcs/tri_inter.c	\
 srcs/mirrors.c		\
 srcs/color_fun.c	\
 srcs/utils2.c		\
+srcs/first_inter.c	\
 
 OBJ = $(SRC:.c=.o)
 
@@ -40,7 +41,7 @@ EOC = \033[1;0m
 
 HEADERS = minirt.h
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -O2 -pthread -g3 -Ofast -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -O2 -pthread -g3 -Ofast #-fsanitize=address
 
 all: $(NAME)
 
