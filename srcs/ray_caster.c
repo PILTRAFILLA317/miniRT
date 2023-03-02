@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/01 20:17:04 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/02 13:29:11 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void	*thread_routine(void *data)
 	obj.type = n;
 	i[0] = (WIN_Y / NUM_THREAD * th.core) + (WIN_Y / NUM_THREAD);
 	i[1] = WIN_Y / NUM_THREAD * th.core - 1;
-	r = malloc(sizeof(int) * ((i[0] - i[1]) * (WIN_X - i[2])));
+	r = malloc(sizeof(int) * ((i[0] - i[1] + 1) * (WIN_X - i[2] + 1)) + 1);
 	i[4] = 0;
 	while (++i[1] <= i[0])
 	{
@@ -187,7 +187,7 @@ void	*thread_routine(void *data)
 			yy = 1 - (double)i[1] * 2 / WIN_Y;
 			d.pos = th.elem->cam.pos;
 			d.dir = vec_rotation(xx, yy, th.elem);
-			//printf("R = %d\n", r[i[4]]);
+			r[i[4]] = 0;
 			i[3] = color(th.elem, d, obj, &r[i[4]]);
 			pthread_mutex_lock(&th.elem->pixl);
 			mlx_pixel_put(th.elem->mlx, th.elem->win, i[2], i[1], i[3]);
