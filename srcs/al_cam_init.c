@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   al_cam_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:50:21 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 16:50:41 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/03 15:33:16 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,34 +77,12 @@ int	second_line_cam(char *line, t_elem *elem)
 	if (ft_doublestrlen(pos) != 3 || digit_checker(pos[0])
 		|| digit_checker(pos[1]) || digit_checker(pos[2]))
 		return (error_printer(3), 1);
-	elem->cam.mtx.pos.x = ft_strtod(pos[0]);
-	elem->cam.pos.x = 0;
-	elem->cam.mtx.pos.y = ft_strtod(pos[1]);
-	elem->cam.pos.y = 0;
-	elem->cam.mtx.pos.z = ft_strtod(pos[2]);
-	elem->cam.pos.z = 0;
+	init_elem_cam(elem, pos);
 	rot = ft_split(fl[2], ',');
 	if (ft_doublestrlen(rot) != 3 || digit_checker(rot[0])
 		|| digit_checker(rot[1]) || digit_checker(rot[2]))
 		return (error_printer(3), 1);
-	elem->cam.orient.x = ft_strtod(rot[0]);
-	elem->cam.orient.y = ft_strtod(rot[1]);
-	elem->cam.orient.z = ft_strtod(rot[2]);
-	elem->cam.orient = vec_norm(elem->cam.orient);
-	elem->cam.a_ratio = (double)WIN_X / (double)WIN_Y;
-	elem->cam.fov = ft_strtod(fl[3]);
-	elem->cam.theta = elem->cam.fov * M_PI / 180.0;
-	//elem->cam.h = tan(elem->cam.theta / 2.0);
-	//elem->cam.w = elem->cam.a_ratio * elem->cam.h;
-	elem->cam.w = tan(elem->cam.fov * M_PI / 360.0);
-	elem->cam.h = elem->cam.w / WIN_X * WIN_Y;
-	if ((elem->cam.orient.x == 0 && elem->cam.orient.y == 1 && elem->cam.orient.z == 0)
-		|| (elem->cam.orient.x == 0 && elem->cam.orient.y == -1 && elem->cam.orient.z == 0))
-		elem->cam.up = new_vec(0.0, 0.0, 1.0);
-	else
-		elem->cam.up = new_vec(0.0, 1.0, 0.0);
-	elem->cam.right = vec_mult(vec_norm(vec_cross(elem->cam.orient, elem->cam.up)), -1);
-	elem->cam.up = vec_mult(vec_norm(vec_cross(elem->cam.right, elem->cam.orient)), -1);
+	init_elem_orient(elem, rot, fl);
 	if (cam_checker(elem) == -1)
 		return (1);
 	return (0);
