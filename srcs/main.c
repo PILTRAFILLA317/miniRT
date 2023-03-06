@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 19:12:38 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:23:23 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,43 +111,6 @@ int	elem_type(char *line, t_elem *elem)
 		return (error_printer(3), 1);
 	return (0);
 }
-
-void	id_creator(t_elem *elem)
-{
-	int			id;
-	t_sphere	*s_head;
-	t_cyl		*c_head;
-	t_plane		*p_head;
-
-	s_head = elem->sphere;
-	c_head = elem->cyl;
-	p_head = elem->pl;
-	id = 0;
-	while (s_head != NULL)
-	{
-		s_head->id = id;
-		id++;
-		s_head = s_head->next;
-	}
-	id = 0;
-	while (c_head != NULL)
-	{
-		c_head->id = id;
-		c_head->bot_disc.id = id;
-		c_head->top_disc.id = id;
-		id++;
-		c_head = c_head->next;
-	}
-	id = 0;
-	while (p_head != NULL)
-	{
-		p_head->id = id;
-		id++;
-		p_head = p_head->next;
-	}
-}
-
-
 
 int	main(int ac, char **av)
 {
