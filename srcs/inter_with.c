@@ -42,13 +42,13 @@ int	i_w_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light)
 int	i_w_pl(t_elem *elem, t_dirpos arg, t_plane pl, t_light light)
 {
 	if (iw_pl_s_it(elem, arg, light))
-		return (0);
+		return (1);
 	if (iw_pl_c_it(elem, arg, light))
-		return (0);
+		return (1);
 	if (iw_pl_p_it(elem, arg, pl, light))
-		return (0);
+		return (1);
 	if (iw_pl_t_it(elem, arg, light))
-		return (0);
+		return (1);
 	return (0);
 }
 
@@ -62,6 +62,8 @@ int	i_w_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light)
 	t_head = elem->t;
 	s_head = elem->sphere;
 	c_head = elem->cyl;
+	if (iw_disc_s_it(elem, arg, light))
+		return (1);
 	p_head = elem->pl;
 	while (s_head != NULL)
 	{
