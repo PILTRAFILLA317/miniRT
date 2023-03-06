@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cyl_linked.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:07:38 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/28 16:55:06 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:04:57 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,29 @@ int	cyl_pre_chkr(char **fl)
 	return (0);
 }
 
+void	cyl_init_rgb_bot(t_cyl *cyl, char **fl)
+{
+	char	**rgb;
+
+	rgb = ft_split(fl[5], ',');
+	cyl->color.x = ft_atoi(rgb[0]);
+	cyl->color.y = ft_atoi(rgb[1]);
+	cyl->color.z = ft_atoi(rgb[2]);
+	cyl->orient2 = vec_norm(points_to_vec(cyl->pos2, cyl->pos));
+	cyl->bot_disc.color = cyl->color;
+	cyl->bot_disc.diam = cyl->diam;
+	cyl->bot_disc.orient = cyl->orient;
+	cyl->bot_disc.pos = cyl->pos;
+	cyl->top_disc.color = cyl->color;
+	cyl->top_disc.diam = cyl->diam;
+	cyl->top_disc.orient = cyl->orient2;
+	cyl->top_disc.pos = cyl->pos2;
+}
+
 t_cyl	*cyl_creator(char **fl, t_elem *e)
 {
 	char	**pos;
 	char	**dir;
-	char	**rgb;
 	t_cyl	*cyl;
 
 	cyl = malloc(sizeof(t_cyl));
@@ -72,19 +90,7 @@ t_cyl	*cyl_creator(char **fl, t_elem *e)
 	cyl->diam = ft_strtod(fl[3]);
 	cyl->h = ft_strtod(fl[4]);
 	cyl->pos2 = vec_point(cyl->orient, cyl->pos, cyl->h);
-	rgb = ft_split(fl[5], ',');
-	cyl->color.x = ft_atoi(rgb[0]);
-	cyl->color.y = ft_atoi(rgb[1]);
-	cyl->color.z = ft_atoi(rgb[2]);
-	cyl->orient2 = vec_norm(points_to_vec(cyl->pos2, cyl->pos));
-	cyl->bot_disc.color = cyl->color;
-	cyl->bot_disc.diam = cyl->diam;
-	cyl->bot_disc.orient = cyl->orient;
-	cyl->bot_disc.pos = cyl->pos;
-	cyl->top_disc.color = cyl->color;
-	cyl->top_disc.diam = cyl->diam;
-	cyl->top_disc.orient = cyl->orient2;
-	cyl->top_disc.pos = cyl->pos2;
+	cyl_init_rgb_bot(cyl, fl);
 	cyl->next = NULL;
 	return (cyl);
 }
