@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:08:11 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 13:52:51 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 13:56:17 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,23 @@ int	iw_disc_p_it(t_elem *elem, t_dirpos arg, t_light light)
 				< vec_len(vec_diff(arg.pos, light.pos)))
 				return (1);
 		p_head = p_head->next;
+	}
+	return (0);
+}
+
+int	iw_disc_t_it(t_elem *elem, t_dirpos arg, t_light light)
+{
+	t_tri		*t_head;
+
+	t_head = elem->t;
+	while (t_head != NULL)
+	{
+		if (tri_intersect(arg.pos, t_head, arg.dir) == 1)
+			if (vec_len(vec_diff(arg.pos,
+						t_intersect_point(arg.pos, t_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
+		t_head = t_head->next;
 	}
 	return (0);
 }
