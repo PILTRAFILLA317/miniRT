@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/02 16:09:49 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/06 11:55:51 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,8 @@ double		num_to_pos(double num);
 ////////// AL_CAM_INIT //////////
 int			first_line_alight(char *line, t_elem *elem);
 int			second_line_cam(char *line, t_elem *elem);
+void		init_elem_orient(t_elem *elem, char **rot, char **fl);
+void		init_elem_cam(t_elem *elem, char **pos);
 
 ////////// LIGHT_LNKD //////////
 t_light		*light_creator(char **fl, t_elem *e);
