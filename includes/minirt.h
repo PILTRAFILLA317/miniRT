@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 14:52:14 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:56:09 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,6 +290,10 @@ int			iw_tri_t_it(t_elem *elem, t_tri tri, t_dirpos arg, t_light light);
 int			sph_mirror(t_elem *elem, t_dirpos rt, t_sphere sph, int *ray);
 int			pl_mirror(t_elem *elem, t_dirpos rt, t_plane pl, int *ray);
 int			pl_checkboard(t_elem *elem, t_dirpos rt, t_plane pl, int *ray);
+void		pl_checkboard_axis_calc(int *axis, t_plane pl, t_dirpos rt);
+int			pl_checkboard_color_calc(int *axis, t_dirpos rt);
+void		pl_cb_vec_init(t_vec *vec, t_plane pl, t_dirpos rt, int clor);
+void		pl_cb_vec_calc(t_vec *vec, t_plane pl, t_dirpos rt, t_elem *elem);
 
 ////////// RAY_CAST //////////
 void		ray_caster(t_elem *elem);

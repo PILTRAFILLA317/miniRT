@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 11:55:15 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 11:55:16 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 15:56:38 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	init_elem_cam(t_elem *elem, char **pos)
 	elem->cam.pos.y = 0;
 	elem->cam.mtx.pos.z = ft_strtod(pos[2]);
 	elem->cam.pos.z = 0;
-
 }
 
 void	init_elem_orient(t_elem *elem, char **rot, char **fl)
