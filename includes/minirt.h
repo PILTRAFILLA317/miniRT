@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 12:55:00 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:59:43 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ int			iw_sph_t_it(t_elem *elem, t_dirpos arg, t_light light);
 int			iw_cyl_s_it(t_elem *elem, t_dirpos arg, t_light light);
 int			iw_cyl_c_it(t_elem *elem,
 				t_dirpos arg, t_cyl cyl, t_light light);
+int			iw_cyl_p_it(t_elem *elem, t_dirpos arg, t_light light);
 
 ////////// MIRRORS //////////
 int			sph_mirror(t_elem *elem, t_dirpos rt, t_sphere sph, int *ray);
