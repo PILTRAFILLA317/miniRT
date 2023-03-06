@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 12:15:48 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:25:53 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,9 @@ t_vec		sph_intersect_point(t_vec pos, t_sphere *sph, t_vec dir);
 int			sph_intersect(t_vec pos, t_sphere *sph, t_vec dir);
 int			tri_intersect(t_vec pos, t_tri *tri, t_vec dir);
 t_vec		t_intersect_point(t_vec pos, t_tri *tri, t_vec dir);
-int			iw_sph_s_it(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light);
+int			iw_sph_s_it(t_elem *elem,
+				t_dirpos arg, t_sphere sph, t_light light);
+int			iw_sph_c_it(t_elem *elem, t_dirpos arg, t_light light);
 
 ////////// MIRRORS //////////
 int			sph_mirror(t_elem *elem, t_dirpos rt, t_sphere sph, int *ray);
