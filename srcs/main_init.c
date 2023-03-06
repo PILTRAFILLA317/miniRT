@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 19:11:26 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 19:12:46 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:49:42 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	file_error_checker(t_elem *elem, char *line, int file)
 	if (second_line_cam(last_char_trimmer(line), elem) == -1)
 		return (error_printer(3), 1);
 	return (0);
-
 }
 
 void	main_init(t_elem *elem)
@@ -70,5 +69,4 @@ void	main_init(t_elem *elem)
 	mlx_hook(elem->win, 17, 1L << 17, ft_close, elem);
 	ray_caster(elem);
 	mlx_loop(elem->mlx);
-
 }

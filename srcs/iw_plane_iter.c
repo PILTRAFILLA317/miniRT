@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:08:11 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 13:25:17 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:50:01 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	iw_pl_c_it(t_elem *elem, t_dirpos arg, t_light light)
 	return (0);
 }
 
-
 int	iw_pl_p_it(t_elem *elem, t_dirpos arg, t_plane pl, t_light light)
 {
 	t_plane		*p_head;
@@ -92,5 +91,4 @@ int	iw_pl_t_it(t_elem *elem, t_dirpos arg, t_light light)
 		t_head = t_head->next;
 	}
 	return (0);
-
 }

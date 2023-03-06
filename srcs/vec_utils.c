@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 20:52:04 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 18:53:56 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:48:20 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,3 @@ t_vec	points_to_vec(t_vec a, t_vec b)
 	rtn.z = b.z - a.z;
 	return (rtn);
 }
-

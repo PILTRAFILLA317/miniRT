@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:54:12 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 15:54:53 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:49:29 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	pl_checkboard_axis_calc(int *axis, t_plane pl, t_dirpos rt)
 		axis[0] = rt.pos.x / 10;
 		axis[1] = rt.pos.y / 10;
 	}
-
 }
 
 int	pl_checkboard_color_calc(int *axis, t_dirpos rt)

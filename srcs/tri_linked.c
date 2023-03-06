@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 22:06:17 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 18:47:23 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:48:15 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	triangle_init(char **ver_pos, char **ver, t_tri *tri, t_elem *e)
 	tri->ver[2].x = ft_strtod(ver_pos[0]) - e->cam.mtx.pos.x;
 	tri->ver[2].y = ft_strtod(ver_pos[1]) - e->cam.mtx.pos.y;
 	tri->ver[2].z = ft_strtod(ver_pos[2]) - e->cam.mtx.pos.z;
-
 }
 
 t_tri	*triangle_creator(char **fl, t_elem *e)

@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 19:23:14 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:36:27 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ void		main_init(t_elem *elem);
 int			arg_error_checker(int ac, char **av);
 int			file_error_checker(t_elem *elem, char *line, int file);
 void		id_creator(t_elem *elem);
+int			elem_type(char *line, t_elem *elem);
 
 ////////// AL_CAM_INIT //////////
 int			first_line_alight(char *line, t_elem *elem);

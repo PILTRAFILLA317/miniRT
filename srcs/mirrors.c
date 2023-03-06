@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 19:32:54 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 15:54:08 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:49:06 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int	sph_mirror(t_elem *elem, t_dirpos rt, t_sphere sph, int *ray)
 	vec[3] = vec_add(vec[3], vec[4]);
 	return (convert_rgb(col_to_255(vec[3])));
 }
-
-
 
 int	pl_checkboard(t_elem *elem, t_dirpos rt, t_plane pl, int *ray)
 {

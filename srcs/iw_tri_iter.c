@@ -6,12 +6,11 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:41:41 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 14:51:56 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:48:44 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
-
 
 int	iw_tri_s_it(t_elem *elem, t_dirpos arg, t_light light)
 {

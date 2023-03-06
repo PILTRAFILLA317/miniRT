@@ -27,7 +27,6 @@ int	i_w_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light)
 
 int	i_w_cyl(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light)
 {
-
 	if (iw_cyl_s_it(elem, arg, light))
 		return (1);
 	if (iw_cyl_c_it(elem, arg, cyl, light))

@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:22:05 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 18:13:31 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:48:52 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_light_c	light_comb_sph_init(t_sphere sph, t_elem *elem, t_vec rtn)
 	lc.arg.pos = rtn;
 	return (lc);
 }
-
 
 t_light_c	light_comb_disc_init(t_disc disc, t_elem *elem, t_vec rtn)
 {

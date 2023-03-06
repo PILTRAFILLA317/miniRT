@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:08:11 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 13:03:39 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:50:20 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	iw_cyl_s_it(t_elem *elem, t_dirpos arg, t_light light)
 	}
 	return (0);
 }
-
 
 static int	cyl_c_checker(t_cyl *c_head,
 	t_dirpos arg, t_cyl cyl, t_light light)
@@ -67,7 +66,6 @@ int	iw_cyl_c_it(t_elem *elem, t_dirpos arg, t_cyl cyl, t_light light)
 	}
 	return (0);
 }
-
 
 int	iw_cyl_p_it(t_elem *elem, t_dirpos arg, t_light light)
 {
