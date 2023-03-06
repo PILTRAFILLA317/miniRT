@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:08:11 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 12:23:50 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 12:28:26 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,23 @@ int	iw_sph_c_it(t_elem *elem, t_dirpos arg, t_light light)
 				< vec_len(vec_diff(arg.pos, light.pos)))
 				return (1);
 		c_head = c_head->next;
+	}
+	return (0);
+}
+
+int	iw_sph_p_it(t_elem *elem, t_dirpos arg, t_light light)
+{
+	t_plane		*p_head;
+
+	p_head = elem->pl;
+	while (p_head != NULL)
+	{
+		if (pl_intersect(arg.pos, p_head, arg.dir) == 1)
+			if (vec_len(vec_diff(arg.pos,
+						pl_intersect_point(arg.pos, p_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
+		p_head = p_head->next;
 	}
 	return (0);
 }
