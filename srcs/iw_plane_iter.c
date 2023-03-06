@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 12:08:11 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 13:17:03 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 13:25:17 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,3 +59,38 @@ int	iw_pl_c_it(t_elem *elem, t_dirpos arg, t_light light)
 	return (0);
 }
 
+
+int	iw_pl_p_it(t_elem *elem, t_dirpos arg, t_plane pl, t_light light)
+{
+	t_plane		*p_head;
+
+	p_head = elem->pl;
+	while (p_head != NULL)
+	{
+		if (pl_intersect(arg.pos, p_head, arg.dir) == 1 && p_head->id != pl.id)
+			if (vec_len(vec_diff(arg.pos,
+						pl_intersect_point(arg.pos, p_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
+		p_head = p_head->next;
+	}
+	return (0);
+}
+
+int	iw_pl_t_it(t_elem *elem, t_dirpos arg, t_light light)
+{
+	t_tri		*t_head;
+
+	t_head = elem->t;
+	while (t_head != NULL)
+	{
+		if (tri_intersect(arg.pos, t_head, arg.dir) == 1)
+			if (vec_len(vec_diff(arg.pos,
+						t_intersect_point(arg.pos, t_head, arg.dir)))
+				< vec_len(vec_diff(arg.pos, light.pos)))
+				return (1);
+		t_head = t_head->next;
+	}
+	return (0);
+
+}
