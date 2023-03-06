@@ -67,33 +67,13 @@ int	i_w_disc(t_elem *elem, t_dirpos arg, t_disc disc, t_light light)
 
 int	i_w_tri(t_elem *elem, t_dirpos arg, t_tri tri, t_light light)
 {
-	t_plane		*p_head;
-	t_tri		*t_head;
-
-	t_head = elem->t;
-	p_head = elem->pl;
 	if (iw_tri_s_it(elem, arg, light))
 		return (1);
 	if (iw_tri_c_it(elem, arg, light))
 		return (1);
-	while (p_head != NULL)
-	{
-		if (pl_intersect(arg.pos, p_head, arg.dir) == 1)
-			if (vec_len(vec_diff(arg.pos,
-						pl_intersect_point(arg.pos, p_head, arg.dir)))
-				< vec_len(vec_diff(arg.pos, light.pos)))
-				return (1);
-		p_head = p_head->next;
-	}
-	while (t_head != NULL)
-	{
-		if (tri_intersect(arg.pos, t_head, arg.dir) == 1
-			&& t_head->id != tri.id)
-			if (vec_len(vec_diff(arg.pos,
-						t_intersect_point(arg.pos, t_head, arg.dir)))
-				< vec_len(vec_diff(arg.pos, light.pos)))
-				return (1);
-		t_head = t_head->next;
-	}
+	if (iw_tri_p_it(elem, arg, light))
+		return (1);
+	if (iw_tri_t_it(elem, tri, arg, light))
+		return (1);
 	return (0);
 }
