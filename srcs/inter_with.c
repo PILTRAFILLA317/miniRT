@@ -14,25 +14,14 @@
 
 int	i_w_sph(t_elem *elem, t_dirpos arg, t_sphere sph, t_light light)
 {
-	t_tri		*t_head;
-
-	t_head = elem->t;
-
 	if (iw_sph_s_it(elem, arg, sph, light))
 		return (1);
 	if (iw_sph_c_it(elem, arg, light))
 		return (1);
 	if (iw_sph_p_it(elem, arg, light))
 		return (1);
-	while (t_head != NULL)
-	{
-		if (tri_intersect(arg.pos, t_head, arg.dir) == 1)
-			if (vec_len(vec_diff(arg.pos,
-						t_intersect_point(arg.pos, t_head, arg.dir)))
-				< vec_len(vec_diff(arg.pos, light.pos)))
-				return (1);
-		t_head = t_head->next;
-	}
+	if (iw_sph_t_it(elem, arg, light))
+		return (1);
 	return (0);
 }
 
