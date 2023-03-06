@@ -12,6 +12,7 @@ srcs/mirror_utils.c	\
 srcs/light_comb_inits.c	\
 srcs/vec_math.c		\
 srcs/vec_mult_math.c	\
+srcs/vec_unit_cross.c	\
 srcs/iw_sph_iter.c	\
 srcs/iw_cyl_iter.c	\
 srcs/iw_plane_iter.c\

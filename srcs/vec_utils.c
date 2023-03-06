@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 20:52:04 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 18:52:06 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:53:56 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,3 @@ t_vec	points_to_vec(t_vec a, t_vec b)
 	return (rtn);
 }
 
-t_vec	vec_unit(t_vec vec)
-{
-	t_vec	rtn;
-	double	mod;
-
-	mod = vec_len(vec);
-	rtn = vec_div(vec, mod);
-	return(rtn);
-}
-
-t_vec	vec_cross(t_vec v, t_vec w)
-{
-	t_vec	u;
-
-	u.x = (v.y * w.z) - (v.z * w.y);
-	u.y = (v.z * w.x) - (v.x * w.z);
-	u.z = (v.x * w.y) - (v.y * w.x);
-	return (u);
-}
