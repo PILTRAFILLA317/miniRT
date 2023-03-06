@@ -8,6 +8,7 @@ MLX				=	$(MLX_PATH)/libmlx.a
 
 SRC = srcs/main.c	\
 srcs/main_init.c	\
+srcs/thread_manager.c \
 srcs/id_getter.c	\
 srcs/elem_getter.c	\
 srcs/elem_init.c	\

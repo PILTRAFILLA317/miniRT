@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/02 16:10:03 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/06 20:06:17 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,42 +59,6 @@ int	color(t_elem *elem, t_dirpos dp, t_object co, int *ray)
 	if (obj.type == t)
 		return (trian_color(elem, dp.dir, dp.pos, (*(t_tri *)obj.elem)));
 	return (0);
-}
-
-void	*thread_routine(void *data)
-{
-	t_th		th;
-	int			i[5];
-	int			*r;
-	double		xx;
-	double		yy;
-	t_object	obj;
-	t_dirpos	d;
-
-	th = *(t_th *)data;
-	obj.type = n;
-	i[0] = (WIN_Y / NUM_THREAD * th.core) + (WIN_Y / NUM_THREAD);
-	i[1] = WIN_Y / NUM_THREAD * th.core - 1;
-	r = malloc(sizeof(int) * ((i[0] - i[1] + 1) * (WIN_X - i[2] + 1)) + 1);
-	i[4] = 0;
-	while (++i[1] <= i[0])
-	{
-		i[2] = -1;
-		while (++i[2] <= WIN_X)
-		{
-			xx = (double)i[2] * 2 / WIN_X - 1;
-			yy = 1 - (double)i[1] * 2 / WIN_Y;
-			d.pos = th.elem->cam.pos;
-			d.dir = vec_rotation(xx, yy, th.elem);
-			r[i[4]] = 0;
-			i[3] = color(th.elem, d, obj, &r[i[4]]);
-			pthread_mutex_lock(&th.elem->pixl);
-			mlx_pixel_put(th.elem->mlx, th.elem->win, i[2], i[1], i[3]);
-			pthread_mutex_unlock(&th.elem->pixl);
-			i[4]++;
-		}
-	}
-	return (NULL);
 }
 
 void	ray_caster(t_elem *elem)

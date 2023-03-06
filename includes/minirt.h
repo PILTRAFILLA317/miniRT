@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 19:36:27 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 20:04:15 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,13 @@ typedef struct s_light_tc
 	t_light		*tmp;
 	t_dirpos	arg;
 }	t_light_tc;
+typedef struct s_th_vars
+{
+	double		xx;
+	double		yy;
+	t_object	obj;
+	t_dirpos	d;
+}	t_th_vars;
 
 ////////// UTILS //////////
 double		ft_strtod(char *str);
@@ -217,6 +224,8 @@ int			arg_error_checker(int ac, char **av);
 int			file_error_checker(t_elem *elem, char *line, int file);
 void		id_creator(t_elem *elem);
 int			elem_type(char *line, t_elem *elem);
+void		*thread_routine(void *data);
+t_vec		vec_rotation(double x, double y, t_elem *elem);
 
 ////////// AL_CAM_INIT //////////
 int			first_line_alight(char *line, t_elem *elem);
