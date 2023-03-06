@@ -7,6 +7,7 @@ MLX_PATH		=	./mlx
 MLX				=	$(MLX_PATH)/libmlx.a
 
 SRC = srcs/main.c	\
+srcs/main_init.c	\
 srcs/elem_init.c	\
 srcs/mirror_utils.c	\
 srcs/light_comb_inits.c	\
