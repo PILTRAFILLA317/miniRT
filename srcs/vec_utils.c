@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 20:52:04 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/10 19:09:27 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:50:29 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,53 +49,6 @@ t_vec	points_to_vec(t_vec a, t_vec b)
 	rtn.y = b.y - a.y;
 	rtn.z = b.z - a.z;
 	return (rtn);
-}
-
-t_vec	vec_diff(t_vec a, t_vec b)
-{
-	t_vec	rtn;
-
-	rtn.x = a.x - b.x;
-	rtn.y = a.y - b.y;
-	rtn.z = a.z - b.z;
-	return (rtn);
-}
-
-t_vec	vec_add(t_vec a, t_vec b)
-{
-	t_vec	rtn;
-
-	rtn.x = a.x + b.x;
-	rtn.y = a.y + b.y;
-	rtn.z = a.z + b.z;
-	return (rtn);
-}
-
-t_vec	vec_mult(t_vec vec, double a)
-{
-	t_vec	rtn;
-
-	rtn.x = vec.x * a;
-	rtn.y = vec.y * a;
-	rtn.z = vec.z * a;
-	return (rtn);
-}
-
-t_vec	vec_div(t_vec vec, double a)
-{
-	t_vec	rtn;
-
-	rtn.x = vec.x / a;
-	rtn.y = vec.y / a;
-	rtn.z = vec.z / a;
-	return (rtn);
-}
-
-t_vec	vec_point(t_vec dir, t_vec pos, double t)
-{
-	t_vec	rtn;
-
-	return(rtn = vec_add(pos, vec_mult(dir, t)));
 }
 
 void	vec_printer(t_vec	vec)
