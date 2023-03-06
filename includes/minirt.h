@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 17:01:57 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:59:30 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,6 +261,7 @@ double		clamp(double min, double max, double value);
 t_vec		double_to_rgb(int num);
 t_light_c	light_comb_pl_init(t_plane pl, t_elem *elem, t_vec rnt);
 t_light_c	light_comb_sph_init(t_sphere sph, t_elem *elem, t_vec rtn);
+t_light_c	light_comb_disc_init(t_disc disc, t_elem *elem, t_vec rtn);
 
 ////////// INTERSECTIONS //////////
 int			cyl_intersect(t_vec pos, t_cyl *cyl, t_vec dir);

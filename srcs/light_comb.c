@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:04:49 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 17:02:46 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:59:49 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,37 +112,27 @@ t_vec	light_comb_cyl(t_cyl cyl, t_elem *elem, t_vec rtn)
 
 t_vec	light_comb_disc(t_disc disc, t_elem *elem, t_vec rtn)
 {
-	t_light		*tmp;
-	t_vec		light;
-	t_vec		aux;
-	t_dirpos	arg;
-	double		t;
+	t_light_c	lc;
 
-	tmp = elem->light;
-	t = clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
-				/ (tmp->bright * 1000)));
-	light = (vec_mult(vec_mult_vec(col_to_01(disc.color),
-					col_to_01(tmp->color)), t * tmp->bright));
-	arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
-	arg.pos = rtn;
-	if (i_w_disc(elem, arg, disc, *tmp) == 1)
-		light = new_vec(0.0, 0.0, 0.0);
-	tmp = tmp->next;
-	while (tmp != NULL)
+	lc = light_comb_disc_init(disc, elem, rtn);
+	if (i_w_disc(elem, lc.arg, disc, *lc.tmp) == 1)
+		lc.light = new_vec(0.0, 0.0, 0.0);
+	lc.tmp = lc.tmp->next;
+	while (lc.tmp != NULL)
 	{
-		t = clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
-					/ (tmp->bright * 1000)));
-		aux = (vec_mult(vec_mult_vec(col_to_01(disc.color),
-						col_to_01(tmp->color)), t * tmp->bright));
-		arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
-		arg.pos = rtn;
-		if (i_w_disc(elem, arg, disc, *tmp) == 1)
-			aux = new_vec(0.0, 0.0, 0.0);
-		light = vec_add(aux, light);
-		light = vec_clamp(0, 1, light);
-		tmp = tmp->next;
+		lc.t = clamp(0, 1, (1 - (vec_len(points_to_vec(lc.tmp->pos, rtn)))
+					/ (lc.tmp->bright * 1000)));
+		lc.aux = (vec_mult(vec_mult_vec(col_to_01(disc.color),
+						col_to_01(lc.tmp->color)), lc.t * lc.tmp->bright));
+		lc.arg.dir = vec_norm(vec_diff(lc.tmp->pos, rtn));
+		lc.arg.pos = rtn;
+		if (i_w_disc(elem, lc.arg, disc, *lc.tmp) == 1)
+			lc.aux = new_vec(0.0, 0.0, 0.0);
+		lc.light = vec_add(lc.aux, lc.light);
+		lc.light = vec_clamp(0, 1, lc.light);
+		lc.tmp = lc.tmp->next;
 	}
-	return (light);
+	return (lc.light);
 }
 
 t_vec	light_comb_tri(t_tri tri, t_elem *elem, t_vec rtn)
