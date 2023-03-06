@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane_linked.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 14:30:52 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/20 20:47:41 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/06 16:12:13 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ int	plane_pre_chkr(char **fl)
 	return (0);
 }
 
+void	plane_pos_init(t_plane *plane, t_elem *e, char **fl, char **pos)
+{
+	pos = ft_split(fl[1], ',');
+	plane->pos.x = ft_strtod(pos[0]) - e->cam.mtx.pos.x;
+	plane->pos.y = ft_strtod(pos[1]) - e->cam.mtx.pos.y;
+	plane->pos.z = ft_strtod(pos[2]) - e->cam.mtx.pos.z;
+}
+
 t_plane	*plane_creator(char **fl, t_elem *e)
 {
 	char	**pos;
@@ -57,16 +65,14 @@ t_plane	*plane_creator(char **fl, t_elem *e)
 	char	**rgb;
 	t_plane	*plane;
 
+	pos = NULL;
 	plane = malloc(sizeof(t_plane));
 	plane->x = 0;
 	if (fl[0][2] == 'x')
 		plane->x = 1;
 	else if (fl[0][2] == 'c')
 		plane->x = 2;
-	pos = ft_split(fl[1], ',');
-	plane->pos.x = ft_strtod(pos[0]) - e->cam.mtx.pos.x;
-	plane->pos.y = ft_strtod(pos[1]) - e->cam.mtx.pos.y;
-	plane->pos.z = ft_strtod(pos[2]) - e->cam.mtx.pos.z;
+	plane_pos_init(plane, e, fl, pos);
 	dir = ft_split(fl[2], ',');
 	plane->orient.x = ft_strtod(dir[0]);
 	plane->orient.y = ft_strtod(dir[1]);
