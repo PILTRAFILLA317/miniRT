@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 15:56:09 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:01:57 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,15 @@ typedef struct s_objlen
 	double		len;
 }	t_objlen;
 
+typedef struct s_light_c
+{
+	double		t;
+	t_vec		light;
+	t_vec		aux;
+	t_light		*tmp;
+	t_dirpos	arg;
+}	t_light_c;
+
 ////////// UTILS //////////
 double		ft_strtod(char *str);
 char		*first_char_trimmer(char	*str);
@@ -250,6 +259,8 @@ t_vec		col_to_255(t_vec	col);
 t_vec		col_to_01(t_vec	col);
 double		clamp(double min, double max, double value);
 t_vec		double_to_rgb(int num);
+t_light_c	light_comb_pl_init(t_plane pl, t_elem *elem, t_vec rnt);
+t_light_c	light_comb_sph_init(t_sphere sph, t_elem *elem, t_vec rtn);
 
 ////////// INTERSECTIONS //////////
 int			cyl_intersect(t_vec pos, t_cyl *cyl, t_vec dir);

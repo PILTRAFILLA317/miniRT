@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light_comb.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 17:04:49 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/28 19:43:24 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:02:46 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,78 +14,56 @@
 
 t_vec	light_comb_pl(t_plane pl, t_elem *elem, t_vec rtn)
 {
-	t_light		*tmp;
-	t_vec		light;
-	t_vec		aux;
-	t_dirpos	arg;
-	double		t;
+	t_light_c	lc;
 
-	tmp = elem->light;
-	t = clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
-				/ (tmp->bright * 1000)));
-	light = (vec_mult(vec_mult_vec(col_to_01(pl.color),
-					col_to_01(tmp->color)), t * tmp->bright));
-	arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
-	arg.pos = rtn;
-	if (i_w_pl(elem, arg, pl, *tmp) == 1)
-		light = new_vec(0.0, 0.0, 0.0);
-	tmp = tmp->next;
-	while (tmp != NULL)
+	lc = light_comb_pl_init(pl, elem, rtn);
+	if (i_w_pl(elem, lc.arg, pl, *lc.tmp) == 1)
+		lc.light = new_vec(0.0, 0.0, 0.0);
+	lc.tmp = lc.tmp->next;
+	while (lc.tmp != NULL)
 	{
-		t = clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
-					/ (tmp->bright * 1000)));
-		aux = (vec_mult(vec_mult_vec(col_to_01(pl.color),
-						col_to_01(tmp->color)), t * tmp->bright));
-		arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
-		arg.pos = rtn;
-		if (i_w_pl(elem, arg, pl, *tmp) == 1)
-			aux = new_vec(0.0, 0.0, 0.0);
-		light = vec_add(aux, light);
-		light = vec_clamp(0, 1, light);
-		tmp = tmp->next;
+		lc.t = clamp(0, 1, (1 - (vec_len(points_to_vec(lc.tmp->pos, rtn)))
+					/ (lc.tmp->bright * 1000)));
+		lc.aux = (vec_mult(vec_mult_vec(col_to_01(pl.color),
+						col_to_01(lc.tmp->color)), lc.t * lc.tmp->bright));
+		lc.arg.dir = vec_norm(vec_diff(lc.tmp->pos, rtn));
+		lc.arg.pos = rtn;
+		if (i_w_pl(elem, lc.arg, pl, *lc.tmp) == 1)
+			lc.aux = new_vec(0.0, 0.0, 0.0);
+		lc.light = vec_add(lc.aux, lc.light);
+		lc.light = vec_clamp(0, 1, lc.light);
+		lc.tmp = lc.tmp->next;
 	}
-	return (light);
+	return (lc.light);
 }
 
 t_vec	light_comb_sph(t_sphere sph, t_elem *elem, t_vec rtn)
 {
-	t_light		*tmp;
-	t_vec		light;
-	t_vec		aux;
-	t_dirpos	arg;
-	double		t;
+	t_light_c	lc;
 
-	tmp = elem->light;
-	t = vec_dot(vec_norm(points_to_vec(sph.pos, rtn)),
-			vec_norm(vec_diff(tmp->pos, rtn)));
-	t = clamp(0, 1, t);
-	t = t * (clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
-					/ (tmp->bright * 1000))));
-	light = (vec_mult(vec_mult_vec(col_to_01(sph.color),
-					col_to_01(tmp->color)), t * tmp->bright));
-	arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
-	arg.pos = rtn;
-	if (i_w_sph(elem, arg, sph, *tmp) == 1)
-		light = new_vec(0.0, 0.0, 0.0);
-	tmp = tmp->next;
-	while (tmp != NULL)
+	lc = light_comb_sph_init(sph, elem, rtn);
+	if (i_w_sph(elem, lc.arg, sph, *lc.tmp) == 1)
+		lc.light = new_vec(0.0, 0.0, 0.0);
+	lc.tmp = lc.tmp->next;
+	while (lc.tmp != NULL)
 	{
-		t = vec_dot(vec_norm(points_to_vec(sph.pos, rtn)),
-				vec_norm(vec_diff(tmp->pos, rtn)));
-		t = clamp(0, 1, t);
-		t = t * (clamp(0, 1, (1 - (vec_len(points_to_vec(tmp->pos, rtn)))
-						/ (tmp->bright * 1000))));
-		aux = (vec_mult(vec_mult_vec(col_to_01(sph.color),
-						col_to_01(tmp->color)), t * tmp->bright));
-		arg.dir = vec_norm(vec_diff(tmp->pos, rtn));
-		arg.pos = rtn;
-		if (i_w_sph(elem, arg, sph, *tmp) == 1)
-			aux = new_vec(0.0, 0.0, 0.0);
-		light = vec_add(aux, light);
-		light = vec_clamp(0, 1, light);
-		tmp = tmp->next;
+		lc.t = vec_dot(vec_norm(points_to_vec(sph.pos, rtn)),
+				vec_norm(vec_diff(lc.tmp->pos, rtn)));
+		lc.t = clamp(0, 1, lc.t);
+		lc.t = lc.t * (clamp(0, 1, (1
+						- (vec_len(points_to_vec(lc.tmp->pos, rtn)))
+						/ (lc.tmp->bright * 1000))));
+		lc.aux = (vec_mult(vec_mult_vec(col_to_01(sph.color),
+						col_to_01(lc.tmp->color)), lc.t * lc.tmp->bright));
+		lc.arg.dir = vec_norm(vec_diff(lc.tmp->pos, rtn));
+		lc.arg.pos = rtn;
+		if (i_w_sph(elem, lc.arg, sph, *lc.tmp) == 1)
+			lc.aux = new_vec(0.0, 0.0, 0.0);
+		lc.light = vec_add(lc.aux, lc.light);
+		lc.light = vec_clamp(0, 1, lc.light);
+		lc.tmp = lc.tmp->next;
 	}
-	return (light);
+	return (lc.light);
 }
 
 t_vec	light_comb_cyl(t_cyl cyl, t_elem *elem, t_vec rtn)
