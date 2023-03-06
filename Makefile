@@ -8,6 +8,7 @@ MLX				=	$(MLX_PATH)/libmlx.a
 
 SRC = srcs/main.c	\
 srcs/elem_init.c	\
+srcs/iw_sph_iter.c	\
 srcs/utils.c		\
 srcs/al_cam_init.c	\
 srcs/light_linked.c	\
