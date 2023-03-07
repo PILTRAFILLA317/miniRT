@@ -6,42 +6,43 @@ LIBFT			=	$(LIBFT_PATH)/libft.a
 MLX_PATH		=	./mlx
 MLX				=	$(MLX_PATH)/libmlx.a
 
-SRC = srcs/main.c	\
-srcs/main_init.c	\
-srcs/thread_manager.c \
-srcs/id_getter.c	\
-srcs/elem_getter.c	\
-srcs/elem_init.c	\
-srcs/mirror_utils.c	\
+SRC = srcs/main.c		\
+srcs/main_init.c		\
+srcs/thread_manager.c	\
+srcs/id_getter.c		\
+srcs/elem_getter.c		\
+srcs/elem_getter_uts.c	\
+srcs/elem_init.c		\
+srcs/mirror_utils.c		\
 srcs/light_comb_inits.c	\
-srcs/vec_math.c		\
+srcs/vec_math.c			\
 srcs/vec_mult_math.c	\
 srcs/vec_unit_cross.c	\
-srcs/iw_sph_iter.c	\
-srcs/iw_cyl_iter.c	\
-srcs/iw_plane_iter.c\
-srcs/iw_disc_iter.c	\
-srcs/iw_tri_iter.c	\
-srcs/utils.c		\
-srcs/al_cam_init.c	\
-srcs/light_linked.c	\
-srcs/plane_linked.c	\
-srcs/sph_linked.c	\
-srcs/cyl_linked.c	\
-srcs/ray_caster.c	\
-srcs/vec_utils.c	\
-srcs/color_utils.c	\
-srcs/cyl_inter.c	\
-srcs/sph_inter.c	\
-srcs/pl_inter.c		\
-srcs/light_comb.c	\
-srcs/inter_with.c	\
-srcs/tri_linked.c	\
-srcs/tri_inter.c	\
-srcs/mirrors.c		\
-srcs/color_fun.c	\
-srcs/utils2.c		\
-srcs/first_inter.c	\
+srcs/iw_sph_iter.c		\
+srcs/iw_cyl_iter.c		\
+srcs/iw_plane_iter.c	\
+srcs/iw_disc_iter.c		\
+srcs/iw_tri_iter.c		\
+srcs/utils.c			\
+srcs/al_cam_init.c		\
+srcs/light_linked.c		\
+srcs/plane_linked.c		\
+srcs/sph_linked.c		\
+srcs/cyl_linked.c		\
+srcs/ray_caster.c		\
+srcs/vec_utils.c		\
+srcs/color_utils.c		\
+srcs/cyl_inter.c		\
+srcs/sph_inter.c		\
+srcs/pl_inter.c			\
+srcs/light_comb.c		\
+srcs/inter_with.c		\
+srcs/tri_linked.c		\
+srcs/tri_inter.c		\
+srcs/mirrors.c			\
+srcs/color_fun.c		\
+srcs/utils2.c			\
+srcs/first_inter.c		\
 
 OBJ = $(SRC:.c=.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 20:06:17 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/07 13:46:33 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ void	ray_caster(t_elem *elem)
 		elem->th[i].core = i;
 		if (pthread_create(&elem->th[i].th, NULL, thread_routine,
 				&elem->th[i]) != 0)
-			printf("WUAAAAAA");
+			exit (1);
 	}
 	i = -1;
 	while (++i < NUM_THREAD)
 		if (pthread_join(elem->th[i].th, NULL))
-			printf("WUAAAAAA");
+			exit (1);
 }

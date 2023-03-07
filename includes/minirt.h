@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 20:04:15 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:23:53 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,7 +329,7 @@ int			pl_mirror(t_elem *elem, t_dirpos rt, t_plane pl, int *ray);
 int			pl_checkboard(t_elem *elem, t_dirpos rt, t_plane pl, int *ray);
 void		pl_checkboard_axis_calc(int *axis, t_plane pl, t_dirpos rt);
 int			pl_checkboard_color_calc(int *axis, t_dirpos rt);
-void		pl_cb_vec_init(t_vec *vec, t_plane pl, t_dirpos rt, int clor);
+void		pl_cb_vec_init(t_vec *vec, t_plane *pl, t_dirpos rt, int clor);
 void		pl_cb_vec_calc(t_vec *vec, t_plane pl, t_dirpos rt, t_elem *elem);
 
 ////////// RAY_CAST //////////
@@ -352,6 +352,13 @@ t_objlen	pl_f_i(t_elem *elem, t_dirpos d, t_object co, t_objlen ol);
 t_objlen	sph_f_i(t_elem *elem, t_dirpos d, t_object co, t_objlen ol);
 t_objlen	tri_f_i(t_elem *elem, t_dirpos d, t_objlen ol);
 t_objlen	cyl_f_i(t_elem *elem, t_dirpos d, t_objlen ol);
+
+////////// TYPE_UTS //////////
+int			l_type(char **fl, t_elem *elem);
+int			sp_type(char **fl, t_elem *elem);
+int			cy_type(char **fl, t_elem *elem);
+int			t_type(char **fl, t_elem *elem);
+int			pl_type(char **fl, t_elem *elem);
 
 ////////// COLORS //////////
 int			cyl_color(t_elem *elem, t_vec dir, t_vec pos, t_cyl cyl);

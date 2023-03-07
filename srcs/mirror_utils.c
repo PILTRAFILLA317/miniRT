@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mirror_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:54:12 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/06 19:49:29 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:09:46 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ int	pl_checkboard_color_calc(int *axis, t_dirpos rt)
 	return (clor);
 }
 
-void	pl_cb_vec_init(t_vec *vec, t_plane pl, t_dirpos rt, int clor)
+void	pl_cb_vec_init(t_vec *vec, t_plane *pl, t_dirpos rt, int clor)
 {
-	vec[0] = vec_mult_vec(pl.orient, rt.dir);
-	vec[0] = vec_mult_vec(vec[0], pl.orient);
+	vec[0] = vec_mult_vec(pl->orient, rt.dir);
+	vec[0] = vec_mult_vec(vec[0], pl->orient);
 	vec[0] = vec_mult (vec[0], -2);
 	vec[0] = vec_add(rt.dir, vec[0]);
 	vec[0] = vec_norm(vec[0]);
-	pl.color = double_to_rgb(clor);
+	pl->color = double_to_rgb(clor);
 }
 
 void	pl_cb_vec_calc(t_vec *vec, t_plane pl, t_dirpos rt, t_elem *elem)

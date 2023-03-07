@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mirrors.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 19:32:54 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/06 19:49:06 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:10:03 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	pl_checkboard(t_elem *elem, t_dirpos rt, t_plane pl, int *ray)
 	clor = pl_checkboard_color_calc(axis, rt);
 	obj.type = 0;
 	obj.elem = &pl;
-	pl_cb_vec_init(vec, pl, rt, clor);
+	pl_cb_vec_init(vec, &pl, rt, clor);
 	pl_cb_vec_calc(vec, pl, rt, elem);
 	rf.dir = vec[0];
 	rf.pos = rt.pos;
