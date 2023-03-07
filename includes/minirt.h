@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/07 15:23:53 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/07 15:32:19 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 # define YELLOW	"\033[0;33m"
 # define BLUE 	"\033[0;34m"
 # define PURPLE	"\033[0;35m"
-# define CYAN	"\033[0;36m"
 # define BOLD	"\033[0;1m"
 # define CLOSE	"\033[0;0m"
 # define BHRED	"\e[1;91m"
