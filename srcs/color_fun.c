@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 19:54:24 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/07 15:06:13 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/08 19:32:44 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,47 @@ int	cyl_color(t_elem *elem, t_vec dir, t_vec pos, t_cyl cyl)
 	return (convert_rgb(col_to_255(final)));
 }
 
+double	spec_light(t_vec norm, t_vec rtn, t_light *light, t_vec d)
+{
+	t_vec	ref;
+	t_vec	new_vec;
+	double	spec;
+
+	ref = vec_norm(vec_diff(d, vec_mult(norm, 2 * vec_dot(d, norm))));
+	new_vec = vec_norm(vec_diff(light->pos, rtn));
+	spec = vec_dot(ref, new_vec);
+	return (pow(fmax(spec, 0.0), 1000) * light->bright);
+}
+
 int	sph_color(t_elem *elem, t_dirpos d, t_sphere sph, int *ray)
 {
 	t_vec		rtn;
 	t_vec		alight;
 	t_vec		light;
 	t_vec		final;
+	t_light		*temp;
 	t_dirpos	rt;
 
+	temp = elem->light;
 	rtn = sph_intersect_point(d.pos, &sph, d.dir);
 	rt.dir = d.dir;
 	rt.pos = rtn;
-	if (sph.x == 1 && *ray <= MAX_MIRR_RAYS)
-		return (sph_mirror(elem, rt, sph, ray));
-	alight = (vec_mult(vec_mult_vec(col_to_01
-					(sph.color),
+	alight = (vec_mult(vec_mult_vec(col_to_01(sph.color),
 					col_to_01(elem->alight.color)), elem->alight.ratio));
-	light = light_comb_sph(sph, elem, rtn);
-	final = vec_add(alight, light);
-	final = vec_clamp(0, 1, final);
-	return (convert_rgb(col_to_255(final)));
+	if (sph.x == 1 && *ray <= MAX_MIRR_RAYS)
+		light = col_to_01(double_to_rgb(sph_mirror(elem, rt, sph, ray)));
+	else
+	{
+		light = light_comb_sph(sph, elem, rtn);
+		final = vec_add(alight, light);
+	}
+	while (temp != NULL)
+	{
+		final = vec_add(final, vec_mult(temp->color,
+					spec_light(points_to_vec(sph.pos, rtn), rtn, temp, d.dir)));
+		temp = temp->next;
+	}
+	return (final = vec_clamp(0, 1, final), convert_rgb(col_to_255(final)));
 }
 
 int	plane_color(t_elem *elem, t_dirpos d, t_plane pl, int *ray)

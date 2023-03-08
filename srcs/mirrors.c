@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 19:32:54 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/07 15:10:03 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/08 19:16:06 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	sph_mirror(t_elem *elem, t_dirpos rt, t_sphere sph, int *ray)
 	vec[0] = vec_norm(vec[0]);
 	vec[1] = (vec_mult(vec_mult_vec(col_to_01(sph.color),
 					col_to_01(elem->alight.color)), elem->alight.ratio));
-	vec[2] = light_comb_sph(sph, elem, rt.pos);
+	vec[2] = light_comb_sph(sph, elem, rt.pos, rt.dir);
 	vec[3] = vec_add(vec[1], vec[2]);
 	vec[3] = vec_clamp(0, 1, vec[3]);
 	vec[3] = vec_mult(vec[3], (1 - sph.ref));
