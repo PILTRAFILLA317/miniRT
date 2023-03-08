@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cyl_inter.c                                        :+:      :+:    :+:   */
+/*   cyl_inter_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:44:22 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/08 17:19:33 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/08 17:41:07 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minirt.h"
+#include "../includes/minirt_bonus.h"
 
 t_vec	cyl_intersect_point(t_vec pos, t_cyl *cyl, t_vec dir)
 {

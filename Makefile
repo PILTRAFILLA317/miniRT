@@ -1,4 +1,6 @@
 NAME = miniRT
+#BONUS = miniRT_bonus
+BONUS_NAME = miniRT_bonus
 
 LIBFT_PATH		=	./libft
 LIBFT			=	$(LIBFT_PATH)/libft.a
@@ -71,21 +73,29 @@ $(NAME): $(OBJ)
 %.o: %.c
 	$(CC) $(FLAGS) -Imlx -c $^ -o $@
 
+bonus: $(BONUS_NAME)
+
+$(BONUS_NAME):
+	make -C bonus
+
 clean:
 	@echo "$(WHT)Removing o-files...$(EOC)"
 	$(RM) $(OBJ)
 	@ make clean -C libft
 	@ make clean -C mlx
+	@make clean -C bonus
 	@echo "$(GREEN)clean done.$(EOC)"
 
 fclean: clean
 	@echo "$(WHT)Removing binary -files...$(EOC)"
 	@make fclean -C libft
 	@make clean -C mlx
+	@make fclean -C bonus
 	$(RM) $(NAME)
 	@echo "$(GREEN)fclean done.$(EOC)"
 
 
 re: fclean all
+	@make re -C bonus
 
 .PHONY: clean re fclean all bonus m rebonus
