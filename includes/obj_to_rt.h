@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:50:35 by umartin-          #+#    #+#             */
-/*   Updated: 2023/02/11 16:35:43 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/09 18:32:38 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,14 @@ typedef struct s_norm
 }	t_norm;
 
 double	ft_strtod(char *str);
+char	*last_char_trimmer(char *str);
+t_ver	*trian_creator(char **fl);
+t_norm	*norm_creator(char **fl);
+t_tri	*face_creator(char **fl, t_ver **ver);
+void	lister(t_ver **ver, t_tri **tri, char *line);
+void	trian_lister(char **fl, t_tri **tri, t_ver **ver);
+int		new_trian(t_ver **trian, t_ver *new);
+int		new_face(t_tri **trian, t_tri *new);
+int		new_norm(t_norm **norm, t_norm *new);
 
 #endif

@@ -4,7 +4,9 @@ LIBFT_PATH		=	../libft
 LIBFT			=	$(LIBFT_PATH)/libft.a
 
 SRC = obj_to_rt.c	\
-utils.c 			\
+creators.c			\
+listers.c			\
+new.c				\
 
 OBJ = $(SRC:.c=.o)
 
@@ -18,7 +20,7 @@ WHT = \033[1;37m
 EOC = \033[1;0m
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -O2 -g3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -O2 -g3 #-fsanitize=address
 
 all: $(NAME)
 
