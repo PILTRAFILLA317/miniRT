@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/20 16:02:22 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:10:49 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	error_printer(int i)
 		printf(RED "Invalid scene\n" CLOSE);
 	if (i == 4)
 		printf(RED "Scene does not exist\n" CLOSE);
+	exit(0);
 }
 
 char	*first_char_trimmer(char *str)

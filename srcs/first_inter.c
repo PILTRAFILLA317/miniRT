@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 12:32:04 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/02 16:10:30 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:51:19 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,16 @@ t_objlen	disc_f_i_ut(t_dirpos dd, t_objlen ol, t_disc disc)
 	t_objlen	rtn;
 
 	rtn = ol;
-	if (vec_len(vec_diff(dd.pos, disc_intersect_point(dd.pos,
-					&disc, dd.dir))) < ol.len || ol.len == 0)
+	if (disc_intersect(dd.pos, &disc, dd.dir))
 	{
-		ol.len = vec_len(vec_diff(dd.pos,
-					disc_intersect_point(dd.pos, &disc, dd.dir)));
-		ol.obj.elem = &disc;
-		ol.obj.type = d;
+		if (vec_len(vec_diff(dd.pos, disc_intersect_point(dd.pos,
+						&disc, dd.dir))) < rtn.len || rtn.len == 0)
+		{
+			rtn.len = vec_len(vec_diff(dd.pos,
+						disc_intersect_point(dd.pos, &disc, dd.dir)));
+			rtn.obj.elem = &disc;
+			rtn.obj.type = d;
+		}
 	}
 	return (rtn);
 }
@@ -129,8 +132,8 @@ t_objlen	cyl_f_i(t_elem *elem, t_dirpos d, t_objlen ol)
 				rtn.obj.type = c;
 			}
 		}
-		ol = disc_f_i_ut(d, ol, c_head->bot_disc);
-		ol = disc_f_i_ut(d, ol, c_head->top_disc);
+		rtn = disc_f_i_ut(d, rtn, c_head->bot_disc);
+		rtn = disc_f_i_ut(d, rtn, c_head->top_disc);
 		c_head = c_head->next;
 	}
 	return (rtn);
