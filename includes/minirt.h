@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:38:27 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/08 17:38:02 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:07:46 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ typedef struct s_light_c
 	t_light		*tmp;
 	t_dirpos	arg;
 }	t_light_c;
+
 typedef struct s_light_tc
 {
 	double		t;
@@ -203,6 +204,7 @@ typedef struct s_light_tc
 	t_light		*tmp;
 	t_dirpos	arg;
 }	t_light_tc;
+
 typedef struct s_th_vars
 {
 	double		xx;

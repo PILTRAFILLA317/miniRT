@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pl_inter_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:44:11 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/08 17:43:18 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/20 14:57:44 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt_bonus.h"
+
 t_vec	pl_intersect_point(t_vec pos, t_plane *pl, t_vec dir)
 {
 	double	t;

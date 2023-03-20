@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_init_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 19:11:26 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/08 17:43:02 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:01:50 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,13 @@ int	arg_error_checker(int ac, char **av)
 
 int	file_error_checker(t_elem *elem, char *line, int file)
 {
+	while (line && line[0] == '\n')
+		line = get_next_line(file);
 	if (first_line_alight(line, elem) == -1)
 		return (error_printer(3), 1);
 	line = get_next_line(file);
+	while (line && line[0] == '\n')
+		line = get_next_line(file);
 	if (second_line_cam(last_char_trimmer(line), elem) == -1)
 		return (error_printer(3), 1);
 	return (0);

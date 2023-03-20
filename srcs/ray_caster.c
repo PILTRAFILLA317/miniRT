@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 20:50:33 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/07 13:46:33 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:42:28 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,29 @@ int	color(t_elem *elem, t_dirpos dp, t_object co, int *ray)
 
 void	ray_caster(t_elem *elem)
 {
-	int	i;
+	double		s[2];
+	int			i[3];
+	int			*r;
+	t_dirpos	d;
+	t_object	obj;
 
-	i = -1;
-	elem->th = (t_th *)malloc(sizeof(t_th) * NUM_THREAD);
-	pthread_mutex_init(&elem->pixl, 0);
-	while (++i < NUM_THREAD)
+	obj.type = n;
+	r = malloc(sizeof(int) * (WIN_X + 1) * (WIN_Y + 1) + 1);
+	i[2] = -1;
+	i[0] = 0;
+	while (++i[2] <= WIN_Y)
 	{
-		elem->th[i].elem = elem;
-		elem->th[i].core = i;
-		if (pthread_create(&elem->th[i].th, NULL, thread_routine,
-				&elem->th[i]) != 0)
-			exit (1);
+		i[1] = -1;
+		while (++i[1] <= WIN_X)
+		{
+			s[0] = (double)i[1] * 2 / WIN_X - 1;
+			s[1] = 1 - (double)i[2] * 2 / WIN_Y;
+			d.pos = elem->cam.pos;
+			d.dir = vec_rotation(s[0], s[1], elem);
+			r[i[0]] = 0;
+			mlx_pixel_put(elem->mlx, elem->win, i[1], i[2],
+				color(elem, d, obj, &r[i[0]]));
+			i[0]++;
+		}
 	}
-	i = -1;
-	while (++i < NUM_THREAD)
-		if (pthread_join(elem->th[i].th, NULL))
-			exit (1);
 }

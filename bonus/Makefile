@@ -65,7 +65,7 @@ $(NAME): $(OBJ)
 	make -C ../libft
 	make -C ../mlx
 	@echo "$(WHT)Compiling MiniRT...$(EOC)"
-	@$(CC) $(FLAGS) -lmlx -Lmlx -framework OpenGL -framework AppKit $(LIBFT) $(MLX) $^ -o $@
+	@$(CC) $(FLAGS) -lmlx -L../mlx -framework OpenGL -framework AppKit $(LIBFT) $(MLX) $^ -o $@
 	@echo "$(GREEN)miniRT bonus build completed.$(EOC)"
 
 %.o: %.c

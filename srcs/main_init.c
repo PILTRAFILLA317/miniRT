@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 19:11:26 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/12 17:09:00 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/20 15:26:27 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	file_error_checker(t_elem *elem, char *line, int file)
 	if (first_line_alight(line, elem) == -1)
 		return (error_printer(3), 1);
 	line = get_next_line(file);
-	printf("(%s)\n", line);
 	while (line && line[0] == '\n')
 		line = get_next_line(file);
 	if (second_line_cam(last_char_trimmer(line), elem) == -1)

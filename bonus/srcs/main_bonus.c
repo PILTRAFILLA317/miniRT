@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/08 17:42:57 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:02:22 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	main(int ac, char **av)
 		line = get_next_line(file);
 		if (line == NULL)
 			break ;
+		if (line && line[0] == '\n')
+			line = get_next_line(file);
 		if (elem_type(line, &elem))
 			return (1);
 	}

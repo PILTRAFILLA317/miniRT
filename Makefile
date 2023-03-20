@@ -10,7 +10,6 @@ MLX				=	$(MLX_PATH)/libmlx.a
 
 SRC = srcs/main.c		\
 srcs/main_init.c		\
-srcs/thread_manager.c	\
 srcs/id_getter.c		\
 srcs/elem_getter.c		\
 srcs/elem_getter_uts.c	\
@@ -59,7 +58,7 @@ EOC = \033[1;0m
 
 HEADERS = minirt.h
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -O2 -pthread -g3 -Ofast #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -O2 -g3 -Ofast -fsanitize=address
 
 all: $(NAME)
 
