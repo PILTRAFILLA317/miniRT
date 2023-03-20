@@ -6,7 +6,7 @@
 /*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/20 17:41:22 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/20 18:03:28 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ int	main(int ac, char **av)
 			return (1);
 	}
 	main_init(&elem);
+	exit (0);
 	return (0);
 }
