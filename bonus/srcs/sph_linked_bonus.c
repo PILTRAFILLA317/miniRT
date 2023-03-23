@@ -6,7 +6,7 @@
 /*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:31 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/08 17:43:40 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:39:31 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_sphere	*sphere_creator(char **fl, t_elem *e)
 	t_sphere	*sphere;
 
 	sphere = malloc(sizeof(t_sphere));
-	if (fl[0][2] == 'x')
+	if (fl[4])
 		sphere->x = 1;
 	else
 		sphere->x = 0;

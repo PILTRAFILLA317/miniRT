@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 19:11:26 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/20 18:05:54 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:35:55 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ int	arg_error_checker(int ac, char **av)
 {
 	if (ac != 2 || WIN_X < 1 || WIN_Y < 1)
 		return (error_printer(1), 1);
-	if (access(av[1], F_OK))
-		return (error_printer(4), 1);
+	if (open(av[1], O_RDONLY) == -1)
+		return (error_printer(5), 1);
+	if (!ft_filelen(av[1]))
+		return (error_printer(5), 1);
 	if (ft_strlen(av[1]) < 4)
 		return (error_printer(2), 1);
 	if (av[1][ft_strlen(av[1]) - 1] != 't' || av[1][ft_strlen(av[1]) - 2] != 'r'
@@ -53,7 +55,7 @@ int	file_error_checker(t_elem *elem, char *line, int file)
 	while (line && line[0] == '\n')
 		line = get_next_line(file);
 	if (second_line_cam(last_char_trimmer(line), elem) == -1)
-		return (error_printer(3), 1);
+		return (error_printer(5), 1);
 	return (0);
 }
 

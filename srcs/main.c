@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/20 18:03:46 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/23 18:34:45 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	error_printer(int i)
 		printf(RED "Invalid scene\n" CLOSE);
 	if (i == 4)
 		printf(RED "Scene does not exist\n" CLOSE);
+	if (i == 5)
+		printf(RED "invalid file\n" CLOSE);
 	exit(0);
 }
 
@@ -71,7 +73,7 @@ int	main(int ac, char **av)
 	t_elem	elem;
 
 	if (arg_error_checker(ac, av))
-		return (1);
+		return (error_printer(5), 1);
 	ft_memset(&elem, 0, sizeof(elem));
 	elem.light = NULL;
 	file = open(av[1], O_RDONLY);

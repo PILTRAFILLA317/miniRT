@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 11:16:24 by umartin-          #+#    #+#             */
-/*   Updated: 2022/12/27 16:38:21 by umartin-         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:49:35 by becastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	*ft_strjoin_gnl(char *final, char *rd);
 char	*ft_strchr_gnl(char *str, int c);
 
 size_t	ft_strlen_gnl(char *str);
+int		ft_filelen(char *path);
 
 //ft_printf
 void	ft_type(char t, va_list args, int *num);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+         #
+#    By: becastro <becastro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/20 12:04:06 by umartin-          #+#    #+#              #
-#    Updated: 2023/01/09 16:54:58 by umartin-         ###   ########.fr        #
+#    Updated: 2023/03/23 15:50:06 by becastro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,7 @@ ft_lstadd_back.c \
 ft_doubleprint.c \
 ft_doublestrlen.c \
 ft_doublefree.c \
+ft_filelen.c	\
 
 OBJ = $(SRC:.c=.o)
 
@@ -77,7 +78,7 @@ $(NAME): $(OBJ)
 %.o: %.c
 	$(CC) $(FLAGS) -c $^ -o $@
 
-clean: 
+clean:
 	@$(RM) $(OBJ)
 
 fclean: clean
