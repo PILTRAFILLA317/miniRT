@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:36:06 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/23 16:22:20 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:30:45 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	main(int ac, char **av)
 	char	*line;
 	t_elem	elem;
 
-	if (!ft_filelen(av[1]) || arg_error_checker(ac, av))
+	if (arg_error_checker(ac, av))
 		return (error_printer(5), 1);
 	ft_memset(&elem, 0, sizeof(elem));
 	elem.light = NULL;

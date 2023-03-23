@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_init_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 19:11:26 by becastro          #+#    #+#             */
-/*   Updated: 2023/03/23 18:22:58 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:31:25 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	arg_error_checker(int ac, char **av)
 		return (error_printer(1), 1);
 	if (access(av[1], F_OK))
 		return (error_printer(4), 1);
+	if (!ft_filelen(av[1]))
+		return (error_printer(5), 1);
 	if (ft_strlen(av[1]) < 4)
 		return (error_printer(2), 1);
 	if (av[1][ft_strlen(av[1]) - 1] != 't' || av[1][ft_strlen(av[1]) - 2] != 'r'

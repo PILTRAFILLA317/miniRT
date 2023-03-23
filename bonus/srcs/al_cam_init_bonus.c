@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   al_cam_init_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: becastro <becastro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: umartin- <umartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 16:50:21 by umartin-          #+#    #+#             */
-/*   Updated: 2023/03/08 17:40:52 by becastro         ###   ########.fr       */
+/*   Updated: 2023/03/23 19:28:47 by umartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,6 @@ int	second_line_cam(char *line, t_elem *elem)
 		return (error_printer(3), 1);
 	init_elem_orient(elem, rot, fl);
 	if (cam_checker(elem) == -1)
-		return (1);
+		return (error_printer(3), -1);
 	return (0);
 }
